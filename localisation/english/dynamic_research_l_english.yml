@@ -1,11 +1,11 @@
-﻿l_english:
+l_english:
   # Category & decision titles
   dynamic_research_category:0 "Dynamic Research Slots"
   dynamic_research_category_desc:0 "This mod dynamically adjusts the number of research slots available to each country based on their industrial capacity."
   dynamic_research_display:0 "Research Power Overview"
 
   # Detailed description used by the info decision
-  dynamic_research_decision_desc:0 "Our factories generate Research Power (RP), which, when it reaches certain thresholds, unlocks more research slots for us to use - but we can also lose them if our RP is not high enough.\n\nÂ§YTotal RP:Â§! [?research_power|Y]\nÂ§O RP from civilian factories:Â§! [?rp_civilian|Y]\nÂ§G RP from military factories:Â§! [?rp_military|Y]\nÂ§C RP from naval dockyards:Â§! [?rp_naval|Y]"
+  dynamic_research_decision_desc:0 "Our factories generate Research Power (RP), which, when it reaches certain thresholds, unlocks more research slots for us to use - but we can also lose them if our RP is not high enough.\n\n§YTotal RP:§! [?research_power|Y]\n§O RP from civilian factories:§! [?rp_civilian|Y]\n§G RP from military factories:§! [?rp_military|Y]\n§C RP from naval dockyards:§! [?rp_naval|Y]"
 
   # Event notification titles, descriptions and option names.
   dynamic_research_growth_title:0 "The growth of research capacity"
@@ -66,5 +66,50 @@
   RULE_DR_MINOR_EASY_SLOTS_OFF_DESC:0 "Minor nations use the same Easy Slot baseline as major nations."
   RULE_DR_MINOR_EASY_SLOTS_ON:0 "Enabled (no achievements)"
   RULE_DR_MINOR_EASY_SLOTS_ON_DESC:0 "Non-major countries receive one additional Easy Research Slot. This makes the game slightly easier for minors and disables achievements."
+
+  RULE_DR_FACTORY_WEIGHTS:0 "Factory RP Weights"
+  RULE_DR_FACTORY_WEIGHTS_DESC:0 "Controls how much Research Power civilian, military and naval factories generate."
+  RULE_DR_FACTORY_WEIGHTS_BALANCED:0 "Balanced (3 / 2 / 2)"
+  RULE_DR_FACTORY_WEIGHTS_BALANCED_DESC:0 "Civilian factories generate 3 RP each, military and naval factories 2 RP each."
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY:0 "Industry-focused (4 / 2 / 1)"
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY_DESC:0 "Civilian factories generate 4 RP each, military factories 2 RP and naval dockyards 1 RP."
+  RULE_DR_FACTORY_WEIGHTS_MILITARY:0 "Military-focused (2 / 4 / 2)"
+  RULE_DR_FACTORY_WEIGHTS_MILITARY_DESC:0 "Military factories generate 4 RP each, civilian and naval factories 2 RP each."
+  RULE_DR_FACTORY_WEIGHTS_NAVAL:0 "Naval-focused (2 / 2 / 4)"
+  RULE_DR_FACTORY_WEIGHTS_NAVAL_DESC:0 "Naval dockyards generate 4 RP each, civilian and military factories 2 RP each."
+
+  RULE_DR_WAR_RP:0 "War-time Research Power"
+  RULE_DR_WAR_RP_DESC:0 "Adjusts total Research Power while at war. Non-default options disable achievements."
+  RULE_DR_WAR_RP_OFF:0 "No change (default)"
+  RULE_DR_WAR_RP_OFF_DESC:0 "War does not affect Research Power."
+  RULE_DR_WAR_RP_MINUS_5:0 "-5% RP in war"
+  RULE_DR_WAR_RP_MINUS_5_DESC:0 "While at war, total Research Power is reduced by 5%."
+  RULE_DR_WAR_RP_MINUS_10:0 "-10% RP in war"
+  RULE_DR_WAR_RP_MINUS_10_DESC:0 "While at war, total Research Power is reduced by 10%."
+  RULE_DR_WAR_RP_MINUS_15:0 "-15% RP in war"
+  RULE_DR_WAR_RP_MINUS_15_DESC:0 "While at war, total Research Power is reduced by 15%."
+  RULE_DR_WAR_RP_MINUS_20:0 "-20% RP in war"
+  RULE_DR_WAR_RP_MINUS_20_DESC:0 "While at war, total Research Power is reduced by 20%."
+  RULE_DR_WAR_RP_MINUS_25:0 "-25% RP in war"
+  RULE_DR_WAR_RP_MINUS_25_DESC:0 "While at war, total Research Power is reduced by 25%."
+  RULE_DR_WAR_RP_MINUS_30:0 "-30% RP in war"
+  RULE_DR_WAR_RP_MINUS_30_DESC:0 "While at war, total Research Power is reduced by 30%."
+
+  RULE_DR_ALLIANCE_RP:0 "Alliance Research Power"
+  RULE_DR_ALLIANCE_RP_DESC:0 "Grants a bonus to total Research Power for countries that are in a faction. Non-default options disable achievements."
+  RULE_DR_ALLIANCE_RP_OFF:0 "No bonus (default)"
+  RULE_DR_ALLIANCE_RP_OFF_DESC:0 "Being in a faction does not affect Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_5:0 "+5% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_5_DESC:0 "Countries that are in a faction gain 5% additional Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_10:0 "+10% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_10_DESC:0 "Countries that are in a faction gain 10% additional Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_15:0 "+15% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_15_DESC:0 "Countries that are in a faction gain 15% additional Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_20:0 "+20% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_20_DESC:0 "Countries that are in a faction gain 20% additional Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_25:0 "+25% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_25_DESC:0 "Countries that are in a faction gain 25% additional Research Power."
+  RULE_DR_ALLIANCE_RP_PLUS_30:0 "+30% RP in faction"
+  RULE_DR_ALLIANCE_RP_PLUS_30_DESC:0 "Countries that are in a faction gain 30% additional Research Power."
 
 

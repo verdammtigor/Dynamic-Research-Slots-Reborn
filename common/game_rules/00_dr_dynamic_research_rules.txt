@@ -111,3 +111,126 @@ DR_MINOR_EASY_SLOTS_RULE = {
 		allow_achievements = no
 	}
 }
+
+DR_FACTORY_WEIGHTS_RULE = {
+	name = "RULE_DR_FACTORY_WEIGHTS"
+	group = "RULE_GROUP_DYNAMIC_RESEARCH"
+
+	default = {
+		name = DR_FACTORY_WEIGHTS_BALANCED
+		text = "RULE_DR_FACTORY_WEIGHTS_BALANCED"
+		desc = "RULE_DR_FACTORY_WEIGHTS_BALANCED_DESC"
+	}
+
+	option = {
+		name = DR_FACTORY_WEIGHTS_INDUSTRY
+		text = "RULE_DR_FACTORY_WEIGHTS_INDUSTRY"
+		desc = "RULE_DR_FACTORY_WEIGHTS_INDUSTRY_DESC"
+	}
+	option = {
+		name = DR_FACTORY_WEIGHTS_MILITARY
+		text = "RULE_DR_FACTORY_WEIGHTS_MILITARY"
+		desc = "RULE_DR_FACTORY_WEIGHTS_MILITARY_DESC"
+	}
+	option = {
+		name = DR_FACTORY_WEIGHTS_NAVAL
+		text = "RULE_DR_FACTORY_WEIGHTS_NAVAL"
+		desc = "RULE_DR_FACTORY_WEIGHTS_NAVAL_DESC"
+	}
+}
+
+DR_WAR_RP_RULE = {
+	name = "RULE_DR_WAR_RP"
+	group = "RULE_GROUP_DYNAMIC_RESEARCH"
+
+	default = {
+		name = DR_WAR_RP_OFF
+		text = "RULE_DR_WAR_RP_OFF"
+		desc = "RULE_DR_WAR_RP_OFF_DESC"
+	}
+
+	option = {
+		name = DR_WAR_RP_MINUS_5
+		text = "RULE_DR_WAR_RP_MINUS_5"
+		desc = "RULE_DR_WAR_RP_MINUS_5_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_WAR_RP_MINUS_10
+		text = "RULE_DR_WAR_RP_MINUS_10"
+		desc = "RULE_DR_WAR_RP_MINUS_10_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_WAR_RP_MINUS_15
+		text = "RULE_DR_WAR_RP_MINUS_15"
+		desc = "RULE_DR_WAR_RP_MINUS_15_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_WAR_RP_MINUS_20
+		text = "RULE_DR_WAR_RP_MINUS_20"
+		desc = "RULE_DR_WAR_RP_MINUS_20_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_WAR_RP_MINUS_25
+		text = "RULE_DR_WAR_RP_MINUS_25"
+		desc = "RULE_DR_WAR_RP_MINUS_25_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_WAR_RP_MINUS_30
+		text = "RULE_DR_WAR_RP_MINUS_30"
+		desc = "RULE_DR_WAR_RP_MINUS_30_DESC"
+		allow_achievements = no
+	}
+}
+
+DR_ALLIANCE_RP_RULE = {
+	name = "RULE_DR_ALLIANCE_RP"
+	group = "RULE_GROUP_DYNAMIC_RESEARCH"
+
+	default = {
+		name = DR_ALLIANCE_RP_OFF
+		text = "RULE_DR_ALLIANCE_RP_OFF"
+		desc = "RULE_DR_ALLIANCE_RP_OFF_DESC"
+	}
+
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_5
+		text = "RULE_DR_ALLIANCE_RP_PLUS_5"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_5_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_10
+		text = "RULE_DR_ALLIANCE_RP_PLUS_10"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_10_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_15
+		text = "RULE_DR_ALLIANCE_RP_PLUS_15"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_15_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_20
+		text = "RULE_DR_ALLIANCE_RP_PLUS_20"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_20_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_25
+		text = "RULE_DR_ALLIANCE_RP_PLUS_25"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_25_DESC"
+		allow_achievements = no
+	}
+	option = {
+		name = DR_ALLIANCE_RP_PLUS_30
+		text = "RULE_DR_ALLIANCE_RP_PLUS_30"
+		desc = "RULE_DR_ALLIANCE_RP_PLUS_30_DESC"
+		allow_achievements = no
+	}
+}

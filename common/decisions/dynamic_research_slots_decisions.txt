@@ -36,5 +36,19 @@ dynamic_research_slots_decisions = {
 			recalculate_dynamic_research_slots = yes
 		}
 	}
-}
 
+	dynamic_research_slots_debug = {
+		visible = {
+			is_debug = yes
+		}
+		available = {
+			always = yes
+		}
+		cost = 0
+		days_remove = -1
+		ai_will_do = { factor = 0 }
+		complete_effect = {
+			country_event = dynamic_research_slots.4
+		}
+	}
+}

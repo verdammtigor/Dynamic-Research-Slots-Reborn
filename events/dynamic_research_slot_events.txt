@@ -39,3 +39,28 @@ country_event = {
   }
 }
 
+country_event = {
+  id = dynamic_research_slots.3
+  hidden = no
+  is_triggered_only = yes
+
+  title = dynamic_research_slots.3.title
+  desc = dynamic_research_slots.3.desc
+
+  option {
+    name = dynamic_research_slots.3.a
+  }
+}
+
+country_event = {
+  id = dynamic_research_slots.4
+  hidden = no
+  is_triggered_only = yes
+
+  title = dynamic_research_slots.4.title
+  desc = dynamic_research_slots.4.desc
+
+  option {
+    name = dynamic_research_slots.4.a
+  }
+}

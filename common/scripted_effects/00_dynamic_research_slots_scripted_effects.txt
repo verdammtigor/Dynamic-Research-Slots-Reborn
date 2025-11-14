@@ -8,9 +8,30 @@ initialize_dynamic_research_slots = {
 	set_variable = { target_research_slots = 2 }
 	set_variable = { easy_research_slots = 2 }
 
+	# Base RP weights per factory type
 	set_variable = { research_power_per_civ = 3 }
 	set_variable = { research_power_per_mil = 2 }
 	set_variable = { research_power_per_nav = 2 }
+
+	# Optional override via factory weights game rule
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_INDUSTRY } }
+		set_variable = { research_power_per_civ = 4 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_MILITARY } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 4 }
+		set_variable = { research_power_per_nav = 2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_NAVAL } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 4 }
+	}
 
 	add_to_array = { base_research_for_slot = 0 } 		#this doesnt correspond to a research slot, its for easier indexing
 	add_to_array = { base_research_for_slot = 0 }			#1
@@ -146,6 +167,187 @@ calculate_modifiers_to_rp = {
 	set_variable = { military_rp_modifier = 0 }
 	set_variable = { naval_rp_modifier = 0 }
 	set_variable = { total_rp_modifier = 0 }
+
+	# War-time RP modifier (global, applied to total RP)
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_5 }
+		}
+		add_to_variable = { total_rp_modifier = -0.05 }
+	}
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_10 }
+		}
+		add_to_variable = { total_rp_modifier = -0.10 }
+	}
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_15 }
+		}
+		add_to_variable = { total_rp_modifier = -0.15 }
+	}
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_20 }
+		}
+		add_to_variable = { total_rp_modifier = -0.20 }
+	}
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_25 }
+		}
+		add_to_variable = { total_rp_modifier = -0.25 }
+	}
+	if = {
+		limit = {
+			has_war = yes
+			has_game_rule = { rule = DR_WAR_RP_RULE option = DR_WAR_RP_MINUS_30 }
+		}
+		add_to_variable = { total_rp_modifier = -0.30 }
+	}
+
+	# Alliance / faction RP modifier
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_5 }
+		}
+		add_to_variable = { total_rp_modifier = 0.05 }
+	}
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_10 }
+		}
+		add_to_variable = { total_rp_modifier = 0.10 }
+	}
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_15 }
+		}
+		add_to_variable = { total_rp_modifier = 0.15 }
+	}
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_20 }
+		}
+		add_to_variable = { total_rp_modifier = 0.20 }
+	}
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_25 }
+		}
+		add_to_variable = { total_rp_modifier = 0.25 }
+	}
+	if = {
+		limit = {
+			is_in_faction = yes
+			has_game_rule = { rule = DR_ALLIANCE_RP_RULE option = DR_ALLIANCE_RP_PLUS_30 }
+		}
+		add_to_variable = { total_rp_modifier = 0.30 }
+	}
+
+	# Scientist effects
+	# Approximate per-level bonuses using has_scientist_level thresholds (levels 1–5).
+
+	# Nuclear / physics scientist – counted towards "civ" bucket
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 0 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 1 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 2 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 3 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 4 } } add_to_variable = { scientist_level_civ = 1 } }
+
+	# Land + air scientists – counted towards "military" bucket
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 0 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 1 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 2 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 3 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 4 } } add_to_variable = { scientist_level_mil = 1 } }
+
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 0 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 1 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 2 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 3 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 4 } } add_to_variable = { scientist_level_mil = 1 } }
+
+	# Naval scientist – counted towards "naval" bucket
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 0 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 1 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 2 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 3 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 4 } } add_to_variable = { scientist_level_nav = 1 } }
+
+	# Total scientist level (for flat RP bonus)
+	add_to_variable = { scientist_level_total = scientist_level_civ }
+	add_to_variable = { scientist_level_total = scientist_level_mil }
+	add_to_variable = { scientist_level_total = scientist_level_nav }
+
+	# 1% extra RP from relevant factories per level
+	set_variable = { temp = scientist_level_civ }
+	multiply_variable = { temp = 0.01 }
+	add_to_variable = { civilian_rp_modifier = temp }
+
+	set_variable = { temp = scientist_level_mil }
+	multiply_variable = { temp = 0.01 }
+	add_to_variable = { military_rp_modifier = temp }
+
+	set_variable = { temp = scientist_level_nav }
+	multiply_variable = { temp = 0.01 }
+	add_to_variable = { naval_rp_modifier = temp }
+
+	# Recompute scientist levels for Experimental Facilities and clear per-factory modifiers.
+	# This ensures scientists modify only Experimental Facility RP, not global factory RP.
+	set_variable = { civilian_rp_modifier = 0 }
+	set_variable = { military_rp_modifier = 0 }
+	set_variable = { naval_rp_modifier = 0 }
+	set_variable = { scientist_level_civ = 0 }
+	set_variable = { scientist_level_mil = 0 }
+	set_variable = { scientist_level_air = 0 }
+	set_variable = { scientist_level_nav = 0 }
+	set_variable = { scientist_level_total = 0 }
+
+	# Nuclear / physics scientist – used for Physics Experimental Facility
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 0 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 1 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 2 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 3 } } add_to_variable = { scientist_level_civ = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_nuclear level > 4 } } add_to_variable = { scientist_level_civ = 1 } }
+
+	# Land scientists – used for Land Experimental Facility
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 0 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 1 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 2 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 3 } } add_to_variable = { scientist_level_mil = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_land level > 4 } } add_to_variable = { scientist_level_mil = 1 } }
+
+	# Air scientists – used for Air Experimental Facility
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 0 } } add_to_variable = { scientist_level_air = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 1 } } add_to_variable = { scientist_level_air = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 2 } } add_to_variable = { scientist_level_air = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 3 } } add_to_variable = { scientist_level_air = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_air level > 4 } } add_to_variable = { scientist_level_air = 1 } }
+
+	# Naval scientist – used for Naval Experimental Facility
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 0 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 1 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 2 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 3 } } add_to_variable = { scientist_level_nav = 1 } }
+	if = { limit = { has_scientist_level = { specialization = specialization_naval level > 4 } } add_to_variable = { scientist_level_nav = 1 } }
+
+	# Total scientist level (for flat RP bonus)
+	add_to_variable = { scientist_level_total = scientist_level_civ }
+	add_to_variable = { scientist_level_total = scientist_level_mil }
+	add_to_variable = { scientist_level_total = scientist_level_air }
+	add_to_variable = { scientist_level_total = scientist_level_nav }
 }
 
 recalculate_dynamic_research_slots = {
@@ -249,6 +451,11 @@ recalculate_dynamic_research_slots = {
 		add_to_variable = { total_research_power = 35 }
 		add_to_variable = { facility_research_power = 35 }
 	}
+
+	# Apply global RP modifier (from war and alliance rules)
+	set_variable = { temp = 1 }
+	add_to_variable = { temp = total_rp_modifier }
+	multiply_variable = { total_research_power = temp }
 
 	for_each_loop = {
 		array = research_for_slot

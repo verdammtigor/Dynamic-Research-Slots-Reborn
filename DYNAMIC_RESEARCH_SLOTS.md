@@ -274,6 +274,88 @@ if = {
 
 This bonus is applied after the other Game Rule adjustments, so minors can be globally buffed or kept even with majors depending on the selected option.
 
+### Factory RP Weights
+
+The Game Rule `RULE_DR_FACTORY_WEIGHTS` allows changing the relative strength of Civ/Mil/Naval factories:
+
+- `Balanced (3 / 2 / 2)` – **default**: `research_power_per_civ = 3`, `research_power_per_mil = 2`, `research_power_per_nav = 2`.
+- `Industry-focused (4 / 2 / 1)` – Civs are strongest, naval weakest.
+- `Military-focused (2 / 4 / 2)` – Mils are strongest, Civs/Naval support them.
+- `Naval-focused (2 / 2 / 4)` – Naval dockyards are strongest.
+
+Implementation in `initialize_dynamic_research_slots`:
+
+```txt
+set_variable = { research_power_per_civ = 3 }
+set_variable = { research_power_per_mil = 2 }
+set_variable = { research_power_per_nav = 2 }
+
+if = {
+    limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_INDUSTRY } }
+    set_variable = { research_power_per_civ = 4 }
+    set_variable = { research_power_per_mil = 2 }
+    set_variable = { research_power_per_nav = 1 }
+}
+...
+```
+
+### War-time and Alliance RP Modifiers
+
+Two Game Rules modify `total_rp_modifier`, which is applied as a multiplicative factor to `total_research_power`:
+
+```txt
+set_variable = { temp = 1 }
+add_to_variable = { temp = total_rp_modifier }
+multiply_variable = { total_research_power = temp }
+```
+
+#### War-time Research Power
+
+`RULE_DR_WAR_RP`:
+
+- `OFF` (**default**) – no change.
+- `-20% RP in war` – `total_rp_modifier -= 0.2` if `has_war = yes`.
+- `-10% RP in war` – `total_rp_modifier -= 0.1`.
+- `+10% RP in war` – `total_rp_modifier += 0.1`.
+- `+20% RP in war` – `total_rp_modifier += 0.2`.
+
+Non-default options disable achievements.
+
+#### Alliance Research Power
+
+`RULE_DR_ALLIANCE_RP`:
+
+- `OFF` (**default**) – no bonus.
+- `+10% RP in faction` – `total_rp_modifier += 0.1` if `is_in_faction = yes`.
+- `+20% RP in faction` – `total_rp_modifier += 0.2`.
+
+Also disables achievements when enabled. Both rules are additive: a country at war and in a faction can get combined modifiers.
+
+### Visual Feedback for Slot Loss
+
+Slot changes are now split into:
+
+- `dynamic_research_slots.1` – generic change (used for gains).
+- `dynamic_research_slots.3` – explicit **slot loss** event.
+
+In `recalculate_dynamic_research_slots` the direction of change is detected and the appropriate event is triggered (respecting the player event cooldown).
+
+### Debug / Modder Overlay
+
+A debug-only decision and event provide a live snapshot of all important variables:
+
+- Decision: `dynamic_research_slots_debug` in `dynamic_research_slots_decisions`, visible only when `is_debug = yes`.
+- Event: `dynamic_research_slots.4` with localisation key `dynamic_research_slots.4.desc`.
+
+The event lists:
+
+- `total_research_power`
+- `civilian_research_power`, `military_research_power`, `naval_research_power`, `facility_research_power`
+- `current_research_slots`, `target_research_slots`, `easy_research_slots`, `easy_research_slot_coefficient`
+- `dr_player_event_cooldown`, `dr_days_until_update`
+
+This is intended for balancing and debugging and has no gameplay effect.
+
 ### Game Rule: Easy Slot Cost Factor
 
 The Custom Game Rule `DR_EASY_COST_RULE` controls `easy_research_slot_coefficient`:

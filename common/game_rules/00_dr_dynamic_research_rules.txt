@@ -1,0 +1,95 @@
+DR_EASY_SLOTS_RULE = {
+	name = "RULE_DR_EASY_SLOTS"
+	group = "RULE_GROUP_DYNAMIC_RESEARCH"
+
+	# Default: behave like original mod (no extra easy slots)
+	default = {
+		name = DR_EASY_SLOTS_DEFAULT
+		text = "RULE_DR_EASY_SLOTS_DEFAULT"
+		desc = "RULE_DR_EASY_SLOTS_DEFAULT_DESC"
+	}
+
+	# Additional easy slots on top of the default behaviour
+	option = {
+		name = DR_EASY_SLOTS_PLUS_1
+		text = "RULE_DR_EASY_SLOTS_PLUS_1"
+		desc = "RULE_DR_EASY_SLOTS_PLUS_1_DESC"
+	}
+	option = {
+		name = DR_EASY_SLOTS_PLUS_2
+		text = "RULE_DR_EASY_SLOTS_PLUS_2"
+		desc = "RULE_DR_EASY_SLOTS_PLUS_2_DESC"
+	}
+	option = {
+		name = DR_EASY_SLOTS_PLUS_3
+		text = "RULE_DR_EASY_SLOTS_PLUS_3"
+		desc = "RULE_DR_EASY_SLOTS_PLUS_3_DESC"
+	}
+	option = {
+		name = DR_EASY_SLOTS_PLUS_4
+		text = "RULE_DR_EASY_SLOTS_PLUS_4"
+		desc = "RULE_DR_EASY_SLOTS_PLUS_4_DESC"
+	}
+	option = {
+		name = DR_EASY_SLOTS_PLUS_5
+		text = "RULE_DR_EASY_SLOTS_PLUS_5"
+		desc = "RULE_DR_EASY_SLOTS_PLUS_5_DESC"
+	}
+}
+
+DR_EASY_COST_RULE = {
+	name = "RULE_DR_EASY_COST"
+	group = "RULE_GROUP_DYNAMIC_RESEARCH"
+
+	# 10 steps for cost factor; default is 60% (original behaviour)
+	option = {
+		name = DR_EASY_COST_10
+		text = "RULE_DR_EASY_COST_10"
+		desc = "RULE_DR_EASY_COST_10_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_20
+		text = "RULE_DR_EASY_COST_20"
+		desc = "RULE_DR_EASY_COST_20_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_30
+		text = "RULE_DR_EASY_COST_30"
+		desc = "RULE_DR_EASY_COST_30_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_40
+		text = "RULE_DR_EASY_COST_40"
+		desc = "RULE_DR_EASY_COST_40_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_50
+		text = "RULE_DR_EASY_COST_50"
+		desc = "RULE_DR_EASY_COST_50_DESC"
+	}
+	default = {
+		name = DR_EASY_COST_60
+		text = "RULE_DR_EASY_COST_60"
+		desc = "RULE_DR_EASY_COST_60_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_70
+		text = "RULE_DR_EASY_COST_70"
+		desc = "RULE_DR_EASY_COST_70_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_80
+		text = "RULE_DR_EASY_COST_80"
+		desc = "RULE_DR_EASY_COST_80_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_90
+		text = "RULE_DR_EASY_COST_90"
+		desc = "RULE_DR_EASY_COST_90_DESC"
+	}
+	option = {
+		name = DR_EASY_COST_100
+		text = "RULE_DR_EASY_COST_100"
+		desc = "RULE_DR_EASY_COST_100_DESC"
+	}
+}

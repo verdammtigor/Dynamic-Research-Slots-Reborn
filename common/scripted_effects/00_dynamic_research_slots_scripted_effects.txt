@@ -39,6 +39,67 @@ initialize_dynamic_research_slots = {
 
 	set_variable = { removed_research_slots = 0 }
 	set_variable = { easy_research_slot_coefficient = 0.6 }
+
+	# Zusätzliche Easy Slots über Game Rule
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_1 } }
+		add_to_variable = { easy_research_slots = 1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_2 } }
+		add_to_variable = { easy_research_slots = 2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_3 } }
+		add_to_variable = { easy_research_slots = 3 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_4 } }
+		add_to_variable = { easy_research_slots = 4 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_5 } }
+		add_to_variable = { easy_research_slots = 5 }
+	}
+
+	# Kostenfaktor der Easy Slots über Game Rule (Standard 60%)
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_10 } }
+		set_variable = { easy_research_slot_coefficient = 0.1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_20 } }
+		set_variable = { easy_research_slot_coefficient = 0.2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_30 } }
+		set_variable = { easy_research_slot_coefficient = 0.3 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_40 } }
+		set_variable = { easy_research_slot_coefficient = 0.4 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_50 } }
+		set_variable = { easy_research_slot_coefficient = 0.5 }
+	}
+	# DR_EASY_COST_60 nutzt den Standardwert 0.6
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_70 } }
+		set_variable = { easy_research_slot_coefficient = 0.7 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_80 } }
+		set_variable = { easy_research_slot_coefficient = 0.8 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_90 } }
+		set_variable = { easy_research_slot_coefficient = 0.9 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_100 } }
+		set_variable = { easy_research_slot_coefficient = 1.0 }
+	}
 	if = {
 		limit = {
 			check_variable = { current_research_slots > target_research_slots }
@@ -124,6 +185,7 @@ recalculate_dynamic_research_slots = {
 		}
 	}
 	set_variable = { total_research_power = 0 }
+	set_variable = { facility_research_power = 0 }
 
 	set_variable = { base_civilian_research_power = 0 }
 	add_to_variable = { base_civilian_research_power = research_power_per_civ }
@@ -153,6 +215,28 @@ recalculate_dynamic_research_slots = {
 	add_to_variable = { total_research_power = civilian_research_power }
 	add_to_variable = { total_research_power = military_research_power }
 	add_to_variable = { total_research_power = naval_research_power }
+
+	# Experimental Facilities give additional flat Research Power
+	if = {
+		limit = { nuclear_facility > 0 }
+		add_to_variable = { total_research_power = 50 }
+		add_to_variable = { facility_research_power = 50 }
+	}
+	if = {
+		limit = { naval_facility > 0 }
+		add_to_variable = { total_research_power = 35 }
+		add_to_variable = { facility_research_power = 35 }
+	}
+	if = {
+		limit = { air_facility > 0 }
+		add_to_variable = { total_research_power = 35 }
+		add_to_variable = { facility_research_power = 35 }
+	}
+	if = {
+		limit = { land_facility > 0 }
+		add_to_variable = { total_research_power = 35 }
+		add_to_variable = { facility_research_power = 35 }
+	}
 
 	for_each_loop = {
 		array = research_for_slot
@@ -226,4 +310,3 @@ recalculate_dynamic_research_slots = {
 	set_research_slots = var:target_research_slots
 	set_variable = { current_research_slots = amount_research_slots }
 }
-

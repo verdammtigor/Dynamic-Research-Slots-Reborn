@@ -36,160 +36,171 @@ calculate_modifiers_to_rp = {
 
 
 recalculate_dynamic_research_slots = {
+	# Compatibility hook: allow other mods to disable dynamic slot changes per country.
+	# If the flag is set, we keep our bookkeeping in sync but skip all slot logic.
 	if = {
-		limit = {
-			check_variable = {
-				var = current_research_slots
-				value = amount_research_slots
-				compare = less_than
-			}
-		}
-		set_variable = { temp = amount_research_slots }
-		subtract_from_variable = { temp = current_research_slots }
-		add_to_variable = { easy_research_slots = temp }
-		country_event = dynamic_research_slots.2
-		multiply_variable = { temp = -1 }
-		add_research_slot = var:temp
+		limit = { has_country_flag = dr_disable_dynamic_research_slots }
+		set_variable = { current_research_slots = amount_research_slots }
 	}
 
-	# Rebuild effective thresholds after Easy Slot changes.
-	dr_rebuild_research_thresholds = yes
-	set_variable = { total_research_power = 0 }
-	set_variable = { facility_research_power = 0 }
-
-	set_variable = { base_civilian_research_power = 0 }
-	add_to_variable = { base_civilian_research_power = research_power_per_civ }
-	multiply_variable = { base_civilian_research_power = num_of_civilian_factories }
-	set_variable = { temp = 1 }
-	add_to_variable = { temp = civilian_rp_modifier }
-	set_variable = { civilian_research_power = base_civilian_research_power }
-	multiply_variable = { civilian_research_power = temp }
-
-
-	set_variable = { base_military_research_power = 0 }
-	add_to_variable = { base_military_research_power = research_power_per_mil }
-	multiply_variable = { base_military_research_power = num_of_military_factories }
-	set_variable = { temp = 1 }
-	add_to_variable = { temp = military_rp_modifier }
-	set_variable = { military_research_power = base_military_research_power }
-	multiply_variable = { military_research_power = temp }
-
-	set_variable = { base_naval_research_power = 0 }
-	add_to_variable = { base_naval_research_power = research_power_per_nav }
-	multiply_variable = { base_naval_research_power = num_of_naval_factories }
-	set_variable = { temp = 1 }
-	add_to_variable = { temp = naval_rp_modifier }
-	set_variable = { naval_research_power = base_naval_research_power }
-	multiply_variable = { naval_research_power = temp }
-
-	add_to_variable = { total_research_power = civilian_research_power }
-	add_to_variable = { total_research_power = military_research_power }
-	add_to_variable = { total_research_power = naval_research_power }
-
-	# Experimental Facilities give additional flat Research Power
 	if = {
-		limit = { nuclear_facility > 0 }
-		set_variable = { temp_facility_rp = nuclear_facility }
-		multiply_variable = { temp_facility_rp = rp_per_nuclear_facility }
-		add_to_variable = { total_research_power = temp_facility_rp }
-		add_to_variable = { facility_research_power = temp_facility_rp }
-	}
-	if = {
-		limit = { naval_facility > 0 }
-		set_variable = { temp_facility_rp = naval_facility }
-		multiply_variable = { temp_facility_rp = rp_per_naval_facility }
-		add_to_variable = { total_research_power = temp_facility_rp }
-		add_to_variable = { facility_research_power = temp_facility_rp }
-	}
-	if = {
-		limit = { air_facility > 0 }
-		set_variable = { temp_facility_rp = air_facility }
-		multiply_variable = { temp_facility_rp = rp_per_air_facility }
-		add_to_variable = { total_research_power = temp_facility_rp }
-		add_to_variable = { facility_research_power = temp_facility_rp }
-	}
-	if = {
-		limit = { land_facility > 0 }
-		set_variable = { temp_facility_rp = land_facility }
-		multiply_variable = { temp_facility_rp = rp_per_land_facility }
-		add_to_variable = { total_research_power = temp_facility_rp }
-		add_to_variable = { facility_research_power = temp_facility_rp }
-	}
-
-	# Apply global RP modifier (from war and alliance rules)
-	set_variable = { temp = 1 }
-	add_to_variable = { temp = total_rp_modifier }
-	multiply_variable = { total_research_power = temp }
-
-	for_each_loop = {
-		array = research_for_slot
+		limit = { NOT = { has_country_flag = dr_disable_dynamic_research_slots } }
 
 		if = {
 			limit = {
 				check_variable = {
-					var = total_research_power
-					value = research_for_slot^i
-					compare = greater_than_or_equals
+					var = current_research_slots
+					value = amount_research_slots
+					compare = less_than
 				}
 			}
-			set_variable = { target_research_slots = i }
-		}
-	}
-
-	if = {
-		limit = {
-			check_variable = {
-				var = target_research_slots
-				value = current_research_slots
-				compare = not_equals
-			}
+			set_variable = { temp = amount_research_slots }
+			subtract_from_variable = { temp = current_research_slots }
+			add_to_variable = { easy_research_slots = temp }
+			country_event = dynamic_research_slots.2
+			multiply_variable = { temp = -1 }
+			add_research_slot = var:temp
 		}
 
-		# Slots have changed
+		# Rebuild effective thresholds after Easy Slot changes.
+		dr_rebuild_research_thresholds = yes
+		set_variable = { total_research_power = 0 }
+		set_variable = { facility_research_power = 0 }
 
-		# Player: only show the event if no cooldown is running (or it has expired)
+		set_variable = { base_civilian_research_power = 0 }
+		add_to_variable = { base_civilian_research_power = research_power_per_civ }
+		multiply_variable = { base_civilian_research_power = num_of_civilian_factories }
+		set_variable = { temp = 1 }
+		add_to_variable = { temp = civilian_rp_modifier }
+		set_variable = { civilian_research_power = base_civilian_research_power }
+		multiply_variable = { civilian_research_power = temp }
+
+
+		set_variable = { base_military_research_power = 0 }
+		add_to_variable = { base_military_research_power = research_power_per_mil }
+		multiply_variable = { base_military_research_power = num_of_military_factories }
+		set_variable = { temp = 1 }
+		add_to_variable = { temp = military_rp_modifier }
+		set_variable = { military_research_power = base_military_research_power }
+		multiply_variable = { military_research_power = temp }
+
+		set_variable = { base_naval_research_power = 0 }
+		add_to_variable = { base_naval_research_power = research_power_per_nav }
+		multiply_variable = { base_naval_research_power = num_of_naval_factories }
+		set_variable = { temp = 1 }
+		add_to_variable = { temp = naval_rp_modifier }
+		set_variable = { naval_research_power = base_naval_research_power }
+		multiply_variable = { naval_research_power = temp }
+
+		add_to_variable = { total_research_power = civilian_research_power }
+		add_to_variable = { total_research_power = military_research_power }
+		add_to_variable = { total_research_power = naval_research_power }
+
+		# Experimental Facilities give additional flat Research Power
 		if = {
-			limit = { is_ai = no }
+			limit = { nuclear_facility > 0 }
+			set_variable = { temp_facility_rp = nuclear_facility }
+			multiply_variable = { temp_facility_rp = rp_per_nuclear_facility }
+			add_to_variable = { total_research_power = temp_facility_rp }
+			add_to_variable = { facility_research_power = temp_facility_rp }
+		}
+		if = {
+			limit = { naval_facility > 0 }
+			set_variable = { temp_facility_rp = naval_facility }
+			multiply_variable = { temp_facility_rp = rp_per_naval_facility }
+			add_to_variable = { total_research_power = temp_facility_rp }
+			add_to_variable = { facility_research_power = temp_facility_rp }
+		}
+		if = {
+			limit = { air_facility > 0 }
+			set_variable = { temp_facility_rp = air_facility }
+			multiply_variable = { temp_facility_rp = rp_per_air_facility }
+			add_to_variable = { total_research_power = temp_facility_rp }
+			add_to_variable = { facility_research_power = temp_facility_rp }
+		}
+		if = {
+			limit = { land_facility > 0 }
+			set_variable = { temp_facility_rp = land_facility }
+			multiply_variable = { temp_facility_rp = rp_per_land_facility }
+			add_to_variable = { total_research_power = temp_facility_rp }
+			add_to_variable = { facility_research_power = temp_facility_rp }
+		}
+
+		# Apply global RP modifier (from war and alliance rules)
+		set_variable = { temp = 1 }
+		add_to_variable = { temp = total_rp_modifier }
+		multiply_variable = { total_research_power = temp }
+
+		for_each_loop = {
+			array = research_for_slot
 
 			if = {
 				limit = {
-					OR = {
-						NOT = { has_variable = dr_player_event_cooldown }
-						check_variable = {
-							var = dr_player_event_cooldown
-							value = 0
-							compare = less_than_or_equals
-						}
+					check_variable = {
+						var = total_research_power
+						value = research_for_slot^i
+						compare = greater_than_or_equals
 					}
 				}
-				country_event = dynamic_research_slots.1
-				set_variable = { dr_player_event_cooldown = 14 }
+				set_variable = { target_research_slots = i }
 			}
 		}
 
-		# AI: can always fire the event (if used)
 		if = {
-			limit = { is_ai = yes }
-			country_event = dynamic_research_slots.1
-		}
-	}
+			limit = {
+				check_variable = {
+					var = target_research_slots
+					value = current_research_slots
+					compare = not_equals
+				}
+			}
 
-	set_variable = { max_research_slots = research_for_slot^num }
-	subtract_from_variable = { max_research_slots = 1 }
-	set_variable = { next_research_slot_at = 0 }
-	if = {
-		limit = {
-			check_variable = {
-				var = target_research_slots
-				value = max_research_slots
-				compare = less_than
+			# Slots have changed
+
+			# Player: only show the event if no cooldown is running (or it has expired)
+			if = {
+				limit = { is_ai = no }
+
+				if = {
+					limit = {
+						OR = {
+							NOT = { has_variable = dr_player_event_cooldown }
+							check_variable = {
+								var = dr_player_event_cooldown
+								value = 0
+								compare = less_than_or_equals
+							}
+						}
+					}
+					country_event = dynamic_research_slots.1
+					set_variable = { dr_player_event_cooldown = 14 }
+				}
+			}
+
+			# AI: can always fire the event (if used)
+			if = {
+				limit = { is_ai = yes }
+				country_event = dynamic_research_slots.1
 			}
 		}
-		set_variable = { temp = target_research_slots }
-		add_to_variable = { temp = 1 }
-		set_variable = { next_research_slot_at = var:research_for_slot^temp }
-	}
 
-	set_research_slots = var:target_research_slots
-	set_variable = { current_research_slots = amount_research_slots }
+		set_variable = { max_research_slots = research_for_slot^num }
+		subtract_from_variable = { max_research_slots = 1 }
+		set_variable = { next_research_slot_at = 0 }
+		if = {
+			limit = {
+				check_variable = {
+					var = target_research_slots
+					value = max_research_slots
+					compare = less_than
+				}
+			}
+			set_variable = { temp = target_research_slots }
+			add_to_variable = { temp = 1 }
+			set_variable = { next_research_slot_at = var:research_for_slot^temp }
+		}
+
+		set_research_slots = var:target_research_slots
+		set_variable = { current_research_slots = amount_research_slots }
+	}
 }

@@ -1,6 +1,9 @@
 dynamic_research_slots_decisions = {
 
 	dynamic_research_slots_help = {
+		visible = {
+			is_ai = no
+		}
 		available = {
 			is_ai = no
 		}

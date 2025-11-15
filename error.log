@@ -1,315 +1,44 @@
-[17:23:23][no_game_date][dlc.cpp:222]: Invalid supported_version in  file: mod/ugc_3037314794.mod line: 8
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_4
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_4
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_4
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_3
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_3
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_3
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_2
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_2
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_2
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_1
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_1
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_1
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_prototype_plane_0_medium", associated with USA jet_tac_bomber_equipment
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_1_entity", associated with USA ship_hull_light
-[17:23:32][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_prototype_plane_0_medium", associated with USA jet_strat_bomber_equipment
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_4
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_3
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_2
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_1
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_4
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_3
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_2
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_1
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_iw_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_basic_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_improved_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_advanced_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
-[17:23:32][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_modern_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
-[17:23:34][no_game_date][persistent.cpp:68]: Error: "Unexpected token: GetDRWarRuleNote, near line: 3" in file: "common/scripted_localisation/00_dynamic_research_slots_loc.txt" near line: 16
-[17:23:34][no_game_date][persistent.cpp:68]: Error: "Unexpected token: GetDRLawRuleNote, near line: 18" in file: "common/scripted_localisation/00_dynamic_research_slots_loc.txt" near line: 31
-[17:23:34][no_game_date][persistent.cpp:68]: Error: "Unexpected token: GetDRAllianceRuleNote, near line: 33" in file: "common/scripted_localisation/00_dynamic_research_slots_loc.txt" near line: 46
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 66
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 66" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 66
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 67
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 67" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 67
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 68
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 68" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 68
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 69
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 69" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 69
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 73
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 73" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 73
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 74
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 74" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 74
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 75
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 75" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 75
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 76
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 76" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 76
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 283
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 283" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 283
-[17:23:35][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 287
-[17:23:35][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 287" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 287
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 66
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 66" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 66
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 67
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 67" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 67
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 68
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 68" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 68
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'war_support' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 69
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: war_support, near line: 69" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 69
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 73
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 73" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 73
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 74
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 74" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 74
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 75
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 75" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 75
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 76
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 76" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 76
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 283
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 283" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 283
-[17:23:38][no_game_date][trigger.cpp:697]: Invalid trigger 'stability' in common/scripted_effects/00_dr_dynamic_research_modifiers.txt line : 287
-[17:23:38][no_game_date][trigger.cpp:565]: Error: "Unknown trigger-type: stability, near line: 287" in file: "common/scripted_effects/00_dr_dynamic_research_modifiers.txt" near line: 287
-[17:23:38][no_game_date][gameitemdatabase.h:747]: 20 errors.
-[17:23:38][no_game_date][gameitemdatabase.h:759]: =============================
-[17:23:41][1936.01.01.12][effect.cpp:439]: Invalid effect 'IRQ_kamil_shabib' in history/countries/IRQ - Iraq.txt line : 110
-[17:23:41][1936.01.01.12][effect.cpp:352]: Error: "Unknown effect-type: IRQ_kamil_shabib, near line: 110" in file: "history/countries/IRQ - Iraq.txt" near line: 121
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:50][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
-[17:23:56][1936.01.01.12][scopedvariable.cpp:345]: mio:CHL_famae_organization was not found in country scope CHL
-[17:23:56][1936.01.01.12][effect.cpp:802]: history/units/CHL_1936.txt:84: add_equipment_production: industrial_manufacturer is set but no MIO has been found
-[17:23:57][1936.01.01.12][scopedvariable.cpp:345]: mio:RAJ_ammunition_factory_khadki_organization was not found in country scope RAJ
-[17:23:57][1936.01.01.12][effect.cpp:802]: history/units/RAJ_1936.txt:169: add_equipment_production: industrial_manufacturer is set but no MIO has been found
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:23:59][1936.01.01.12][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:01][1936.01.01.17][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:01][1936.01.01.17][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:02][1936.01.01.22][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:02][1936.01.01.22][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:02][1936.01.01.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:02][1936.01.01.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:03][1936.01.02.15][bitmapfont.cpp:2861]: Could not find coloring for character 'P'
-[17:24:11][1936.01.02.19][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.02.19][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.02.23][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.02.23][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.02.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.02.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.03.04][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.03.04][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.03.06][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.03.06][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.03.10][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.03.10][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:11][1936.01.03.14][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:11][1936.01.03.14][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:16][1936.01.03.17][bitmapfont.cpp:2861]: Could not find coloring for character 'P'
-[17:24:17][1936.01.03.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.03.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.03.24][bitmapfont.cpp:2861]: Could not find coloring for character 'P'
-[17:24:17][1936.01.04.05][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.05][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.04.11][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.11][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.04.11][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.11][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.04.19][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.19][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.04.20][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.20][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.04.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.04.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:17][1936.01.05.01][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:17][1936.01.05.01][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:18][1936.01.05.13][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:18][1936.01.05.13][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
-[17:24:18][1936.01.05.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:391: has_idea: early_mobilization is not A valid Idea
-[17:24:18][1936.01.05.24][triggerimplementation.cpp:2844]: common/scripted_effects/00_dr_dynamic_research_modifiers.txt:399: has_idea: total_mobilization is not A valid Idea
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_4
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_4
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_4
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_3
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_3
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_3
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_2
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_2
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_2
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_1
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light_1
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_destroyer_0_medium", associated with USA ship_hull_light_1
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_prototype_plane_0_medium", associated with USA jet_tac_bomber_equipment
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_1_entity", associated with USA ship_hull_light
+[18:50:43][no_game_date][equipment_graphic_database.cpp:59]: Entity referenced in equipment graphic database does not exist: "USA_destroyer_entity", associated with USA ship_hull_light
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_USA_prototype_plane_0_medium", associated with USA jet_strat_bomber_equipment
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_4
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_3
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_2
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_JAP_destroyer_0_medium", associated with JAP ship_hull_light_1
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_4
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_3
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_2
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_AST_destroyer_0_medium", associated with AST ship_hull_light_1
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_iw_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_basic_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_improved_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_advanced_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
+[18:50:43][no_game_date][equipment_graphic_database.cpp:36]: GFX referenced in equipment graphic database does not exist: "GFX_ARG_modern_small_airframe_medium", associated with AUS cv_small_plane_cas_airframe
+[18:50:52][1936.01.01.12][effect.cpp:439]: Invalid effect 'IRQ_kamil_shabib' in history/countries/IRQ - Iraq.txt line : 110
+[18:50:52][1936.01.01.12][effect.cpp:352]: Error: "Unknown effect-type: IRQ_kamil_shabib, near line: 110" in file: "history/countries/IRQ - Iraq.txt" near line: 121
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:07][1936.01.01.12][containerwindow.cpp:1944]: interface/frontendgamesetupview.gui(line 1467): Could not find "background" element #1 in window "difficulty_setting_item".
+[18:51:11][1936.01.01.12][scopedvariable.cpp:345]: mio:CHL_famae_organization was not found in country scope CHL
+[18:51:11][1936.01.01.12][effect.cpp:802]: history/units/CHL_1936.txt:84: add_equipment_production: industrial_manufacturer is set but no MIO has been found
+[18:51:11][1936.01.01.12][scopedvariable.cpp:345]: mio:RAJ_ammunition_factory_khadki_organization was not found in country scope RAJ
+[18:51:11][1936.01.01.12][effect.cpp:802]: history/units/RAJ_1936.txt:169: add_equipment_production: industrial_manufacturer is set but no MIO has been found

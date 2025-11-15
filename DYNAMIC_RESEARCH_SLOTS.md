@@ -35,7 +35,7 @@ The core of the system lives in the following files:
 - `common/game_rules/00_dr_dynamic_research_rules.txt`  
   Defines all **Custom Game Rules** that influence Easy Slots, factory weights, war/alliance modifiers and law-based modifiers.
 
-- `common/scripted_localisation/00_dynamic_research_slots_loc.txt`  
+- `scripted_localisation/00_dynamic_research_slots_loc.txt`  
   Simple scripted localisation that adds helper notes to some game rules depending on their settings.
 
 ---
@@ -244,7 +244,7 @@ The following rules influence `total_rp_modifier` as positive or negative terms:
 
 Compatibility note:
 
-- `dr_apply_law_rp_logic` assumes the vanilla law idea IDs (`free_trade`, `export_focus`, `closed_economy`, `civilian_economy`, `early_mobilization`, `war_economy`, `total_mobilization`, `extensive_conscription`, `service_by_requirement`, `all_adults_serve`, `scraping_the_barrel`).
+- `dr_apply_law_rp_logic` assumes the vanilla law idea IDs (`free_trade`, `export_focus`, `closed_economy`, `civilian_economy`, `low_economic_mobilisation`, `war_economy`, `tot_economic_mobilisation`, `extensive_conscription`, `service_by_requirement`, `all_adults_serve`, `scraping_the_barrel`).
 - If a large overhaul mod renames or replaces these ideas, create a submod that overrides `00_dr_dynamic_research_modifiers.txt` and adjust only the `dr_apply_law_rp_logic` block to the new IDs.
 
 Together with the war penalty, these form a **single additive modifier** `total_rp_modifier`. Finally:

@@ -1,0 +1,150 @@
+# Dynamic Research Slots - Configuration
+#
+# This file contains all *default* configuration for the Dynamic Research Slots system:
+# - Base RP weights per factory type
+# - Base thresholds for research slots
+# - Default Easy Slot settings
+# - Game rule overrides that affect these values
+#
+# Submods can override this file (or the individual scripted effects) to change
+# the behaviour of the system without touching the core logic.
+#
+# Recommended pattern for submods:
+# - Create a new mod.
+# - Copy this file, adjust values as needed.
+# - Make sure your mod is loaded *after* "Dynamic Research Slots Reborn".
+#
+
+dr_apply_research_config = {
+	# Base RP weights per factory type
+	set_variable = { research_power_per_civ = 3 }
+	set_variable = { research_power_per_mil = 2 }
+	set_variable = { research_power_per_nav = 2 }
+
+	# Optional override via factory weights game rule
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_INDUSTRY } }
+		set_variable = { research_power_per_civ = 4 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_MILITARY } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 4 }
+		set_variable = { research_power_per_nav = 2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_NAVAL } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 4 }
+	}
+
+	# Base thresholds for research slots
+	# Index 0 is a dummy entry for easier indexing.
+	add_to_array = { base_research_for_slot = 0 }	# 0 (dummy)
+	add_to_array = { base_research_for_slot = 0 }	# 1
+	add_to_array = { base_research_for_slot = 0 }	# 2
+	add_to_array = { base_research_for_slot = 50 }	# 3
+	add_to_array = { base_research_for_slot = 200 }	# 4
+	add_to_array = { base_research_for_slot = 400 }	# 5
+	add_to_array = { base_research_for_slot = 700 }	# 6
+	add_to_array = { base_research_for_slot = 1000 }	# 7
+	add_to_array = { base_research_for_slot = 1500 }	# 8
+	add_to_array = { base_research_for_slot = 2000 }	# 9
+	add_to_array = { base_research_for_slot = 3000 }	# 10
+
+	add_to_array = { research_for_slot = 0 }	# 0 (dummy)
+	add_to_array = { research_for_slot = 0 }	# 1
+	add_to_array = { research_for_slot = 0 }	# 2
+	add_to_array = { research_for_slot = 50 }	# 3
+	add_to_array = { research_for_slot = 200 }	# 4
+	add_to_array = { research_for_slot = 400 }	# 5
+	add_to_array = { research_for_slot = 700 }	# 6
+	add_to_array = { research_for_slot = 1000 }	# 7
+	add_to_array = { research_for_slot = 1500 }	# 8
+	add_to_array = { research_for_slot = 2000 }	# 9
+	add_to_array = { research_for_slot = 3000 }	# 10
+
+	# Default Easy Slot setup
+	set_variable = { easy_research_slots = 2 }
+	set_variable = { easy_research_slot_coefficient = 0.6 }
+
+	# Additional Easy Slots via game rule
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_1 } }
+		add_to_variable = { easy_research_slots = 1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_2 } }
+		add_to_variable = { easy_research_slots = 2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_3 } }
+		add_to_variable = { easy_research_slots = 3 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_4 } }
+		add_to_variable = { easy_research_slots = 4 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_5 } }
+		add_to_variable = { easy_research_slots = 5 }
+	}
+
+	# Optional: minor nations get an additional Easy Slot (controlled via game rule)
+	if = {
+		limit = {
+			is_major = no
+			has_game_rule = {
+				rule = DR_MINOR_EASY_SLOTS_RULE
+				option = DR_MINOR_EASY_SLOTS_ON
+			}
+		}
+		add_to_variable = { easy_research_slots = 1 }
+	}
+
+	# Cost factor of Easy Slots via game rule (default 60%)
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_10 } }
+		set_variable = { easy_research_slot_coefficient = 0.1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_20 } }
+		set_variable = { easy_research_slot_coefficient = 0.2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_30 } }
+		set_variable = { easy_research_slot_coefficient = 0.3 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_40 } }
+		set_variable = { easy_research_slot_coefficient = 0.4 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_50 } }
+		set_variable = { easy_research_slot_coefficient = 0.5 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_60 } }
+		set_variable = { easy_research_slot_coefficient = 0.6 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_70 } }
+		set_variable = { easy_research_slot_coefficient = 0.7 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_80 } }
+		set_variable = { easy_research_slot_coefficient = 0.8 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_90 } }
+		set_variable = { easy_research_slot_coefficient = 0.9 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_100 } }
+		set_variable = { easy_research_slot_coefficient = 1.0 }
+	}
+}
+

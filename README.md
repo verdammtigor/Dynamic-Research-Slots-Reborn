@@ -1,57 +1,60 @@
-﻿# Dynamic Research Slots Reborn
-Dieses Repository enthaelt die ueberarbeitete und erweiterte Version der Mod **"Dynamic Research Slots Reborn"** fuer *Hearts of Iron IV*.
+# Dynamic Research Slots Reborn
 
-## Was die Mod macht (fuer Spieler)
+This repository contains the updated and extended version of the mod **“Dynamic Research Slots Reborn”** for *Hearts of Iron IV*.
 
-- Die Anzahl deiner Forschungsslots ist nicht mehr statisch, sondern haengt von deiner **Industrie** ab.
-- Zivile Fabriken, Militaerfabriken, Werften und **Experimentalfabriken** liefern sogenannte **Research Power (RP)**.
-- Wenn deine RP bestimmte Schwellen ueberschreitet, erhaelst du zusaetzliche Forschungsslots.
-- Ein Teil der Slots sind **Easy Research Slots**: Sie sind leichter zu halten (benoetigen weniger RP).
+## What the mod does (for players)
 
-Im Spiel findest du:
+- The number of your research slots is no longer static but depends on your **industry**.
+- Civilian factories, military factories, dockyards and **experimental facilities** generate **Research Power (RP)**.
+- When your RP crosses certain thresholds, you gain additional research slots.
+- Some of the slots are **Easy Research Slots**: they are easier to maintain (require less RP).
 
-- Eine **Entscheidung** in der Kategorie `dynamic_research_slots_decisions`, die dir eine Uebersicht deiner aktuellen RP und der naechsten Schwelle anzeigt.
-- Eine **HELP-Entscheidung**, die ein Popup mit einer ausfuehrlichen Erklaerung aller Mechaniken oeffnet.
-- Einen eigenen **Custom Game Rules-Tab** "Dynamic Research", in dem du globale Einstellungen fuer Easy Slots und RP-Faktoren anpassen kannst.
+In game you will find:
 
-## Installation & Nutzung
+- A **decision** in the category `dynamic_research_slots_decisions` that shows an overview of your current RP and the next threshold.
+- A **HELP decision** that opens a popup with a detailed explanation of all mechanics.
+- A dedicated **Custom Game Rules** tab “Dynamic Research”, where you can adjust global settings for Easy Slots and RP factors.
 
-- Die Mod wird wie ueblich ueber den HOI4 Launcher geladen (Steam Workshop / lokale Mod-Datei).
-- Stelle sicher, dass die Mod nach anderen grossen Overhaul-Mods geladen wird, die eigene Research-Slot-Mechaniken haben koennten.
-- Die Mod ueberschreibt keine Vanilla-Tech- oder Fokusbaeume, sondern arbeitet ueber **scripted_effects**, **on_actions**, **decisions** und **game_rules**.
+## Installation & usage
 
-## Unterstuetzte Version / Kompatibilitaet
+- The mod is loaded as usual via the HOI4 launcher (Steam Workshop / local mod file).
+- Make sure the mod is loaded **after** other large overhaul mods that might have their own research‑slot mechanics.
+- The mod does **not** overwrite vanilla tech or focus trees but works via **scripted_effects**, **on_actions**, **decisions** and **game_rules**.
 
-- Zielversion: aktuelle HOI4-Version zum Zeitpunkt der letzten Aktualisierung dieses Repos.
-- Die Mechanik ist bewusst generisch gehalten und sollte mit den meisten Content-Mods kompatibel sein, solange diese nicht ebenfalls massiv an Forschungsslots und den zugrundeliegenden Engine-Mechaniken drehen.
+## Supported version / compatibility
 
-## Konfiguration im Spiel (Custom Game Rules)
+- Target version: the current HOI4 version at the time of the last update of this repository.
+- The mechanics are intentionally generic and should be compatible with most content mods, as long as they do not also heavily modify research slots and the underlying engine mechanics.
 
-Im Custom-Game-Rules-Menue findest du u.a.:
+## In‑game configuration (Custom Game Rules)
 
-- **Easy Research Slots (Base)** - zusaetzliche Easy Slots fuer alle Laender.
-- **Easy Slot RP Cost Factor** - wie viel RP ein Easy Slot im Vergleich zu einem normalen Slot kostet.
-- **Factory Weights** - wie stark Zivil-/Militaerfabriken und Werften gewichtet werden.
-- **War RP / Alliance RP** (falls aktiviert) - globale Modifikatoren fuer Forschung in Kriegszeiten bzw. in Allianzen.
+In the Custom Game Rules menu you will find, among others:
 
-Nicht-Standard-Optionen koennen in einigen Faellen **Achievements deaktivieren** (siehe Game-Rules-Beschreibung im Spiel).
+- **Easy Research Slots (Base)** – additional Easy Slots for all countries.
+- **Easy Slot RP Cost Factor** – how much RP an Easy Slot costs compared to a normal slot.
+- **Factory Weights** – how strongly civilian/military factories and dockyards are weighted.
+- **War RP / Alliance RP** (if enabled) – global modifiers for research during war and in alliances.
 
-## Fuer Modder / technische Dokumentation
+Non‑standard options can in some cases **disable achievements** (see the game‑rule descriptions in‑game).
 
-Wenn du die Mod erweitern, balancieren oder in eine groessere Mod integrieren moechtest, lies bitte die technische Uebersicht:
+## For modders / technical documentation
 
-- `DYNAMIC_RESEARCH_SLOTS.md` - detaillierte Beschreibung der internen Logik (Research Power, Schwellenwerte, Easy Slots, Game Rules, Debug-Tools usw.).
+If you want to extend, rebalance or integrate the mod into a larger project, please read the technical overview:
 
-Wichtige Skriptdateien:
+- `DYNAMIC_RESEARCH_SLOTS.md` – detailed description of the internal logic (Research Power, thresholds, Easy Slots, game rules, debug tools, etc.).
 
-- `common/scripted_effects/00_dynamic_research_slots_scripted_effects.txt` - zentrale RP-Berechnung, Slot-Logik und Modifier.
-- `common/on_actions/00_dynamic_research_slots_on_actions.txt` - Verankerung im Spielablauf (Start / taegliche Updates).
-- `common/decisions/*.txt` und `events/dynamic_research_slot_events.txt` - UI, Hilfe-Popup, Debug-Overlay.
-- `common/game_rules/00_dr_dynamic_research_rules.txt` - Konfiguration per Custom Game Rules.
+Key script files:
 
-## Weiterentwicklung
+- `common/scripted_effects/00_dynamic_research_slots_scripted_effects.txt` – central RP calculation, slot logic and modifiers.
+- `common/on_actions/00_dynamic_research_slots_on_actions.txt` – hooks into the game flow (startup / daily updates).
+- `common/decisions/*.txt` and `events/dynamic_research_slot_events.txt` – UI, help popup, debug overlay.
+- `common/game_rules/00_dr_dynamic_research_rules.txt` – configuration via Custom Game Rules.
 
-- Aenderungen sollten nach Moeglichkeit in den bestehenden Effekten und Variablen stattfinden, um die Debug-Tools und die bestehende Dokumentation nutzbar zu halten.
-- Fuer neue RP-Quellen (Ideen, National Spirits, Technologien usw.) bitte sowohl die tatsaechliche Berechnung als auch die Anzeige-Variablen (z.B. `facility_research_power` oder neue Variablen) erweitern.
+## Further development
 
-Weitere technische Hintergruende findest du in `DYNAMIC_RESEARCH_SLOTS.md` und in der begleitenden PDF "Technische Dokumentation - Modding in Hearts of Iron IV (HOI4)".
+- Whenever possible, changes should be made within the existing effects and variables so that the debug tools and documentation remain usable.
+- For new RP sources (ideas, national spirits, technologies, etc.), please extend both the actual calculation and the display variables (for example `facility_research_power` or new variables).
+
+More technical background can be found in `DYNAMIC_RESEARCH_SLOTS.md` and in the accompanying PDF “Technische Dokumentation – Modding in Hearts of Iron IV (HOI4)”.
+
+

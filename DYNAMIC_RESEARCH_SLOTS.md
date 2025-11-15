@@ -184,6 +184,7 @@ The RP calculation happens mainly in:
 
 - `calculate_modifiers_to_rp`
 - the subsequent block in `recalculate_dynamic_research_slots` that uses the factory counts.
+- the configuration effect `dr_apply_rp_modifier_logic` (file `common/scripted_effects/00_dr_dynamic_research_modifiers.txt`), which encapsulates the war/peace/law/alliance logic and can be overridden by submods.
 
 ### 5.1 Factory contributions
 
@@ -386,6 +387,11 @@ When creating a **submod** that rebalances the system, typical patterns are:
   - Copy `common/scripted_effects/00_dr_dynamic_research_config.txt` into your mod.
   - Adjust factory weights, thresholds and Easy Slot defaults as desired.
   - Make sure your mod is loaded **after** Dynamic Research Slots Reborn so your version of `dr_apply_research_config` is used.
+- Optionally override `dr_apply_rp_modifier_logic` in your own mod (file `00_dr_dynamic_research_modifiers.txt`) to change:
+  - War-time RP penalties and curves.
+  - Peacetime bonuses.
+  - Law-based RP effects.
+  - Alliance-based bonuses and caps.
 - Optionally add your own helper effects that:
   - Modify `total_rp_modifier` based on new global conditions (difficulty, special ideas, etc.).
   - Adjust `civilian_rp_modifier`, `military_rp_modifier` or `naval_rp_modifier` from your own ideas/spirits.

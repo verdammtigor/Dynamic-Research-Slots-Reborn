@@ -81,3 +81,16 @@ country_event = {
     name = dynamic_research_slots.5.a
   }
 }
+
+country_event = {
+  id = dynamic_research_slots.6
+  hidden = no
+  is_triggered_only = yes
+
+  title = dynamic_research_startup_title
+  desc = dynamic_research_startup_desc
+
+  option {
+    name = dynamic_research_startup_option
+  }
+}

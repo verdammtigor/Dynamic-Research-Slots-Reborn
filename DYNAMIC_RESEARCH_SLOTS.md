@@ -169,12 +169,12 @@ Key steps:
 7. Applies **Easy Slot RP Cost Factor** rule:
    - `DR_EASY_COST_*` options set `easy_research_slot_coefficient` from `0.1` (very cheap) up to `1.0` (same as normal slots).
 
-After initialization, a helper loop adjusts `research_for_slot[index]`:
+After initialization, the helper effect `dr_rebuild_research_thresholds` adjusts `research_for_slot[index]` based on the configured base thresholds:
 - For indices `i` that are `<= easy_research_slots`, the threshold is reduced:
   - `research_for_slot[i] = base_research_for_slot[i] * easy_research_slot_coefficient`.
 - For higher slots, the baseline cost is unchanged.
 
-This way the first few slots are easier to acquire but later slots still require full RP.
+The same helper is also called during `recalculate_dynamic_research_slots`, so any changes to `base_research_for_slot` (e.g. from submods) are consistently reflected whenever thresholds are rebuilt. This way the first few slots are easier to acquire but later slots still require full RP.
 
 ---
 
@@ -204,12 +204,12 @@ For each factory type:
 
 ### 5.2 Experimental facilities
 
-If the country has any **Experimental Facilities**, additional flat RP is added:
+If the country has any **Experimental Facilities**, additional flat RP is added **per facility**:
 
-- Nuclear facility: +50 RP.
-- Naval facility: +35 RP.
-- Air facility: +35 RP.
-- Land facility: +35 RP.
+- Each nuclear facility: +50 RP.
+- Each naval facility: +35 RP.
+- Each air facility: +35 RP.
+- Each land facility: +35 RP.
 
 This RP goes both into:
 - `total_research_power`

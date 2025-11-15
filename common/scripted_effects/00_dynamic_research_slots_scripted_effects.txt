@@ -21,23 +21,8 @@ initialize_dynamic_research_slots = {
 		add_to_variable = { easy_research_slots = var:removed_research_slots }
 	}
 
-	for_each_loop = {
-		array = research_for_slot
-
-		if = {
-			limit = {
-				check_variable = {
-					var = easy_research_slots
-					value = i
-					compare = greater_than_or_equals
-				}
-			}
-			set_variable = { temp = var:research_for_slot^i }
-			multiply_variable = { temp = easy_research_slot_coefficient }
-			#set_variable = { temp = 100 }
-			set_variable = { research_for_slot^i = var:temp }
-		}
-	}
+	# Rebuild effective thresholds (including Easy Slots) based on config.
+	dr_rebuild_research_thresholds = yes
 }
 
 calculate_modifiers_to_rp = {
@@ -67,37 +52,8 @@ recalculate_dynamic_research_slots = {
 		add_research_slot = var:temp
 	}
 
-	#this section is to be removed later, temporary workaround for easy research slots bug
-	set_variable = { base_research_for_slot^0 = 0 } 		#this doesnt correspond to a research slot, its for easier indexing
-	set_variable = { base_research_for_slot^1 = 0 }			#1
-	set_variable = { base_research_for_slot^2 = 0 }			#2
-	set_variable = { base_research_for_slot^3 = 50 }		#3
-	set_variable = { base_research_for_slot^4 = 200 }		#4
-	set_variable = { base_research_for_slot^5 = 400 }		#5
-	set_variable = { base_research_for_slot^6 = 700 }		#6
-	set_variable = { base_research_for_slot^7 = 1000 }	#7
-	set_variable = { base_research_for_slot^8 = 1500 }	#8
-	set_variable = { base_research_for_slot^9 = 2000 }	#9
-	set_variable = { base_research_for_slot^10 = 3000 }	#10
-
-	for_each_loop = {
-		array = research_for_slot
-
-		if = {
-			limit = {
-				check_variable = {
-					var = easy_research_slots
-					value = i
-					compare = greater_than_or_equals
-				}
-			}
-			set_variable = { temp = base_research_for_slot^i }
-			#set_variable = { temp = 1000 }
-			multiply_variable = { temp = easy_research_slot_coefficient }
-			#set_variable = { temp = 100 }
-			set_variable = { research_for_slot^i = var:temp }
-		}
-	}
+	# Rebuild effective thresholds after Easy Slot changes.
+	dr_rebuild_research_thresholds = yes
 	set_variable = { total_research_power = 0 }
 	set_variable = { facility_research_power = 0 }
 
@@ -133,23 +89,31 @@ recalculate_dynamic_research_slots = {
 	# Experimental Facilities give additional flat Research Power
 	if = {
 		limit = { nuclear_facility > 0 }
-		add_to_variable = { total_research_power = 50 }
-		add_to_variable = { facility_research_power = 50 }
+		set_variable = { temp_facility_rp = nuclear_facility }
+		multiply_variable = { temp_facility_rp = rp_per_nuclear_facility }
+		add_to_variable = { total_research_power = temp_facility_rp }
+		add_to_variable = { facility_research_power = temp_facility_rp }
 	}
 	if = {
 		limit = { naval_facility > 0 }
-		add_to_variable = { total_research_power = 35 }
-		add_to_variable = { facility_research_power = 35 }
+		set_variable = { temp_facility_rp = naval_facility }
+		multiply_variable = { temp_facility_rp = rp_per_naval_facility }
+		add_to_variable = { total_research_power = temp_facility_rp }
+		add_to_variable = { facility_research_power = temp_facility_rp }
 	}
 	if = {
 		limit = { air_facility > 0 }
-		add_to_variable = { total_research_power = 35 }
-		add_to_variable = { facility_research_power = 35 }
+		set_variable = { temp_facility_rp = air_facility }
+		multiply_variable = { temp_facility_rp = rp_per_air_facility }
+		add_to_variable = { total_research_power = temp_facility_rp }
+		add_to_variable = { facility_research_power = temp_facility_rp }
 	}
 	if = {
 		limit = { land_facility > 0 }
-		add_to_variable = { total_research_power = 35 }
-		add_to_variable = { facility_research_power = 35 }
+		set_variable = { temp_facility_rp = land_facility }
+		multiply_variable = { temp_facility_rp = rp_per_land_facility }
+		add_to_variable = { total_research_power = temp_facility_rp }
+		add_to_variable = { facility_research_power = temp_facility_rp }
 	}
 
 	# Apply global RP modifier (from war and alliance rules)

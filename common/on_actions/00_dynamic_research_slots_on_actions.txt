@@ -8,6 +8,12 @@ on_actions = {
       every_country = {
         initialize_dynamic_research_slots = yes
         calculate_modifiers_to_rp = yes
+
+        # Show a one-time startup explanation for human players.
+        if = {
+          limit = { is_ai = no }
+          country_event = dynamic_research_slots.6
+        }
       }
     }
   }

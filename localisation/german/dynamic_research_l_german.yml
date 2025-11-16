@@ -1,0 +1,150 @@
+﻿l_german:
+  # Startup notification localisation
+  dynamic_research_startup_title:0 "Dynamische Forschungsslots initialisiert"
+  dynamic_research_startup_desc:0 "Dynamic Research Power ist jetzt aktiviert. Unsere Fabriken erzeugen nun täglich Research Power (RP). Erreicht unsere RP bestimmte Schwellenwerte, werden zusätzliche Forschungsslots automatisch freigeschaltet; fällt die RP unter eine Schwelle, können Slots wieder verloren gehen. Wir sollten unsere industrielle Kapazität weiter ausbauen, um unsere Forschungseffizienz zu halten oder zu steigern. Bereits vorhandene Forschungsslots über 2 werden als Easy Research Slots behandelt und haben verringerte RP-Schwellen, anstatt dauerhaft verloren zu gehen."
+  dynamic_research_startup_option:0 "Verstanden"
+
+  # Custom game rules
+  RULE_GROUP_DYNAMIC_RESEARCH:0 "Dynamische Forschung"
+
+  # Easy Research Slots (Base)
+  RULE_DR_EASY_SLOTS:0 "Easy-Forschungsslots (Basis)"
+  RULE_DR_EASY_SLOTS_DESC:0 "Legt fest, mit wie vielen zusätzlichen Easy-Forschungsslots jedes Land gegenüber dem Standard beginnt. Easy-Slots sind günstiger zu halten und benötigen weniger Research Power, um freigeschaltet zu werden."
+
+  RULE_DR_EASY_SLOTS_DEFAULT:0 "Standard"
+  RULE_DR_EASY_SLOTS_DEFAULT_DESC:0 "Verwendet die ursprüngliche Dynamic-Research-Slots-Logik. Nur Forschungsslots, die zu Spielbeginn oder über nationale Schwerpunkte gewährt werden, zählen als Easy-Slots."
+
+  RULE_DR_EASY_SLOTS_PLUS_1:0 "+1 Easy-Slot"
+  RULE_DR_EASY_SLOTS_PLUS_1_DESC:0 "Jedes Land startet mit einem zusätzlichen Easy-Forschungsslot."
+
+  RULE_DR_EASY_SLOTS_PLUS_2:0 "+2 Easy-Slots"
+  RULE_DR_EASY_SLOTS_PLUS_2_DESC:0 "Jedes Land startet mit 2 zusätzlichen Easy-Forschungsslots."
+
+  RULE_DR_EASY_SLOTS_PLUS_3:0 "+3 Easy-Slots"
+  RULE_DR_EASY_SLOTS_PLUS_3_DESC:0 "Jedes Land startet mit 3 zusätzlichen Easy-Forschungsslots."
+
+  RULE_DR_EASY_SLOTS_PLUS_4:0 "+4 Easy-Slots"
+  RULE_DR_EASY_SLOTS_PLUS_4_DESC:0 "Jedes Land startet mit 4 zusätzlichen Easy-Forschungsslots."
+
+  RULE_DR_EASY_SLOTS_PLUS_5:0 "+5 Easy-Slots"
+  RULE_DR_EASY_SLOTS_PLUS_5_DESC:0 "Jedes Land startet mit 5 zusätzlichen Easy-Forschungsslots."
+
+  # Easy Slot RP Cost Factor
+  RULE_DR_EASY_COST:0 "Easy-Slot-RP-Kostenfaktor"
+  RULE_DR_EASY_COST_DESC:0 "Legt fest, wie viel Research Power Easy-Slots im Vergleich zu normalen Slots benötigen. Niedrigere Werte bedeuten günstigere (leichtere) Slots."
+
+  RULE_DR_EASY_COST_10:0 "10% der normalen Kosten"
+  RULE_DR_EASY_COST_10_DESC:0 "Easy-Forschungsslots benötigen nur 10% der normalen Research Power."
+
+  RULE_DR_EASY_COST_20:0 "20% der normalen Kosten"
+  RULE_DR_EASY_COST_20_DESC:0 "Easy-Forschungsslots benötigen 20% der normalen Research Power."
+
+  RULE_DR_EASY_COST_30:0 "30% der normalen Kosten"
+  RULE_DR_EASY_COST_30_DESC:0 "Easy-Forschungsslots benötigen 30% der normalen Research Power."
+
+  RULE_DR_EASY_COST_40:0 "40% der normalen Kosten"
+  RULE_DR_EASY_COST_40_DESC:0 "Easy-Forschungsslots benötigen 40% der normalen Research Power."
+
+  RULE_DR_EASY_COST_50:0 "50% der normalen Kosten"
+  RULE_DR_EASY_COST_50_DESC:0 "Easy-Forschungsslots benötigen 50% der normalen Research Power."
+
+  RULE_DR_EASY_COST_60:0 "60% der normalen Kosten (Standard)"
+  RULE_DR_EASY_COST_60_DESC:0 "Easy-Forschungsslots benötigen 60% der normalen Research Power. Dies entspricht dem Verhalten des ursprünglichen Mods."
+
+  RULE_DR_EASY_COST_70:0 "70% der normalen Kosten"
+  RULE_DR_EASY_COST_70_DESC:0 "Easy-Forschungsslots benötigen 70% der normalen Research Power."
+
+  RULE_DR_EASY_COST_80:0 "80% der normalen Kosten"
+  RULE_DR_EASY_COST_80_DESC:0 "Easy-Forschungsslots benötigen 80% der normalen Research Power."
+
+  RULE_DR_EASY_COST_90:0 "90% der normalen Kosten"
+  RULE_DR_EASY_COST_90_DESC:0 "Easy-Forschungsslots benötigen 90% der normalen Research Power."
+
+  RULE_DR_EASY_COST_100:0 "100% der normalen Kosten"
+  RULE_DR_EASY_COST_100_DESC:0 "Easy-Forschungsslots benötigen die vollen Research-Power-Kosten eines normalen Slots (kein Rabatt)."
+
+  # Minor Nation Easy Slots
+  RULE_DR_MINOR_EASY_SLOTS:0 "Easy-Slots für kleinere Nationen"
+  RULE_DR_MINOR_EASY_SLOTS_DESC:0 "Legt fest, ob nicht-große Länder einen zusätzlichen Easy-Forschungsslot erhalten, damit sie technologisch besser mithalten können."
+
+  RULE_DR_MINOR_EASY_SLOTS_ON:0 "Aktiv (keine Erfolge)"
+  RULE_DR_MINOR_EASY_SLOTS_ON_DESC:0 "Nicht-große Länder erhalten einen zusätzlichen Easy-Forschungsslot. Dadurch wird das Spiel für Minderstaaten etwas einfacher und Erfolge werden deaktiviert."
+
+  RULE_DR_MINOR_EASY_SLOTS_OFF:0 "Deaktiviert"
+  RULE_DR_MINOR_EASY_SLOTS_OFF_DESC:0 "Kleinere Nationen verwenden die gleiche Easy-Slot-Basislinie wie Großmächte."
+
+  # Factory RP Weights
+  RULE_DR_FACTORY_WEIGHTS:0 "RP-Gewichtung der Fabriken"
+  RULE_DR_FACTORY_WEIGHTS_DESC:0 "Legt fest, wie viel Research Power zivile, militärische und Marinefabriken erzeugen."
+
+  RULE_DR_FACTORY_WEIGHTS_BALANCED:0 "Ausgewogen (3 / 2 / 2)"
+  RULE_DR_FACTORY_WEIGHTS_BALANCED_DESC:0 "Zivile Fabriken erzeugen jeweils 3 RP, militärische und Marinefabriken jeweils 2 RP."
+
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY:0 "Industrie-fokussiert (4 / 2 / 1)"
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY_DESC:0 "Zivile Fabriken erzeugen jeweils 4 RP, Militärfabriken 2 RP und Werften 1 RP."
+
+  RULE_DR_FACTORY_WEIGHTS_MILITARY:0 "Militär-fokussiert (2 / 4 / 2)"
+  RULE_DR_FACTORY_WEIGHTS_MILITARY_DESC:0 "Militärfabriken erzeugen jeweils 4 RP, zivile Fabriken und Werften jeweils 2 RP."
+
+  RULE_DR_FACTORY_WEIGHTS_NAVAL:0 "Marine-fokussiert (2 / 2 / 4)"
+  RULE_DR_FACTORY_WEIGHTS_NAVAL_DESC:0 "Werften erzeugen jeweils 4 RP, zivile und militärische Fabriken jeweils 2 RP."
+
+  # War-time Research Power
+  RULE_DR_WAR_RP:0 "Forschungskraft im Krieg"
+  RULE_DR_WAR_RP_DESC:0 "Legt die maximale Research-Power-Strafe im Kriegsfall fest. Die tatsächliche Strafe skaliert mit Kriegsunterstützung, Stabilität, Popularität der Regierungspartei, Kriegsdauer sowie der Frage, ob es sich um Angriffs- oder Verteidigungskriege handelt."
+
+  RULE_DR_WAR_RP_OFF:0 "Keine Änderung"
+  RULE_DR_WAR_RP_OFF_DESC:0 "Kriege beeinflussen die Research Power nicht."
+
+  RULE_DR_WAR_RP_MINUS_5:0 "Max -5% RP im Krieg"
+  RULE_DR_WAR_RP_MINUS_5_DESC:0 "Legt die maximale Strafe im Krieg auf -5% Research Power fest. Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  RULE_DR_WAR_RP_MINUS_10:0 "Max -10% RP im Krieg (Standard)"
+  RULE_DR_WAR_RP_MINUS_10_DESC:0 "Legt die maximale Strafe im Krieg auf -10% Research Power fest (Standard). Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  RULE_DR_WAR_RP_MINUS_15:0 "Max -15% RP im Krieg"
+  RULE_DR_WAR_RP_MINUS_15_DESC:0 "Legt die maximale Strafe im Krieg auf -15% Research Power fest. Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  RULE_DR_WAR_RP_MINUS_20:0 "Max -20% RP im Krieg"
+  RULE_DR_WAR_RP_MINUS_20_DESC:0 "Legt die maximale Strafe im Krieg auf -20% Research Power fest. Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  RULE_DR_WAR_RP_MINUS_25:0 "Max -25% RP im Krieg"
+  RULE_DR_WAR_RP_MINUS_25_DESC:0 "Legt die maximale Strafe im Krieg auf -25% Research Power fest. Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  RULE_DR_WAR_RP_MINUS_30:0 "Max -30% RP im Krieg"
+  RULE_DR_WAR_RP_MINUS_30_DESC:0 "Legt die maximale Strafe im Krieg auf -30% Research Power fest. Die tatsächliche Strafe ist in der Regel kleiner und skaliert mit inneren Faktoren (Kriegsunterstützung, Stabilität, Regierungspartei, Kriegsdauer, Angriffs-/Verteidigungskriege)."
+
+  # Alliance Research Power
+  RULE_DR_ALLIANCE_RP:0 "Forschungskraft durch Bündnisse"
+  RULE_DR_ALLIANCE_RP_DESC:0 "Legt den maximalen Research-Power-Bonus durch Bündnismitglieder fest. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), aber der gesamte Bündnisbonus wird durch diese Regel begrenzt."
+
+  RULE_DR_ALLIANCE_RP_OFF:0 "Kein Bonus"
+  RULE_DR_ALLIANCE_RP_OFF_DESC:0 "Die Zugehörigkeit zu einem Bündnis gewährt keinen zusätzlichen Research-Power-Bonus."
+
+  RULE_DR_ALLIANCE_RP_PLUS_5:0 "Max +5% RP durch Verbündete"
+  RULE_DR_ALLIANCE_RP_PLUS_5_DESC:0 "Bündnisboni können bis zu +5% Research Power durch Fraktionsmitglieder liefern. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +5%."
+
+  RULE_DR_ALLIANCE_RP_PLUS_10:0 "Max +10% RP durch Verbündete (Standard)"
+  RULE_DR_ALLIANCE_RP_PLUS_10_DESC:0 "Bündnisboni können bis zu +10% Research Power durch Fraktionsmitglieder liefern (Standard). Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +10%."
+
+  RULE_DR_ALLIANCE_RP_PLUS_15:0 "Max +15% RP durch Verbündete"
+  RULE_DR_ALLIANCE_RP_PLUS_15_DESC:0 "Bündnisboni können bis zu +15% Research Power durch Fraktionsmitglieder liefern. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +15%."
+
+  RULE_DR_ALLIANCE_RP_PLUS_20:0 "Max +20% RP durch Verbündete"
+  RULE_DR_ALLIANCE_RP_PLUS_20_DESC:0 "Bündnisboni können bis zu +20% Research Power durch Fraktionsmitglieder liefern. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +20%."
+
+  RULE_DR_ALLIANCE_RP_PLUS_25:0 "Max +25% RP durch Verbündete"
+  RULE_DR_ALLIANCE_RP_PLUS_25_DESC:0 "Bündnisboni können bis zu +25% Research Power durch Fraktionsmitglieder liefern. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +25%."
+
+  RULE_DR_ALLIANCE_RP_PLUS_30:0 "Max +30% RP durch Verbündete"
+  RULE_DR_ALLIANCE_RP_PLUS_30_DESC:0 "Bündnisboni können bis zu +30% Research Power durch Fraktionsmitglieder liefern. Jeder Verbündete kann bis zu 5% seiner eigenen RP beitragen (skaliert mit den Beziehungen), begrenzt auf insgesamt +30%."
+
+  # Law-based Research Power Modifiers
+  RULE_DR_LAW_RP:0 "Gesetzesbasierte Forschungskraft-Modifikatoren"
+  RULE_DR_LAW_RP_DESC:0 "Legt fest, ob Handels-, Wirtschafts- und Wehrpflichtgesetze die Research Power (RP) modifizieren. Wenn deaktiviert, beeinflussen Gesetzesänderungen die RP nicht mehr – es zählen nur Fabriken, Einrichtungen sowie Kriegs- und Bündnisregeln."
+
+  RULE_DR_LAW_RP_ON:0 "Aktiv (Standard)"
+  RULE_DR_LAW_RP_ON_DESC:0 "Behält alle bestehenden Research-Power-Modifikatoren aus Handelsgesetzen (z. B. Freihandel), Wirtschaftsgesetzen (z. B. Zivile Wirtschaft, Kriegswirtschaft) und Wehrpflichtgesetzen (z. B. Umfassende Wehrpflicht) bei."
+
+  RULE_DR_LAW_RP_OFF:0 "Deaktiviert"
+  RULE_DR_LAW_RP_OFF_DESC:0 "Ignoriert alle Research-Power-Modifikatoren aus Handels-, Wirtschafts- und Wehrpflichtgesetzen. Dadurch hängen RP nur von Fabriken, Einrichtungen und anderen Dynamic-Research-Regeln ab."

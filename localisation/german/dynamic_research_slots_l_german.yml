@@ -1,0 +1,35 @@
+﻿l_german:
+  dynamic_research_slots_decisions:0 "Dynamische Forschungsslots"
+  dynamic_research_slots_decisions_desc:0 "§PUnsere Fabriken erzeugen Research Power (RP).§! Wenn unsere RP bestimmte Schwellenwerte erreicht, schalten wir zusätzliche Forschungsslots frei – fällt sie zu stark ab, können wir Slots wieder verlieren.\n\n§YGesamte RP: [?total_research_power]§!\n§YNächster Slot bei: [?next_research_slot_at]§!\n\n§GRP aus zivilen Fabriken:§! [?civilian_research_power]\n§RRP aus Militärfabriken:§! [?military_research_power]\n§CRP aus Werften:§! [?naval_research_power]\n§ORP aus Experimentellen Standorten:§! [?facility_research_power]\n\n§YRP-Modifikatoren: [?total_rp_modifier|%+]§!\n§YKriegs-/Friedenseffekt: [?war_rp_penalty_effective|%+]§!\n§YAllianzbonus: [?alliance_bonus_pct|%+]§!\n\nNutze die Entscheidung \"HILFE\" für ausführlichere Informationen."
+
+  dynamic_research_slots_help:0 "HILFE"
+  dynamic_research_slots.help.title:0 "Dynamische Forschungsslots – Hilfe"
+  dynamic_research_slots.help.desc:0 "§GRP pro ziviler Fabrik:§! [?research_power_per_civ]\n§RRP pro Militärfabrik:§! [?research_power_per_mil]\n§CRP pro Werft:§! [?research_power_per_nav]\n§ORP aus Experimentellen Standorten:§! [?facility_research_power] (Physik: +50 RP, Marine/Luft/Land: jeweils +35 RP)\n\n§PEasy-Forschungsslots:§! [?easy_research_slots]\n§WEasy-Forschungsslots sind Slots, mit denen wir starten (oder die wir über Schwerpunkte usw. erhalten), deren RP-Anforderung auf [?easy_research_slot_coefficient|%.0] reduziert ist.§!\n\n§PRP-Schwellen für Forschungsslots:§!\n§W1: [?research_for_slot^1] RP\n2: [?research_for_slot^2] RP\n3: [?research_for_slot^3] RP\n4: [?research_for_slot^4] RP\n5: [?research_for_slot^5] RP\n6: [?research_for_slot^6] RP\n7: [?research_for_slot^7] RP\n8: [?research_for_slot^8] RP\n9: [?research_for_slot^9] RP\n10: [?research_for_slot^10] RP§!\n\n§PMehr Informationen:§!\n§WKlicke unten auf \"Mehr Details\", um zu sehen, wie Krieg, Gesetze und Bündnisse deine Research Power beeinflussen.§!"
+
+  dynamic_research_slots.help.a:0 "OK"
+  dynamic_research_slots.help.b:0 "Mehr Details"
+
+  dynamic_research_slots.1.title:0 "Forschungsslots geändert"
+  dynamic_research_slots.1.desc:0 "Wegen unserer aktuellen Research Power hat sich die Anzahl der verfügbaren Forschungsslots geändert.\n\nBisherige Forschungsslots: [?current_research_slots|R]\nNeue Forschungsslots: [?target_research_slots|G]"
+  dynamic_research_slots.1.a:0 "OK"
+
+  dynamic_research_slots.2.title:0 "Easy-Forschungsslots geändert"
+  dynamic_research_slots.2.desc:0 "Anstatt direkte Forschungsslots zu vergeben, erhöhen nationale Schwerpunkte jetzt die Anzahl der \"Easy-Forschungsslots\" – also der Slots, deren RP-Anforderung auf [?easy_research_slot_coefficient|%.0] reduziert wurde.\n\nNeue Easy-Forschungsslots: [?temp|B]\nGesamtzahl Easy-Forschungsslots: [?easy_research_slots|B]"
+  dynamic_research_slots.2.a:0 "Perfekt ausbalanciert, so wie es sein sollte."
+
+  dynamic_research_slots.4.title:0 "Dynamic-Research-Debug"
+  dynamic_research_slots.4.desc:0 "Aktueller RP-Überblick und interne Variablen:\n\nGesamte RP: [?total_research_power]\nRP aus Zivilindustrie: [?civilian_research_power]\nRP aus Militärindustrie: [?military_research_power]\nRP aus Marineindustrie: [?naval_research_power]\nRP aus Einrichtungen: [?facility_research_power]\n\nAktuelle Slots: [?current_research_slots]\nZiel-Slots: [?target_research_slots]\nEasy-Slots: [?easy_research_slots]\nEasy-Slot-Koeffizient: [?easy_research_slot_coefficient]\n\nSpieler-Event-Cooldown: [?dr_player_event_cooldown]\nKI-Aktualisierungsintervall (Tage): [?dr_days_until_update]"
+  dynamic_research_slots.4.a:0 "Schließen"
+
+  dynamic_research_slots.5.title:0 "Dynamische Forschungsslots – Erweiterte Details"
+  dynamic_research_slots.5.desc:0 "§PKriegs- und Friedenseffekte:§!\n§WDie Spielregel „Forschungskraft im Krieg“ legt die maximale RP-Strafe im Krieg fest (zum Beispiel -10%, -20%, -30%). Die tatsächliche Strafe hängt von Kriegsunterstützung, Stabilität, Popularität der Regierungspartei, Kriegsdauer sowie davon ab, ob der Krieg offensiv oder defensiv geführt wird. Verteidigungskriege bauen sich langsamer auf und verursachen eine geringere Strafe.§!\n[GetDRWarRuleNote]\n\n§PGesetze & Forschungskraft:§!\n§WHandelsgesetze:§!\n- Freihandel: §G+2%§! RP\n- Exportfokus: §G+1%§! RP\n- Geschlossene Wirtschaft: §R-1%§! RP\n\n§WWirtschaftsgesetze:§!\n- Zivile Wirtschaft: §G+2%§! RP\n- Frühzeitige Mobilisierung: §G+1%§! RP\n- Kriegswirtschaft: §R-1%§! RP\n- Totale Mobilmachung: §R-2%§! RP\n\n§WWehrpflichtgesetze:§!\n- Umfassende Wehrpflicht: §R-2%§! RP\n- Dienst nach Vorschrift: §R-4%§! RP\n- Alle Erwachsenen dienen: §R-7%§! RP\n- Letzte Reserve: §R-10%§! RP\n[GetDRLawRuleNote]\n\n§PBündnisse:§!\n§WJeder Verbündete kann bis zu §G+5%§! seiner eigenen Research Power beitragen, skaliert mit den Beziehungen. Der gesamte Bündnisbonus wird durch die Spielregel „Forschungskraft durch Bündnisse“ begrenzt.§!\n[GetDRAllianceRuleNote]"
+  dynamic_research_slots.5.a:0 "Alles klar"
+
+  EFFECT_ADD_RESEARCH_SLOT:0 "Fügt den Easy-Forschungsslots $COUNT|G$ hinzu. (Easy-Forschungsslots sind Forschungsslots mit reduzierter RP-Anforderung, damit Länder bestimmte Slot-Anzahlen leichter erreichen können.)"
+  EFFECT_REMOVE_RESEARCH_SLOT:0 "Entfernt $COUNT|R$ aus den Easy-Forschungsslots. (Easy-Forschungsslots sind Forschungsslots mit reduzierter RP-Anforderung, damit Länder bestimmte Slot-Anzahlen leichter erreichen können.)"
+
+  DR_EMPTY_LOC:0 ""
+
+  DR_WAR_RULE_NOTE_OFF:0 "§YHinweis:§! Die Spielregel „Forschungskraft im Krieg“ ist auf §Y\"Keine Änderung\"§! gesetzt. Dadurch zeigt die Zeile für Kriegs-/Friedenseffekte in der Übersicht immer §Y0%§! an und hat keinen Einfluss auf die Research Power."
+  DR_LAW_RULE_NOTE_OFF:0 "§YHinweis:§! Die Spielregel „Gesetzesbasierte Forschungskraft-Modifikatoren“ ist auf §Y\"Deaktiviert\"§! gesetzt. Die oben aufgeführten Gesetzesmodifikatoren werden ignoriert; nur Fabriken und Experimentellen Standorten tragen zu RP bei."
+  DR_ALLIANCE_RULE_NOTE_OFF:0 "§YHinweis:§! Die Spielregel „Forschungskraft durch Bündnisse“ ist auf §Y\"Kein Bonus\"§! gesetzt. Die Zeile für den Allianzbonus in der Übersicht zeigt daher immer §Y0%§! an und hat keinen Einfluss auf die Research Power."

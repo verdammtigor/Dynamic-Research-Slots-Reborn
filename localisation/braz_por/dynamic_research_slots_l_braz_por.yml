@@ -1,4 +1,4 @@
-﻿l_english:
+﻿l_braz_por:
   dynamic_research_slots_decisions:0 "Dynamic Research Slots"
   dynamic_research_slots_decisions_desc:0 "§POur factories generate Research Power (RP).§! When RP reaches certain thresholds, we unlock more research slots - but we can also lose slots if our RP drops too low.\n\n§YTotal RP: [?total_research_power]§!\n§YNext slot at: [?next_research_slot_at]§!\n\n§GRP from civilian factories:§! [?civilian_research_power]\n§RRP from military factories:§! [?military_research_power]\n§CRP from naval dockyards:§! [?naval_research_power]\n§ORP from experimental facilities:§! [?facility_research_power]\n\n§YRP modifiers: [?total_rp_modifier|%+]§!\n§YWar / peace effect: [?war_rp_penalty_effective|%+]§!\n§YAlliance bonus: [?alliance_bonus_pct|%+]§!\n\nUse the \"HELP\" decision for more detailed information."
   

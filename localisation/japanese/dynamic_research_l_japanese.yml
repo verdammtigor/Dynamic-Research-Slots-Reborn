@@ -1,4 +1,4 @@
-﻿l_english:
+﻿l_japanese
   # Startup notification localisation
   dynamic_research_startup_title:0 "Dynamic Research Slots Initialized"
   dynamic_research_startup_desc:0 "Dynamic Research Power is now active. Your factories will generate Research Power (RP) each day. When RP reaches certain thresholds, additional research slots will unlock automatically; if your RP falls below a threshold, slots may be lost. Keep growing your industrial capacity to maintain or increase your research efficiency. Existing research slots above 2 are treated as Easy Research Slots with reduced RP thresholds instead of being permanently lost."

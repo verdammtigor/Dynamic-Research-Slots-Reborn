@@ -42,7 +42,7 @@ Non-standard options can in some cases **disable achievements** (see the game-ru
 If you want to extend, rebalance or integrate the mod into a larger project, please read the technical overview:
 
 - `DYNAMIC_RESEARCH_SLOTS.md` – detailed description of the internal logic (Research Power, thresholds, Easy Slots, game rules, debug tools, etc.).
-- `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md` – step‑by‑step guide for creating your own balancing or integration submods.
+- `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md` – step‑by‑step guide for creating your own balancing or integration submods, including the new hook-based workflow.
 
 Key script files:
 
@@ -56,6 +56,9 @@ Key script files:
 ## Further development
 
 - Whenever possible, changes should be made within the existing effects and variables so that the debug tools and documentation remain usable.
+- Use the dedicated **submod hooks** instead of copying core scripts:
+  - `dr_apply_research_config_submods` (configuration tweaks)
+  - `dr_collect_facility_counts_submods`, `dr_apply_facility_rp_submods`, `dr_total_rp_modifier_submods` (runtime RP extensions)
 - For new RP sources (ideas, national spirits, technologies, etc.), please extend both the actual calculation and the display variables (for example `facility_research_power` or new variables).
 - When integrating large overhaul mods that change laws or research mechanics, prefer adapting `00_dr_dynamic_research_config.txt` and `00_dr_dynamic_research_modifiers.txt` in a separate submod.
 

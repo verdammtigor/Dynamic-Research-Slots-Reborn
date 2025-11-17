@@ -59,5 +59,5 @@ Key script files:
 - For new RP sources (ideas, national spirits, technologies, etc.), please extend both the actual calculation and the display variables (for example `facility_research_power` or new variables).
 - When integrating large overhaul mods that change laws or research mechanics, prefer adapting `00_dr_dynamic_research_config.txt` and `00_dr_dynamic_research_modifiers.txt` in a separate submod.
 
-More technical background can be found in `DYNAMIC_RESEARCH_SLOTS.md`, `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md` and in the accompanying PDF “Technische Dokumentation – Modding in Hearts of Iron IV (HOI4)”.
+More technical background can be found in `DYNAMIC_RESEARCH_SLOTS.md` and `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md`.
 

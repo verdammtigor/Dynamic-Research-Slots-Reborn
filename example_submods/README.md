@@ -65,7 +65,7 @@ A submod that adds factory RP bonuses:
 
 ## Creating Your Own Submod
 
-1. Start with the **template**: `docs/submod_template.txt`
+1. Start with the **quick-start template**: `docs/submod_quick_start_template.md` (all hooks with code blocks)
 2. Look at these **example submods** for complete working code
 3. Read the **documentation**: `docs/submodding_guide.md`
 4. Test with **debug tools**: Use `event dynamic_research_slots.4` in console

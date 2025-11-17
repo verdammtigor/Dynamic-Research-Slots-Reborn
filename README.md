@@ -43,11 +43,11 @@ If you want to extend, rebalance or integrate the mod into a larger project, ple
 
 - `docs/technical_reference.md` – detailed description of the internal logic (Research Power, thresholds, Easy Slots, game rules, debug tools, etc.).
 - `docs/submodding_guide.md` – step‑by‑step guide for creating your own balancing or integration submods, including the hook-based workflow.
-- `docs/submod_template.txt` – ready-to-use template for creating submods. Copy it to your submod and adjust as needed.
+- `docs/submod_quick_start_template.md` – quick-start template with all 8 hooks (copy code blocks, uncomment, adjust). For complete working examples, see `example_submods/`.
 - `docs/performance.md` – comprehensive performance analysis of the mod, including base mod performance, compatibility features, and best practices for submod developers.
 - `docs/compatibility.md` – detailed compatibility documentation and available features.
 
-**Quick start for submods**: Copy `docs/submod_template.txt` to your submod at `common/scripted_effects/ZZ_your_submod_name.txt`, uncomment the hooks you need, and adjust values.
+**Quick start for submods**: Copy the code blocks from `docs/submod_quick_start_template.md` to your submod at `common/scripted_effects/ZZ_your_submod_name.txt`, uncomment the hooks you need, and adjust values. For complete working examples, see `example_submods/`.
 
 **Example submods**: Complete, working example submods are available on **GitHub** in the `example_submods/` directory. These demonstrate common use cases (balance tweaks, custom facilities, factory modifiers) and serve as reference implementations for developers. The examples are not published on Steam Workshop - they are developer resources available only on GitHub.
 

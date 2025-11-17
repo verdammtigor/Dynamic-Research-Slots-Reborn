@@ -34,7 +34,7 @@ The mod provides **8 hooks** that submods can override to customize behavior:
 
 - **`dr_total_rp_modifier_submods`** - Runs after the global `total_rp_modifier` is applied. Enables final adjustments to `total_research_power` (e.g., faction-wide buffs, ideology bonuses).
 
-**Usage**: All hooks are empty in the base mod. Submods can override them by creating a file with the same name (see `docs/submod_template.txt`).
+**Usage**: All hooks are empty in the base mod. Submods can override them by creating a file with the same name (see `docs/submod_quick_start_template.md` or `example_submods/` for examples).
 
 ### 1.2. Opt-Out Mechanisms
 
@@ -95,14 +95,14 @@ Submods can override the entire config file `00_dr_dynamic_research_config.txt` 
 
 ### 2.1. Quick Start
 
-1. Copy `docs/submod_template.txt` to your submod at `common/scripted_effects/ZZ_your_submod_name.txt`
+1. Copy the code blocks from `docs/submod_quick_start_template.md` to your submod at `common/scripted_effects/ZZ_your_submod_name.txt`
 2. Uncomment the hooks you want to use by removing the `#` symbols
 3. Adjust the values to fit your needs
 4. Make sure your submod loads AFTER "Dynamic Research Slots Reborn" in the launcher
 
 ### 2.2. Available Resources
 
-- **`docs/submod_template.txt`** - Ready-to-use template with all hooks and examples
+- **`docs/submod_quick_start_template.md`** - Quick-start template with all 8 hooks (copy code blocks, uncomment, adjust)
 - **`docs/submodding_guide.md`** - Complete submodding guide with detailed examples
 - **`docs/performance.md`** - Comprehensive performance analysis including base mod performance, compatibility features, and best practices for submod developers
 
@@ -213,7 +213,8 @@ The mod provides a solid foundation for compatibility and submodding:
 
 For more information, see:
 - `docs/submodding_guide.md` - Complete submodding guide
-- `docs/submod_template.txt` - Template for new submods
+- `docs/submod_quick_start_template.md` - Quick-start template for new submods
+- `example_submods/` - Complete working example submods
 - `docs/performance.md` - Comprehensive performance analysis
 - `docs/technical_reference.md` - Technical documentation of internal logic
 

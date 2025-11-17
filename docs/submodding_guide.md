@@ -51,7 +51,7 @@ As a submodder you usually only touch `00_dr_dynamic_research_config.txt` – an
 
 To avoid editing the core logic, the mod exposes empty scripted effects that you can override in your submod. All hooks are empty in the base mod, so overriding them in your submod is conflict-free.
 
-**Quick start**: For a ready-to-use template with all hooks and examples, see `submod_template.txt`. For complete, working example submods, see the `example_submods/` directory on GitHub (developer resources, not published on Steam Workshop).
+**Quick start**: For a quick-start template with all 8 hooks, see `submod_quick_start_template.md` (copy code blocks, uncomment, adjust). For complete, working example submods, see the `example_submods/` directory on GitHub (developer resources, not published on Steam Workshop).
 
 **Hook execution flow**:
 
@@ -223,7 +223,7 @@ dr_total_rp_modifier_submods = {
 }
 ```
 
-**Template file**: For a complete template with all hooks and detailed examples, see `submod_template.txt`. Copy it to your submod as a starting point.
+**Template file**: For a quick-start template with all hooks, see `submod_quick_start_template.md`. Copy the code blocks to your submod as a starting point. For complete working examples, see `example_submods/`.
 
 See "Example 4 – Adding RP from custom buildings (hooks)" below for a full walkthrough that ties multiple hooks together.
 
@@ -235,9 +235,9 @@ See "Example 4 – Adding RP from custom buildings (hooks)" below for a full wal
 
 **Option A: Use the template (easiest)**
 
-1. Copy `submod_template.txt` from the main mod's `docs/` folder to your submod:
+1. Copy the code blocks from `submod_quick_start_template.md` to your submod:
    - `common/scripted_effects/ZZ_your_submod_name.txt`
-2. Edit the template file and uncomment/modify the hooks you need.
+2. Uncomment/modify the hooks you need.
 3. In the launcher, set a **dependency** or **load order** so your submod loads **after** "Dynamic Research Slots Reborn".
 4. Test your submod with the main mod.
 

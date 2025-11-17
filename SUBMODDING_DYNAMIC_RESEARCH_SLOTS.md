@@ -45,6 +45,68 @@ As a submodder you usually only touch `00_dr_dynamic_research_config.txt` – an
 
 ---
 
+### 2.1. Extension hooks (new)
+
+To avoid editing the core logic, the mod exposes empty scripted effects that you can override in your submod:
+
+- `dr_apply_research_config_submods` (same file, config)  
+  Runs after all vanilla defaults and game rules have been applied. Perfect for “add +1 RP per civ factory” or “replace the facility RP values” without copying the entire config block.
+
+- `dr_collect_facility_counts_submods` (`00_dynamic_research_slots_scripted_effects.txt`)  
+  Executes right after the game counted nuclear/naval/air/land facilities per state. Use this to track custom buildings or scripted states (e.g., add a new `quantum_lab_count` variable).
+
+- `dr_apply_facility_rp_submods`  
+  Called after vanilla RP has been added for the four facilities. Convert the counters from the previous hook (or anything else) into RP and add it to `total_research_power`/`facility_research_power`.
+
+- `dr_total_rp_modifier_submods`  
+  Fires after `total_rp_modifier` was applied globally. Use it for extra multiplicative/flat tweaks (e.g., ideology-based bonuses) without touching `dr_apply_rp_modifier_logic`.
+
+All hooks are empty in the base mod, so overriding them in your submod is conflict-free. If multiple submods override the same hook, standard HOI4 load-order rules apply—the later one wins, so coordinate via dependencies when distributing public submods.
+
+| Hook | Called from | When it runs | What to do there |
+|------|-------------|--------------|------------------|
+| `dr_apply_research_config_submods` | `initialize_dynamic_research_slots` / `dr_apply_research_config` | Once per init (and whenever you manually re-run the config) | Final adjustments to RP weights, thresholds, Easy Slots or facility RP. |
+| `dr_collect_facility_counts_submods` | `recalculate_dynamic_research_slots` | Every recalculation tick (daily for players, staggered for AI) | Count custom buildings, scripted states or other sources that should translate into facility-style RP. |
+| `dr_apply_facility_rp_submods` | `recalculate_dynamic_research_slots` | Immediately after vanilla facilities converted to RP | Turn your custom counters into flat RP, or add extra RP buckets. |
+| `dr_total_rp_modifier_submods` | `recalculate_dynamic_research_slots` | After the vanilla `total_rp_modifier` multiplier is applied | Final tweaks to `total_research_power`, e.g., faction-wide buffs, ideology bonuses, or penalties. |
+
+Quick snippets:
+
+```txt
+dr_apply_research_config_submods = {
+  add_to_variable = { rp_per_nuclear_facility = 10 }
+}
+```
+
+```txt
+dr_collect_facility_counts_submods = {
+  set_variable = { quantum_lab_count = 0 }
+  every_owned_state = {
+    if = { limit = { quantum_lab > 0 } ROOT = { add_to_variable = { quantum_lab_count = 1 } } }
+  }
+}
+```
+
+```txt
+dr_apply_facility_rp_submods = {
+  if = { limit = { check_variable = { var = quantum_lab_count value = 0 compare = greater_than } } 
+    set_variable = { temp_facility_rp = quantum_lab_count }
+    multiply_variable = { temp_facility_rp = 40 }
+    add_to_variable = { total_research_power = temp_facility_rp }
+  }
+}
+```
+
+```txt
+dr_total_rp_modifier_submods = {
+  if = { limit = { has_idea = idea_quantum_focus } add_to_variable = { total_rp_modifier = 0.05 } }
+}
+```
+
+See “Example 4 – Adding RP from custom buildings (hooks)” below for a full walkthrough that ties multiple hooks together.
+
+---
+
 ## 3. Core idea: how to override the mod cleanly
 
 ### 3.1. Own submod – minimal setup
@@ -133,13 +195,25 @@ You want for example:
 In `dr_apply_research_config` at the top, adjust the base values:
 
 ```txt
-dr_apply_research_config = {
+dr_reset_research_config_defaults = {
   # Base RP weights per factory type
   set_variable = { research_power_per_civ = 4 } # instead of 3
   set_variable = { research_power_per_mil = 1 } # instead of 2
   set_variable = { research_power_per_nav = 2 } # unchanged
 
-  # Optional: your own game rule overrides ...
+  # ... rest unchanged
+}
+```
+
+Alternatively, keep the vanilla defaults and only add custom tweaks in your own `dr_apply_research_config_submods`:
+
+```txt
+dr_apply_research_config_submods = {
+  # Simple +10 RP for each experimental facility
+  add_to_variable = { rp_per_nuclear_facility = 10 }
+  add_to_variable = { rp_per_naval_facility = 10 }
+  add_to_variable = { rp_per_air_facility = 10 }
+  add_to_variable = { rp_per_land_facility = 10 }
 }
 ```
 
@@ -172,7 +246,65 @@ The core logic (`recalculate_dynamic_research_slots`) multiplies these values wi
 
 ---
 
-## 7. Example 4 – Adjusting war / law / alliance effects
+## 7. Example 4 – Adding RP from custom buildings (hooks)
+
+### Goal
+
+You added a new state building `quantum_lab` and want each lab to grant +40 flat RP.
+
+### Steps
+
+1. Track the building count via `dr_collect_facility_counts_submods`.
+2. Convert it into RP via `dr_apply_facility_rp_submods`.
+
+```txt
+# Count custom buildings
+dr_collect_facility_counts_submods = {
+  set_variable = { quantum_lab_count = 0 }
+
+  every_owned_state = {
+    if = {
+      limit = { quantum_lab > 0 }
+      ROOT = { add_to_variable = { quantum_lab_count = 1 } }
+    }
+  }
+}
+
+# Add research power
+dr_apply_facility_rp_submods = {
+  if = {
+    limit = {
+      check_variable = {
+        var = quantum_lab_count
+        value = 0
+        compare = greater_than
+      }
+    }
+    set_variable = { temp_facility_rp = quantum_lab_count }
+    multiply_variable = { temp_facility_rp = 40 }
+    add_to_variable = { facility_research_power = temp_facility_rp }
+    add_to_variable = { total_research_power = temp_facility_rp }
+  }
+}
+```
+
+Need a global modifier instead? Hook into `dr_total_rp_modifier_submods`:
+
+```txt
+dr_total_rp_modifier_submods = {
+  # +5% RP if the country has your custom idea
+  if = {
+    limit = { has_idea = idea_quantum_focus }
+    add_to_variable = { total_rp_modifier = 0.05 }
+    add_to_variable = { temp = 0.05 }
+    add_to_variable = { total_research_power = temp }
+  }
+}
+```
+
+---
+
+## 8. Example 5 – Adjusting war / law / alliance effects
 
 The RP modifier logic is intentionally split into three effects:
 
@@ -246,7 +378,7 @@ You can, for example, change only the caps by modifying the `alliance_bonus_cap`
 
 ---
 
-## 8. Debugging and testing submods
+## 9. Debugging and testing submods
 
 For balance submods it’s important to see what happens internally. The mod ships with its own debug tools:
 
@@ -269,7 +401,7 @@ Typical test flow for a submod:
 
 ---
 
-## 9. Best practices and common pitfalls
+## 10. Best practices and common pitfalls
 
 - **Override as few files as possible.**  
   In most cases `00_dr_dynamic_research_config.txt` is enough. Only touch `00_dr_dynamic_research_modifiers.txt` if you really need different war/alliance logic.

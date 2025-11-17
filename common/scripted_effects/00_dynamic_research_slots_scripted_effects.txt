@@ -124,6 +124,9 @@ recalculate_dynamic_research_slots = {
 			}
 		}
 
+		# Allow submods to adjust facility counters (custom buildings, scripted logic, etc.).
+		dr_collect_facility_counts_submods = yes
+
 		# Apply per-facility RP based on accumulated counts.
 		if = {
 			limit = {
@@ -178,10 +181,16 @@ recalculate_dynamic_research_slots = {
 			add_to_variable = { facility_research_power = temp_facility_rp }
 		}
 
+		# Allow submods to convert facility counts (vanilla or custom) into RP.
+		dr_apply_facility_rp_submods = yes
+
 		# Apply global RP modifier (from war and alliance rules)
 		set_variable = { temp = 1 }
 		add_to_variable = { temp = total_rp_modifier }
 		multiply_variable = { total_research_power = temp }
+
+		# Final hook for submods to adjust total RP after modifiers have been applied.
+		dr_total_rp_modifier_submods = yes
 
 		for_each_loop = {
 			array = research_for_slot
@@ -256,3 +265,12 @@ recalculate_dynamic_research_slots = {
 		set_variable = { current_research_slots = amount_research_slots }
 	}
 }
+
+# Submod hook: adjust facility counters after vanilla counting pass
+dr_collect_facility_counts_submods = { }
+
+# Submod hook: convert facility counters into RP, or add additional RP sources
+dr_apply_facility_rp_submods = { }
+
+# Submod hook: tweak total RP after the vanilla global modifier is applied
+dr_total_rp_modifier_submods = { }

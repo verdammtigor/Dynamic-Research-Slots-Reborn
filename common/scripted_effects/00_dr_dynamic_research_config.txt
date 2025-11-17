@@ -16,6 +16,44 @@
 #
 
 dr_apply_research_config = {
+	# Step 1: apply all default values (base weights, arrays, Easy Slots).
+	dr_reset_research_config_defaults = yes
+
+	# Step 2: apply vanilla overrides that depend on game rules.
+	dr_apply_research_factory_weight_rules = yes
+	dr_apply_easy_slot_rule_overrides = yes
+	dr_apply_easy_slot_cost_rules = yes
+
+	# Step 3: allow submods to tweak/extend the config.
+	dr_apply_research_config_submods = yes
+}
+
+# Rebuild effective RP thresholds for research slots based on
+# base_research_for_slot[], easy_research_slots and easy_research_slot_coefficient.
+dr_rebuild_research_thresholds = {
+	for_each_loop = {
+		array = base_research_for_slot
+
+		# Start from the base threshold for this slot.
+		set_variable = { research_for_slot^i = base_research_for_slot^i }
+
+		# For Easy Slots, apply the reduced cost factor.
+		if = {
+			limit = {
+				check_variable = {
+					var = easy_research_slots
+					value = i
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { temp = base_research_for_slot^i }
+			multiply_variable = { temp = easy_research_slot_coefficient }
+			set_variable = { research_for_slot^i = var:temp }
+		}
+	}
+}
+
+dr_reset_research_config_defaults = {
 	# Base RP weights per factory type
 	set_variable = { research_power_per_civ = 3 }
 	set_variable = { research_power_per_mil = 2 }
@@ -26,26 +64,6 @@ dr_apply_research_config = {
 	set_variable = { rp_per_naval_facility = 35 }
 	set_variable = { rp_per_air_facility = 35 }
 	set_variable = { rp_per_land_facility = 35 }
-
-	# Optional override via factory weights game rule
-	if = {
-		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_INDUSTRY } }
-		set_variable = { research_power_per_civ = 4 }
-		set_variable = { research_power_per_mil = 2 }
-		set_variable = { research_power_per_nav = 1 }
-	}
-	if = {
-		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_MILITARY } }
-		set_variable = { research_power_per_civ = 2 }
-		set_variable = { research_power_per_mil = 4 }
-		set_variable = { research_power_per_nav = 2 }
-	}
-	if = {
-		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_NAVAL } }
-		set_variable = { research_power_per_civ = 2 }
-		set_variable = { research_power_per_mil = 2 }
-		set_variable = { research_power_per_nav = 4 }
-	}
 
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.
@@ -76,7 +94,31 @@ dr_apply_research_config = {
 	# Default Easy Slot setup
 	set_variable = { easy_research_slots = 2 }
 	set_variable = { easy_research_slot_coefficient = 0.6 }
+}
 
+dr_apply_research_factory_weight_rules = {
+	# Optional override via factory weights game rule
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_INDUSTRY } }
+		set_variable = { research_power_per_civ = 4 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 1 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_MILITARY } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 4 }
+		set_variable = { research_power_per_nav = 2 }
+	}
+	if = {
+		limit = { has_game_rule = { rule = DR_FACTORY_WEIGHTS_RULE option = DR_FACTORY_WEIGHTS_NAVAL } }
+		set_variable = { research_power_per_civ = 2 }
+		set_variable = { research_power_per_mil = 2 }
+		set_variable = { research_power_per_nav = 4 }
+	}
+}
+
+dr_apply_easy_slot_rule_overrides = {
 	# Additional Easy Slots via game rule
 	if = {
 		limit = { has_game_rule = { rule = DR_EASY_SLOTS_RULE option = DR_EASY_SLOTS_PLUS_1 } }
@@ -110,7 +152,9 @@ dr_apply_research_config = {
 		}
 		add_to_variable = { easy_research_slots = 1 }
 	}
+}
 
+dr_apply_easy_slot_cost_rules = {
 	# Cost factor of Easy Slots via game rule (default 60%)
 	if = {
 		limit = { has_game_rule = { rule = DR_EASY_COST_RULE option = DR_EASY_COST_10 } }
@@ -154,27 +198,7 @@ dr_apply_research_config = {
 	}
 }
 
-# Rebuild effective RP thresholds for research slots based on
-# base_research_for_slot[], easy_research_slots and easy_research_slot_coefficient.
-dr_rebuild_research_thresholds = {
-	for_each_loop = {
-		array = base_research_for_slot
-
-		# Start from the base threshold for this slot.
-		set_variable = { research_for_slot^i = base_research_for_slot^i }
-
-		# For Easy Slots, apply the reduced cost factor.
-		if = {
-			limit = {
-				check_variable = {
-					var = easy_research_slots
-					value = i
-					compare = greater_than_or_equals
-				}
-			}
-			set_variable = { temp = base_research_for_slot^i }
-			multiply_variable = { temp = easy_research_slot_coefficient }
-			set_variable = { research_for_slot^i = var:temp }
-		}
-	}
+dr_apply_research_config_submods = {
+	# Intentionally left blank. Submods can override this scripted effect to
+	# adjust or extend the configuration after the base logic has executed.
 }

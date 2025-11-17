@@ -73,6 +73,30 @@ AI countries:
 
 ---
 
+### 2.1 Extension hooks (quick reference)
+
+To keep submods compatible, the system exposes several empty scripted effects that run at fixed points. You can override any of them in your own mod; they incur zero cost if left untouched.
+
+| Hook | Called from | Timing | Purpose |
+|------|-------------|--------|---------|
+| `dr_apply_research_config_submods` | `dr_apply_research_config` | Once per init/re-init | Final chance to tweak config variables after vanilla defaults + game rules. |
+| `dr_collect_facility_counts_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Adjust the facility counters after the vanilla `every_owned_state` loop (e.g., count custom buildings). |
+| `dr_apply_facility_rp_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Convert the (vanilla or custom) counters into extra RP, or add new flat RP sources. |
+| `dr_total_rp_modifier_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Tweak the final `total_research_power` after all global modifiers have been applied. |
+
+Hook call order during recalculation:
+
+1. Built-in facility counters are zeroed and filled via `every_owned_state`.
+2. `dr_collect_facility_counts_submods`.
+3. Vanilla RP from facilities is added.
+4. `dr_apply_facility_rp_submods`.
+5. Built-in global modifier is applied (`total_rp_modifier`).
+6. `dr_total_rp_modifier_submods`.
+
+This makes it clear where to plug custom logic without touching the core script.
+
+---
+
 ## 3. Core variables & arrays
 
 Most of the internal state is stored in country variables. The most important ones:
@@ -344,6 +368,14 @@ This effect is called from `initialize_dynamic_research_slots` and is responsibl
 - Filling the arrays `base_research_for_slot` and `research_for_slot` with the default thresholds.
 - Setting and adjusting `easy_research_slots` and `easy_research_slot_coefficient` (including game-rule overrides).
 
+Internally the effect is now split into smaller helpers:
+- `dr_reset_research_config_defaults`
+- `dr_apply_research_factory_weight_rules`
+- `dr_apply_easy_slot_rule_overrides`
+- `dr_apply_easy_slot_cost_rules`
+
+After the vanilla logic has finished, the empty hook `dr_apply_research_config_submods` is called. Submods can override this scripted effect to tweak or replace any variables without copying the full config block.
+
 By overriding this single effect in a submod, you can change all core configuration while leaving the main logic untouched.
 
 ### 9.1 Adding new RP sources
@@ -353,6 +385,10 @@ By overriding this single effect in a submod, you can change all core configurat
   - Add a new **flat RP component** and include it in `total_research_power`.
   - Adjust `civilian_rp_modifier`, `military_rp_modifier` or `naval_rp_modifier` from ideas, spirits or laws.
   - Add another component to `total_rp_modifier` (e.g. a global modifier from difficulty or a special focus).
+- Use the dedicated extension hooks:
+  - `dr_collect_facility_counts_submods` (after vanilla facility counting)
+  - `dr_apply_facility_rp_submods` (after vanilla facility RP application)
+  - `dr_total_rp_modifier_submods` (after the global RP modifier was applied)
 
 Always make sure that:
 - `total_research_power` remains the *single source of truth* for slot thresholds.

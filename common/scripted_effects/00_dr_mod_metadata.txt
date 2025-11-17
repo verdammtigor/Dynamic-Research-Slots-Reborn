@@ -1,0 +1,18 @@
+# Dynamic Research Slots Reborn - Mod Metadata
+#
+# This file contains mod metadata such as version information.
+# This is called at the very start of initialization to set up compatibility signals.
+#
+# NOTE: When updating the mod version, update the version here to match descriptor.mod
+# Version format: Major.Minor.Bugfix/Small changes (e.g., 1.1 for version 1.1.0)
+# Personal Note: I will forget this file so often - sorry  ^-^
+
+dr_set_mod_metadata = {
+	# Set mod version for compatibility checks by other mods
+	# Update this value when releasing a new version to match descriptor.mod
+	set_variable = { dr_mod_version = 1.2 }
+	
+	# Signal that Dynamic Research Slots is active
+	set_global_flag = dynamic_research_slots_active
+}
+

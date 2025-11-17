@@ -4,9 +4,15 @@
 initialize_dynamic_research_slots = {
 	set_country_flag = dynamic_research_slots_initialized
 
+	# Set mod metadata (version, compatibility signals) - must be first
+	dr_set_mod_metadata = yes
+
 	set_variable = { current_research_slots = amount_research_slots	}
 	set_variable = { target_research_slots = 2 }
 	set_variable = { removed_research_slots = 0 }
+
+	# Allow other mods to signal compatibility or perform checks before initialization
+	dr_check_compatibility_submods = yes
 
 	# Apply all default configuration values (factory weights, thresholds, Easy Slots, game rules)
 	dr_apply_research_config = yes
@@ -23,6 +29,9 @@ initialize_dynamic_research_slots = {
 
 	# Rebuild effective thresholds (including Easy Slots) based on config.
 	dr_rebuild_research_thresholds = yes
+
+	# Allow submods to initialize their own variables or perform setup tasks.
+	dr_initialize_submods = yes
 }
 
 calculate_modifiers_to_rp = {
@@ -31,13 +40,19 @@ calculate_modifiers_to_rp = {
 	set_variable = { naval_rp_modifier = 0 }
 	set_variable = { total_rp_modifier = 0 }
 
-	dr_apply_rp_modifier_logic = yes
+	# Apply modifier logic only if not disabled via flag.
+	if = {
+		limit = { NOT = { has_country_flag = dr_disable_rp_modifiers } }
+		dr_apply_rp_modifier_logic = yes
+	}
 }
 
 
 recalculate_dynamic_research_slots = {
-	# Compatibility hook: allow other mods to disable dynamic slot changes per country.
+	# Compatibility hooks: allow other mods to disable dynamic slot changes per country.
 	# If the flag is set, we keep our bookkeeping in sync but skip all slot logic.
+	# - dr_disable_dynamic_research_slots: completely disables the system (keeps variables in sync)
+	# - dr_disable_research_slot_changes: disables slot changes but still calculates RP (for display/debug)
 	if = {
 		limit = { has_country_flag = dr_disable_dynamic_research_slots }
 		set_variable = { current_research_slots = amount_research_slots }
@@ -64,8 +79,15 @@ recalculate_dynamic_research_slots = {
 
 		# Rebuild effective thresholds after Easy Slot changes.
 		dr_rebuild_research_thresholds = yes
+
+		# Allow submods to adjust thresholds after Easy Slot logic is applied.
+		dr_adjust_research_thresholds_submods = yes
+
 		set_variable = { total_research_power = 0 }
 		set_variable = { facility_research_power = 0 }
+
+		# Allow submods to set factory modifiers before RP calculation.
+		dr_apply_factory_modifiers_submods = yes
 
 		set_variable = { base_civilian_research_power = 0 }
 		add_to_variable = { base_civilian_research_power = research_power_per_civ }
@@ -127,67 +149,77 @@ recalculate_dynamic_research_slots = {
 		# Allow submods to adjust facility counters (custom buildings, scripted logic, etc.).
 		dr_collect_facility_counts_submods = yes
 
-		# Apply per-facility RP based on accumulated counts.
+		# Apply per-facility RP based on accumulated counts (can be disabled via flag).
 		if = {
-			limit = {
-				check_variable = {
-					var = nuclear_facility_count
-					value = 0
-					compare = greater_than
+			limit = { NOT = { has_country_flag = dr_disable_facility_rp } }
+			
+			if = {
+				limit = {
+					check_variable = {
+						var = nuclear_facility_count
+						value = 0
+						compare = greater_than
+					}
 				}
+				set_variable = { temp_facility_rp = nuclear_facility_count }
+				multiply_variable = { temp_facility_rp = rp_per_nuclear_facility }
+				add_to_variable = { total_research_power = temp_facility_rp }
+				add_to_variable = { facility_research_power = temp_facility_rp }
 			}
-			set_variable = { temp_facility_rp = nuclear_facility_count }
-			multiply_variable = { temp_facility_rp = rp_per_nuclear_facility }
-			add_to_variable = { total_research_power = temp_facility_rp }
-			add_to_variable = { facility_research_power = temp_facility_rp }
-		}
-		if = {
-			limit = {
-				check_variable = {
-					var = naval_facility_count
-					value = 0
-					compare = greater_than
+			if = {
+				limit = {
+					check_variable = {
+						var = naval_facility_count
+						value = 0
+						compare = greater_than
+					}
 				}
+				set_variable = { temp_facility_rp = naval_facility_count }
+				multiply_variable = { temp_facility_rp = rp_per_naval_facility }
+				add_to_variable = { total_research_power = temp_facility_rp }
+				add_to_variable = { facility_research_power = temp_facility_rp }
 			}
-			set_variable = { temp_facility_rp = naval_facility_count }
-			multiply_variable = { temp_facility_rp = rp_per_naval_facility }
-			add_to_variable = { total_research_power = temp_facility_rp }
-			add_to_variable = { facility_research_power = temp_facility_rp }
-		}
-		if = {
-			limit = {
-				check_variable = {
-					var = air_facility_count
-					value = 0
-					compare = greater_than
+			if = {
+				limit = {
+					check_variable = {
+						var = air_facility_count
+						value = 0
+						compare = greater_than
+					}
 				}
+				set_variable = { temp_facility_rp = air_facility_count }
+				multiply_variable = { temp_facility_rp = rp_per_air_facility }
+				add_to_variable = { total_research_power = temp_facility_rp }
+				add_to_variable = { facility_research_power = temp_facility_rp }
 			}
-			set_variable = { temp_facility_rp = air_facility_count }
-			multiply_variable = { temp_facility_rp = rp_per_air_facility }
-			add_to_variable = { total_research_power = temp_facility_rp }
-			add_to_variable = { facility_research_power = temp_facility_rp }
-		}
-		if = {
-			limit = {
-				check_variable = {
-					var = land_facility_count
-					value = 0
-					compare = greater_than
+			if = {
+				limit = {
+					check_variable = {
+						var = land_facility_count
+						value = 0
+						compare = greater_than
+					}
 				}
+				set_variable = { temp_facility_rp = land_facility_count }
+				multiply_variable = { temp_facility_rp = rp_per_land_facility }
+				add_to_variable = { total_research_power = temp_facility_rp }
+				add_to_variable = { facility_research_power = temp_facility_rp }
 			}
-			set_variable = { temp_facility_rp = land_facility_count }
-			multiply_variable = { temp_facility_rp = rp_per_land_facility }
-			add_to_variable = { total_research_power = temp_facility_rp }
-			add_to_variable = { facility_research_power = temp_facility_rp }
 		}
 
-		# Allow submods to convert facility counts (vanilla or custom) into RP.
-		dr_apply_facility_rp_submods = yes
+		# Allow submods to convert facility counts (vanilla or custom) into RP (only if facility RP is enabled).
+		if = {
+			limit = { NOT = { has_country_flag = dr_disable_facility_rp } }
+			dr_apply_facility_rp_submods = yes
+		}
 
-		# Apply global RP modifier (from war and alliance rules)
-		set_variable = { temp = 1 }
-		add_to_variable = { temp = total_rp_modifier }
-		multiply_variable = { total_research_power = temp }
+		# Apply global RP modifier (from war and alliance rules) - can be disabled via flag.
+		if = {
+			limit = { NOT = { has_country_flag = dr_disable_rp_modifiers } }
+			set_variable = { temp = 1 }
+			add_to_variable = { temp = total_rp_modifier }
+			multiply_variable = { total_research_power = temp }
+		}
 
 		# Final hook for submods to adjust total RP after modifiers have been applied.
 		dr_total_rp_modifier_submods = yes
@@ -261,16 +293,34 @@ recalculate_dynamic_research_slots = {
 			set_variable = { next_research_slot_at = var:research_for_slot^temp }
 		}
 
-		set_research_slots = var:target_research_slots
+		# Allow disabling slot changes while keeping RP calculation active (for display/debug purposes).
+		if = {
+			limit = { NOT = { has_country_flag = dr_disable_research_slot_changes } }
+			set_research_slots = var:target_research_slots
+		}
 		set_variable = { current_research_slots = amount_research_slots }
 	}
 }
+
+# Submod hook: compatibility check - allows other mods to signal compatibility or perform checks before config is applied
+dr_check_compatibility_submods = { }
+
+# Submod hook: initialize custom variables or perform setup tasks during initialization (after config is applied)
+dr_initialize_submods = { }
 
 # Submod hook: adjust facility counters after vanilla counting pass
 dr_collect_facility_counts_submods = { }
 
 # Submod hook: convert facility counters into RP, or add additional RP sources
 dr_apply_facility_rp_submods = { }
+
+# Submod hook: set factory modifiers (civilian_rp_modifier, military_rp_modifier, naval_rp_modifier)
+# before the factory RP calculation runs. These modifiers are applied multiplicatively.
+dr_apply_factory_modifiers_submods = { }
+
+# Submod hook: adjust research slot thresholds after Easy Slot logic has been applied.
+# This allows tweaking thresholds based on custom logic without overriding the entire threshold array.
+dr_adjust_research_thresholds_submods = { }
 
 # Submod hook: tweak total RP after the vanilla global modifier is applied
 dr_total_rp_modifier_submods = { }

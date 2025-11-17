@@ -41,13 +41,19 @@ Non-standard options can in some cases **disable achievements** (see the game-ru
 
 If you want to extend, rebalance or integrate the mod into a larger project, please read the technical overview:
 
-- `DYNAMIC_RESEARCH_SLOTS.md` – detailed description of the internal logic (Research Power, thresholds, Easy Slots, game rules, debug tools, etc.).
-- `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md` – step‑by‑step guide for creating your own balancing or integration submods, including the new hook-based workflow.
+- `docs/technical_reference.md` – detailed description of the internal logic (Research Power, thresholds, Easy Slots, game rules, debug tools, etc.).
+- `docs/submodding_guide.md` – step‑by‑step guide for creating your own balancing or integration submods, including the hook-based workflow.
+- `docs/submod_template.txt` – ready-to-use template for creating submods. Copy it to your submod and adjust as needed.
+- `docs/performance.md` – comprehensive performance analysis of the mod, including base mod performance, compatibility features, and best practices for submod developers.
+- `docs/compatibility.md` – detailed compatibility documentation and available features.
+
+**Quick start for submods**: Copy `docs/submod_template.txt` to your submod at `common/scripted_effects/ZZ_your_submod_name.txt`, uncomment the hooks you need, and adjust values.
 
 Key script files:
 
+- `common/scripted_effects/00_dr_mod_metadata.txt` – mod metadata (version, compatibility signals).
 - `common/scripted_effects/00_dynamic_research_slots_scripted_effects.txt` – central RP calculation, slot logic and modifiers.
-- `common/scripted_effects/00_dr_dynamic_research_config.txt` – main configuration and balancing entry point.
+- `common/scripted_effects/00_dr_dynamic_research_config.txt` – main configuration and balancing entry point. Can be overridden by submods for extensive changes.
 - `common/scripted_effects/00_dr_dynamic_research_modifiers.txt` – war/peace/law/alliance modifier logic.
 - `common/on_actions/00_dynamic_research_slots_on_actions.txt` – hooks into the game flow (startup / daily updates).
 - `common/decisions/*.txt` and `events/dynamic_research_slot_events.txt` – UI, help popup, debug overlay.
@@ -57,10 +63,11 @@ Key script files:
 
 - Whenever possible, changes should be made within the existing effects and variables so that the debug tools and documentation remain usable.
 - Use the dedicated **submod hooks** instead of copying core scripts:
-  - `dr_apply_research_config_submods` (configuration tweaks)
-  - `dr_collect_facility_counts_submods`, `dr_apply_facility_rp_submods`, `dr_total_rp_modifier_submods` (runtime RP extensions)
+  - **Initialization hooks**: `dr_check_compatibility_submods` (before config), `dr_initialize_submods` (after config), `dr_apply_research_config_submods` (config tweaks)
+  - **Runtime hooks**: `dr_apply_factory_modifiers_submods`, `dr_adjust_research_thresholds_submods`, `dr_collect_facility_counts_submods`, `dr_apply_facility_rp_submods`, `dr_total_rp_modifier_submods`
+- For small config tweaks, use `dr_apply_research_config_submods`. For extensive changes, override the entire `00_dr_dynamic_research_config.txt` file.
 - For new RP sources (ideas, national spirits, technologies, etc.), please extend both the actual calculation and the display variables (for example `facility_research_power` or new variables).
 - When integrating large overhaul mods that change laws or research mechanics, prefer adapting `00_dr_dynamic_research_config.txt` and `00_dr_dynamic_research_modifiers.txt` in a separate submod.
 
-More technical background can be found in `DYNAMIC_RESEARCH_SLOTS.md` and `SUBMODDING_DYNAMIC_RESEARCH_SLOTS.md`.
+More technical background can be found in `docs/technical_reference.md` and `docs/submodding_guide.md`.
 

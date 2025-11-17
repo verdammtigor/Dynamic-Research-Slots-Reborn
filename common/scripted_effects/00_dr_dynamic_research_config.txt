@@ -25,6 +25,7 @@ dr_apply_research_config = {
 	dr_apply_easy_slot_cost_rules = yes
 
 	# Step 3: allow submods to tweak/extend the config.
+	# Note: Submods can also override this entire file for more extensive changes.
 	dr_apply_research_config_submods = yes
 }
 
@@ -201,4 +202,9 @@ dr_apply_easy_slot_cost_rules = {
 dr_apply_research_config_submods = {
 	# Intentionally left blank. Submods can override this scripted effect to
 	# adjust or extend the configuration after the base logic has executed.
+	#
+	# For extensive changes, submods can also override this entire file:
+	# - Copy 00_dr_dynamic_research_config.txt to your submod
+	# - Adjust values as needed
+	# - Make sure your submod loads after "Dynamic Research Slots Reborn"
 }

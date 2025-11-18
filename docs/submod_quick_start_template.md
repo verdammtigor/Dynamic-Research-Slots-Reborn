@@ -1,6 +1,6 @@
 # Submod Quick-Start Template
 
-This is a **QUICK-START template** containing all 8 hooks with inline examples. Use this for rapid prototyping. For complete working examples, see [`example_submods/`](../example_submods/).
+This is a **QUICK-START template** containing all 9 hooks with inline examples (8 hooks since version 1.0, 1 additional hook since version 1.4). Use this for rapid prototyping. For complete working examples, see [`example_submods/`](../example_submods/).
 
 ## Instructions
 
@@ -13,11 +13,12 @@ This is a **QUICK-START template** containing all 8 hooks with inline examples. 
 
 ## Important Notes
 
-- All 8 hooks are available and optional - only use the ones you need
+- All 9 hooks are available and optional - only use the ones you need
 - All hooks are empty in the base mod, so overriding them is conflict-free
 - Comment extensively on what your submod does
 - Test thoroughly with the main mod
 - If you share this template publicly, mention it in the description
+- Some hooks require specific flags to be set (see individual hook documentation)
 
 ## For Detailed Documentation
 
@@ -267,6 +268,38 @@ dr_total_rp_modifier_submods = {
 	# }
 }
 ```
+
+---
+
+## Hook 9: Override Alliance Opinion Factor (since version 1.4)
+
+**Executes during alliance RP calculation for each alliance member**  
+Use this to override the opinion factor calculation (0.0 to 1.0) used for alliance bonuses.
+
+**IMPORTANT**: You must set the `dr_opinion_factor_custom_set` flag when providing a custom value, otherwise the default calculation will run.
+
+```txt
+dr_get_opinion_factor_for_ally_submods = {
+	# Example 1: Simplified opinion calculation (2 tiers)
+	# if = {
+	#   limit = { has_opinion = { target = ROOT value > 50 } }
+	#   set_variable = { alliance_rel_factor = 1.0 }
+	# }
+	# else = {
+	#   set_variable = { alliance_rel_factor = 0.5 }
+	# }
+	# set_country_flag = dr_opinion_factor_custom_set  # REQUIRED: Signal custom value
+	
+	# Example 2: Explicitly set 0.0 for low opinion
+	# if = {
+	#   limit = { has_opinion = { target = ROOT value < 20 } }
+	#   set_variable = { alliance_rel_factor = 0.0 }
+	#   set_country_flag = dr_opinion_factor_custom_set  # REQUIRED even for 0.0
+	# }
+}
+```
+
+**Note**: This hook runs within the `every_other_country` loop during alliance RP calculation. The `ROOT` scope refers to the country calculating the alliance bonus, while the current scope is the alliance member being evaluated.
 
 ---
 

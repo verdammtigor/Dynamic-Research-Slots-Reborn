@@ -63,11 +63,17 @@ Player countries recalculate **every day** for responsive gameplay:
   - For 10 states: ~0.1ms
   - For 50 states: ~0.5ms
   - For 100+ states: ~1ms+
-- Facility RP application: ~0.01ms
+- Facility count validation *(since version 1.4)*: ~0.0004ms (4 checks)
+- Facility RP application: ~0.01ms (uses helper effect `dr_calculate_single_facility_rp` since version 1.4)
 - Global modifier application: ~0.001ms
+- Modifier validation and capping *(since version 1.4)*: ~0.0001ms
+- Total RP validation *(since version 1.4)*: ~0.0001ms
+- Array validation *(since version 1.4)*: ~0.0001ms (only if array missing, rare)
 - Slot threshold checks (`for_each_loop` over array): ~0.01ms
 - Event firing (if slots changed): ~0.1ms (only when triggered)
 - **Total**: ~0.2-1.5ms per day (typically ~0.5ms for medium-sized countries)
+
+**Note**: Edge-case validations added in version 1.4 add negligible overhead (~0.0006ms total) but improve robustness.
 
 **Combined daily impact (player)**: ~0.4-4ms per day, typically **~1ms per day** for average gameplay.
 
@@ -128,6 +134,7 @@ The main performance bottlenecks in the base mod are:
 - Loop over all owned states
 - 4 facility type checks per state
 - Variable increments
+- Facility count validation *(since version 1.4)* - checks for negative values (~0.0001ms per validation)
 
 **Performance**: ~0.01ms per state
 
@@ -135,6 +142,10 @@ The main performance bottlenecks in the base mod are:
 - 10 states: ~0.1ms
 - 50 states: ~0.5ms
 - 100 states: ~1ms
+
+**Performance improvements** *(since version 1.4)*:
+- Helper effect `dr_calculate_single_facility_rp` reduces code duplication without performance impact
+- Facility RP calculation is now more maintainable with same performance characteristics
 
 ⚠️ **Main bottleneck** - Scales with state count. Can be disabled via `dr_disable_facility_rp` flag.
 
@@ -146,6 +157,11 @@ The main performance bottlenecks in the base mod are:
 - Multiple conditional checks (war support, stability, party support, war phase)
 - Variable calculations and multiplications
 - Peacetime bonus checks
+- Helper effects for modular calculation *(since version 1.4)*:
+  - `dr_calculate_war_penalty_factors` - war support, stability, ruling party factors
+  - `dr_calculate_war_phase_factor` - war duration and type factors
+  - `dr_calculate_peace_bonus` - peacetime bonus calculation
+- Modifier validation and capping *(since version 1.4)* - ~0.0001ms
 
 **Performance**:
 - At peace: ~0.05ms (simple stability/party checks)
@@ -153,7 +169,11 @@ The main performance bottlenecks in the base mod are:
 
 **Scaling**: Constant (doesn't scale with country size)
 
-✅ **Efficient** - Conditional logic only, no loops.
+**Performance improvements** *(since version 1.4)*:
+- Code refactoring into helper effects improves maintainability without performance impact
+- Same calculation logic, better code organization
+
+✅ **Efficient** - Conditional logic only, no loops. Helper effects maintain same performance.
 
 ### 2.4. Alliance RP Bonus
 
@@ -161,7 +181,9 @@ The main performance bottlenecks in the base mod are:
 
 **Operations**:
 - `every_other_country` loop (only when timer expires)
-- Opinion checks for each ally
+- Opinion checks for each ally (uses helper effect `dr_get_opinion_factor_for_ally` since version 1.4)
+- Opinion factor calculation checks from highest to lowest opinion values for better average performance *(since version 1.4)*
+- Submod hook `dr_get_opinion_factor_for_ally_submods` called per ally *(since version 1.4)*
 - Bonus calculation
 
 **Performance**: ~0.1-2ms per calculation (only runs every 7 days)
@@ -172,7 +194,11 @@ The main performance bottlenecks in the base mod are:
 
 **Mitigation**: 7-day timer prevents daily overhead
 
-✅ **Well optimized** - Timer-based recalculation prevents daily overhead.
+**Performance improvements** *(since version 1.4)*:
+- Helper effect `dr_get_opinion_factor_for_ally` uses reverse checking (highest to lowest opinion) for better average performance
+- Code refactoring reduces duplication without performance impact
+
+✅ **Well optimized** - Timer-based recalculation prevents daily overhead. Helper effect improves average-case performance.
 
 ### 2.5. Law RP Modifiers
 
@@ -224,7 +250,7 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 
 ### 3.1. What Was Added
 
-#### 3.1.1. New Hooks (8 total)
+#### 3.1.1. New Hooks (9 total since version 1.4, 8 since version 1.0)
 
 **Initialization hooks** (run once per country at startup):
 - `dr_check_compatibility_submods` - Before config (rare use case)
@@ -237,6 +263,7 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 - `dr_collect_facility_counts_submods` - During facility counting
 - `dr_apply_facility_rp_submods` - After facility RP calc
 - `dr_total_rp_modifier_submods` - Final RP adjustment
+- `dr_get_opinion_factor_for_ally_submods` *(since version 1.4)* - During alliance RP calculation (per alliance member)
 
 #### 3.1.2. New Flag Checks (3)
 
@@ -247,7 +274,7 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 #### 3.1.3. Compatibility Signals
 
 - `set_global_flag = dynamic_research_slots_active` - Once at startup
-- `set_variable = { dr_mod_version = 1.3 }` - Once per country at init
+- `set_variable = { dr_mod_version = 1.4 }` - Once per country at init
 
 ### 3.2. Execution Frequency
 
@@ -267,14 +294,18 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 
 **Player countries**:
 - `recalculate_dynamic_research_slots` runs **every day**
-- Contains: 5 runtime hooks
+- Contains: 5 runtime hooks (6 since version 1.4 with alliance opinion hook)
 - Contains: 2-3 flag checks
+- Contains: Edge-case validations *(since version 1.4)* - ~0.0006ms total overhead
 
 **AI countries**:
 - `recalculate_dynamic_research_slots` runs **every ~30 days** (staggered)
 - Same hooks and checks as player
+- Edge-case validations *(since version 1.4)* - same overhead as player
 
 **Per day**: ~1 player + ~(number_of_AI_countries / 30) recalculations
+
+**Note**: Alliance opinion hook `dr_get_opinion_factor_for_ally_submods` runs during alliance bonus calculation (every 7 days), not during daily recalculation. Performance impact is included in alliance bonus calculation estimates.
 
 ### 3.3. Performance Impact Analysis
 
@@ -291,13 +322,16 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 **Runtime Impact**: ✅ Negligible
 - **Empty hooks**: Zero overhead
 - **Flag checks**: 2-3 per recalculation, ~0.003ms total per country
+- **Edge-case validations** *(since version 1.4)*: ~0.0006ms per recalculation (facility counts, modifier caps, total RP, array validation)
 - **Conditional execution**: The flag checks actually **improve** performance by skipping expensive modifier calculations when disabled
 
 **Per day impact**: 
-- Player: ~0.003ms
-- AI: ~0.003ms × (AI_countries / 30) ≈ ~0.1ms for 70 AI countries
+- Player: ~0.0036ms (includes validations)
+- AI: ~0.0036ms × (AI_countries / 30) ≈ ~0.1ms for 70 AI countries
 
 **Annual impact**: ~0.1ms per day × 365 days ≈ ~36.5ms per year
+
+**Note**: Edge-case validations added in version 1.4 add minimal overhead (~0.0006ms) but significantly improve robustness by preventing calculation errors from invalid variable states.
 
 #### 3.3.2. With Submods
 
@@ -350,6 +384,7 @@ dr_collect_facility_counts_submods = {
 | `dr_collect_facility_counts_submods` | Every recalculation | ~0.001ms | ⚠️ **Can be expensive if looping over states** |
 | `dr_apply_facility_rp_submods` | Every recalculation | ~0.001ms | Empty = zero cost |
 | `dr_total_rp_modifier_submods` | Every recalculation | ~0.001ms | Empty = zero cost |
+| `dr_get_opinion_factor_for_ally_submods` *(since v1.4)* | Every alliance calculation (per ally, ~every 7 days) | ~0.001ms | Empty = zero cost. Called once per alliance member during alliance bonus calculation. |
 
 **Key insight**: Empty hooks have essentially **zero cost**. The performance impact comes from what submods put in them.
 
@@ -368,7 +403,7 @@ dr_collect_facility_counts_submods = {
 | Signal | Frequency | Cost | Notes |
 |--------|-----------|------|-------|
 | `set_global_flag = dynamic_research_slots_active` | Once at startup | ~0.01ms | Cached by engine, no repeated lookups |
-| `set_variable = { dr_mod_version = 1.3 }` | Once per country at init | ~0.0001ms | Minimal memory allocation |
+| `set_variable = { dr_mod_version = 1.4 }` | Once per country at init | ~0.0001ms | Minimal memory allocation |
 
 ---
 

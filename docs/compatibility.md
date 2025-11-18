@@ -12,7 +12,7 @@ The mod provides a comprehensive compatibility architecture with submod hooks, o
 
 ### 1.1. Submod Hook System
 
-The mod provides **8 hooks** that submods can override to customize behavior:
+The mod provides **9 hooks** that submods can override to customize behavior (8 hooks since version 1.0, 1 additional hook since version 1.4):
 
 #### Initialization Hooks (run once at startup per country):
 
@@ -33,6 +33,8 @@ The mod provides **8 hooks** that submods can override to customize behavior:
 - **`dr_apply_facility_rp_submods`** - Runs immediately after standard facilities are converted to RP. Enables adding custom RP sources or additional RP buckets.
 
 - **`dr_total_rp_modifier_submods`** - Runs after the global `total_rp_modifier` is applied. Enables final adjustments to `total_research_power` (e.g., faction-wide buffs, ideology bonuses).
+
+- **`dr_get_opinion_factor_for_ally_submods`** *(since version 1.4)* - Runs during alliance RP calculation for each alliance member. Allows submods to override the opinion factor calculation (0.0 to 1.0) used for alliance bonuses. Submods must set the `dr_opinion_factor_custom_set` flag when providing a custom value. See technical documentation for details.
 
 **Usage**: All hooks are empty in the base mod. Submods can override them by creating a file with the same name (see `docs/submod_quick_start_template.md` or `example_submods/` for examples).
 
@@ -65,7 +67,7 @@ The mod sets standard flags and variables that other mods can use for detection 
 
 - **`dynamic_research_slots_active`** (Global Flag) - Set at startup to indicate the system is active.
 
-- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.3), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
+- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.4), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
 
 **Usage in other mods**:
 
@@ -102,7 +104,7 @@ Submods can override the entire config file `00_dr_dynamic_research_config.txt` 
 
 ### 2.2. Available Resources
 
-- **`docs/submod_quick_start_template.md`** - Quick-start template with all 8 hooks (copy code blocks, uncomment, adjust)
+- **`docs/submod_quick_start_template.md`** - Quick-start template with all 9 hooks (copy code blocks, uncomment, adjust)
 - **`docs/submodding_guide.md`** - Complete submodding guide with detailed examples
 - **`docs/performance.md`** - Comprehensive performance analysis including base mod performance, compatibility features, and best practices for submod developers
 
@@ -132,9 +134,9 @@ The mod is fully backward compatible:
 
 ### 4.1. Hook Structure
 
-**8 hooks total**:
+**9 hooks total** (since version 1.4):
 - 3 Initialization hooks
-- 5 Runtime hooks
+- 6 Runtime hooks (5 since version 1.0, 1 additional since version 1.4)
 
 **Performance Impact**: Empty hooks have practically no overhead (~0.001ms per hook). Performance impact depends entirely on submod implementation. See `docs/performance.md` for best practices.
 
@@ -149,7 +151,7 @@ The mod is fully backward compatible:
 ### 4.3. Compatibility Signals
 
 - 1 Global Flag (`dynamic_research_slots_active`)
-- 1 Variable (`dr_mod_version = 1.3`)
+- 1 Variable (`dr_mod_version = 1.4`)
 
 ---
 
@@ -204,7 +206,7 @@ dr_check_compatibility_submods = {
 
 The mod provides a solid foundation for compatibility and submodding:
 
-- ✅ **8 Hooks** for maximum flexibility
+- ✅ **9 Hooks** for maximum flexibility (8 since version 1.0, 1 additional since version 1.4)
 - ✅ **4 Opt-Out Flags** for granular control
 - ✅ **Compatibility Signals** for other mods
 - ✅ **Full backward compatibility**

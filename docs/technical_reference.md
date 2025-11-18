@@ -146,6 +146,7 @@ RUNTIME (daily for players, staggered for AI):
 | `dr_collect_facility_counts_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Adjust the facility counters after the vanilla `every_owned_state` loop (e.g., count custom buildings). |
 | `dr_apply_facility_rp_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Convert the (vanilla or custom) counters into extra RP, or add new flat RP sources. |
 | `dr_total_rp_modifier_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Tweak the final `total_research_power` after all global modifiers have been applied. |
+| `dr_get_opinion_factor_for_ally_submods` *(since v1.4)* | `dr_apply_alliance_rp_logic` | During alliance RP calculation (per ally) | Override opinion factor calculation (0.0 to 1.0) for alliance members. Must set `dr_opinion_factor_custom_set` flag when providing custom value. |
 
 Hook call order during recalculation:
 
@@ -160,6 +161,8 @@ Hook call order during recalculation:
 9. Built-in global modifier is applied (`total_rp_modifier`).
 10. `dr_total_rp_modifier_submods`.
 11. Slot threshold checks and slot application.
+
+**Note**: During alliance RP calculation (step 9, within `dr_apply_alliance_rp_logic`), the hook `dr_get_opinion_factor_for_ally_submods` is called for each alliance member to allow custom opinion factor calculation.
 
 This makes it clear where to plug custom logic without touching the core script.
 
@@ -212,14 +215,16 @@ War / alliance / law modifiers:
 - `total_rp_modifier` – overall additive RP modifier (includes war/alliance/law effects).  
   This is applied on top of the summed factory/facility RP.
 
-Alliance variables:
+Alliance variables *(updated in version 1.4)*:
 
+- `alliance_rel_factor` *(since version 1.4)* – opinion factor for a single alliance member (0.0 to 1.0, calculated per member via `dr_get_opinion_factor_for_ally` helper effect or custom hook `dr_get_opinion_factor_for_ally_submods`).
 - `alliance_member_count` – number of faction members (excluding self).
 - `alliance_rel_factor_sum` – sum of relation factors across all allies.
 - `alliance_avg_rel_factor` – average relation factor (0-1).
 - `alliance_bonus_cap` – maximum bonus allowed by game rule.
 - `alliance_bonus_pct` – effective alliance bonus percentage.
 - `dr_days_until_alliance_update` – timer to stagger alliance bonus recalculations (updates roughly once per week).
+- `dr_opinion_factor_custom_set` *(since version 1.4)* – flag set by submods when overriding opinion factor calculation via `dr_get_opinion_factor_for_ally_submods` hook.
 
 Arrays:
 
@@ -250,7 +255,7 @@ Key steps:
 2. Sets mod metadata (must be first):
    - Calls `dr_set_mod_metadata` which sets:
      - `set_global_flag = dynamic_research_slots_active` (once globally)
-     - `set_variable = { dr_mod_version = 1.3 }` (per country)
+     - `set_variable = { dr_mod_version = 1.4 }` (per country)
 
 3. Sets base slot counts:
    - `current_research_slots = amount_research_slots`
@@ -379,7 +384,13 @@ Because the building variables (`nuclear_facility`, `naval_facility`, `air_facil
 
 After the vanilla counting pass, the hook `dr_collect_facility_counts_submods` is called, allowing submods to count custom buildings or adjust the counts.
 
-These counters are then multiplied by the configured `rp_per_*_facility` values from `00_dr_dynamic_research_config.txt` to obtain the flat RP bonus. The hook `dr_apply_facility_rp_submods` is called after vanilla facility RP is added, allowing submods to convert custom facility counts into RP or add additional RP sources.
+**Facility count validation** *(since version 1.4)*: After `dr_collect_facility_counts_submods`, the system validates that all facility counts are non-negative. If any count is negative, it is automatically set to 0 to prevent calculation errors.
+
+These counters are then multiplied by the configured `rp_per_*_facility` values from `00_dr_dynamic_research_config.txt` to obtain the flat RP bonus. The facility RP calculation uses a helper effect `dr_calculate_single_facility_rp` *(since version 1.4)* that handles the reduction logic for all facility types, reducing code duplication.
+
+The hook `dr_apply_facility_rp_submods` is called after vanilla facility RP is added, allowing submods to convert custom facility counts into RP or add additional RP sources.
+
+New configuration values (`experimental_facility_rp_reduction_nuclear`, `experimental_facility_rp_reduction_naval`, `experimental_facility_rp_reduction_air`, `experimental_facility_rp_reduction_land`) apply a per-facility reduction to each type. These defaults are `0.0` (no reduction) and the core script applies a linear diminishing return directly: for `n` facilities the average RP per facility is scaled by `1 - reduction * (n - 1) / 2` (clamped at 0). After this calculation runs, the hook `dr_apply_experimental_facility_rp_scaling` is called so submods can further tweak `temp_facility_rp` without affecting saves.
 
 This RP goes both into:
 - `total_research_power`
@@ -427,6 +438,8 @@ The following rules influence `total_rp_modifier` as positive or negative terms:
 - `DR_ALLIANCE_RP_RULE` – determines the maximum positive RP bonus you can get from being in an alliance (OFF, +5%, +10%, +15%, +20%, +25%, +30%, default: +10%).
   - Alliance bonus calculation:
     - Base: 5% per ally, scaled by relations (0-100 opinion mapped to 0-1.0 relation factor in 10 steps)
+    - Opinion factor calculation uses a helper effect `dr_get_opinion_factor_for_ally` *(since version 1.4)* that checks from highest to lowest opinion values for better average performance
+    - Submods can override opinion calculation via `dr_get_opinion_factor_for_ally_submods` hook *(since version 1.4)* - must set `dr_opinion_factor_custom_set` flag when providing custom value
     - Average relation factor across all allies
     - Cap: `min(5% × ally_count, game_rule_cap)`
     - Effective bonus: `cap × average_relation_factor`
@@ -452,14 +465,29 @@ Compatibility note:
 - `dr_apply_law_rp_logic` assumes the vanilla law idea IDs (`free_trade`, `export_focus`, `closed_economy`, `civilian_economy`, `low_economic_mobilisation`, `war_economy`, `tot_economic_mobilisation`, `extensive_conscription`, `service_by_requirement`, `all_adults_serve`, `scraping_the_barrel`).
 - If a large overhaul mod renames or replaces these ideas, create a submod that overrides `00_dr_dynamic_research_modifiers.txt` and adjust only the `dr_apply_law_rp_logic` block to the new IDs.
 
-Together with the war penalty and peacetime bonus, these form a **single additive modifier** `total_rp_modifier`. Finally:
+Together with the war penalty and peacetime bonus, these form a **single additive modifier** `total_rp_modifier`.
+
+**Modifier validation** *(since version 1.4)*: After `dr_apply_rp_modifier_logic`, the system validates and caps `total_rp_modifier`:
+- Maximum bonus: capped at 1.0 (100% bonus)
+- Maximum penalty: capped at -0.5 (50% penalty)
+
+Finally:
 
 - A temporary variable `temp` is set to `1 + total_rp_modifier`.
 - `total_research_power` is multiplied by `temp`.
 
+**Total RP validation** *(since version 1.4)*: After all modifiers are applied and `dr_total_rp_modifier_submods` has run, the system validates that `total_research_power` is non-negative. If negative, it is set to 0.
+
+**Array validation** *(since version 1.4)*: Before slot threshold checks, the system validates that the `research_for_slot` array exists. If missing, it re-initializes the configuration and rebuilds thresholds.
+
 This is the value used for slot thresholds.
 
 RP modifiers can be disabled per-country via the `dr_disable_rp_modifiers` flag.
+
+**War RP logic structure** *(since version 1.4)*: The war RP calculation is split into modular helper effects for better maintainability:
+- `dr_calculate_war_penalty_factors` - calculates war support, stability, and ruling party factors
+- `dr_calculate_war_phase_factor` - calculates war duration and type factors
+- `dr_calculate_peace_bonus` - calculates peacetime bonus based on stability and ruling party support
 
 ---
 

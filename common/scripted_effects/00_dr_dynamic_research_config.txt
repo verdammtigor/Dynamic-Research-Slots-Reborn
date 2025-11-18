@@ -65,6 +65,11 @@ dr_reset_research_config_defaults = {
 	set_variable = { rp_per_naval_facility = 35 }
 	set_variable = { rp_per_air_facility = 35 }
 	set_variable = { rp_per_land_facility = 35 }
+	# Reduction factor applied per additional facility of each type (0 = flat bonus)
+	set_variable = { experimental_facility_rp_reduction_nuclear = 0.0 }
+	set_variable = { experimental_facility_rp_reduction_naval = 0.0 }
+	set_variable = { experimental_facility_rp_reduction_air = 0.0 }
+	set_variable = { experimental_facility_rp_reduction_land = 0.0 }
 
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.

@@ -320,6 +320,15 @@ Default RP per nuclear reactor:
 - `rp_per_heavy_water_reactor = 35`
 - `rp_per_commercial_reactor = 12`
 
+Government support thresholds for war/peace RP modifiers:
+- `government_support_threshold_very_low = 0.25`
+- `government_support_threshold_low = 0.4`
+- `government_support_threshold_medium = 0.55`
+- `government_support_threshold_high = 0.7`
+- `government_support_threshold_very_high = 0.85`
+
+These thresholds determine the government support factor used in war penalty and peace bonus calculations. The factor ranges from 0.0 (best, very high support) to 0.4 (worst, very low support). They can be adjusted in the config file without code changes.
+
 Baseline RP thresholds for each slot in `base_research_for_slot` and `research_for_slot`:
 
 - Slots 1–2: `0` (free, i.e. vanilla starting slots).
@@ -553,6 +562,20 @@ RP modifiers can be disabled per-country via the `dr_disable_rp_modifiers` flag.
 - `dr_calculate_war_penalty_factors` - calculates war support, stability, and ruling party factors
 - `dr_calculate_war_phase_factor` - calculates war duration and type factors
 - `dr_calculate_peace_bonus` - calculates peacetime bonus based on stability and ruling party support
+
+**Helper effect for government support** *(since version 1.4)*:
+- `dr_get_government_support_factor` - calculates government support factor (0.0, 0.1, 0.2, 0.3, or 0.4) based on popularity and config thresholds
+  - Expects: `temp_government_popularity` (variable containing popularity value)
+  - Sets: `government_support_factor` based on `government_support_threshold_very_low/low/medium/high/very_high` config values
+  - Factor mapping:
+    - > very_high (0.85): 0.0 (best)
+    - high - very_high (0.7-0.85): 0.1
+    - medium - high (0.55-0.7): 0.1
+    - low - medium (0.4-0.55): 0.2
+    - very_low - low (0.25-0.4): 0.3
+    - < very_low (< 0.25): 0.4 (worst)
+  - Used by both `dr_calculate_war_penalty_factors` and `dr_calculate_peace_bonus` for consistent logic
+  - Performance: ~0.001ms per call, no loops
 
 ---
 

@@ -42,100 +42,127 @@ dr_calculate_war_penalty_factors = {
 	if = { limit = { has_stability > 0.60 } set_variable = { war_penalty_factor_stab = 0.12 } }
 	if = { limit = { has_stability > 0.80 } set_variable = { war_penalty_factor_stab = 0.00 } }
 
-	# Ruling party factor (0.0-0.3), based on ruling ideology popularity.
-	set_variable = { war_penalty_factor_party = 0.3 }
+	# Ruling party factor (0.0-0.4), based on ruling ideology popularity.
+	set_variable = { war_penalty_factor_party = 0.4 }
 
-	# Demokratische Regierung
+	# Calculate government support factor using helper effect
+	# Democratic government
 	if = {
-		limit = {
-			has_government = democratic
-			democratic > 0.4
-		}
-		set_variable = { war_penalty_factor_party = 0.2 }
-	}
-	if = {
-		limit = {
-			has_government = democratic
-			democratic > 0.55
-		}
-		set_variable = { war_penalty_factor_party = 0.1 }
-	}
-	if = {
-		limit = {
-			has_government = democratic
-			democratic > 0.7
-		}
-		set_variable = { war_penalty_factor_party = 0.0 }
+		limit = { has_government = democratic }
+		set_variable = { temp_government_popularity = democratic }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
 
 	# Fascist government
 	if = {
-		limit = {
-			has_government = fascism
-			fascism > 0.4
-		}
-		set_variable = { war_penalty_factor_party = 0.2 }
-	}
-	if = {
-		limit = {
-			has_government = fascism
-			fascism > 0.55
-		}
-		set_variable = { war_penalty_factor_party = 0.1 }
-	}
-	if = {
-		limit = {
-			has_government = fascism
-			fascism > 0.7
-		}
-		set_variable = { war_penalty_factor_party = 0.0 }
+		limit = { has_government = fascism }
+		set_variable = { temp_government_popularity = fascism }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
 
 	# Communist government
 	if = {
-		limit = {
-			has_government = communism
-			communism > 0.4
-		}
-		set_variable = { war_penalty_factor_party = 0.2 }
-	}
-	if = {
-		limit = {
-			has_government = communism
-			communism > 0.55
-		}
-		set_variable = { war_penalty_factor_party = 0.1 }
-	}
-	if = {
-		limit = {
-			has_government = communism
-			communism > 0.7
-		}
-		set_variable = { war_penalty_factor_party = 0.0 }
+		limit = { has_government = communism }
+		set_variable = { temp_government_popularity = communism }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
 
 	# Neutral or other government
 	if = {
-		limit = {
-			has_government = neutrality
-			neutrality > 0.4
-		}
-		set_variable = { war_penalty_factor_party = 0.2 }
+		limit = { has_government = neutrality }
+		set_variable = { temp_government_popularity = neutrality }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
+}
+
+# Helper effect: Calculate government support factor based on popularity
+# Expects: temp_government_popularity (variable containing popularity value, e.g., democratic, fascism, communism, neutrality)
+# Sets: government_support_factor (0.0, 0.1, 0.2, 0.3, or 0.4) based on config thresholds
+# Uses config variables: government_support_threshold_very_low, government_support_threshold_low, government_support_threshold_medium, government_support_threshold_high, government_support_threshold_very_high
+dr_get_government_support_factor = {
+	set_variable = { government_support_factor = 0.4 }
+	
+	# Check against thresholds (from highest to lowest for better performance)
+	# Very high support (> very_high): 0.0 (best)
 	if = {
 		limit = {
-			has_government = neutrality
-			neutrality > 0.55
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_high
+				compare = greater_than
+			}
 		}
-		set_variable = { war_penalty_factor_party = 0.1 }
+		set_variable = { government_support_factor = 0.0 }
 	}
+	# High support (high - very_high): 0.1
 	if = {
 		limit = {
-			has_government = neutrality
-			neutrality > 0.7
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_high
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_high
+				compare = greater_than
+			}
 		}
-		set_variable = { war_penalty_factor_party = 0.0 }
+		set_variable = { government_support_factor = 0.1 }
 	}
+	# Medium support (medium - high): 0.1 (unchanged for compatibility)
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_high
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_medium
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.1 }
+	}
+	# Low support (low - medium): 0.2
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_medium
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_low
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.2 }
+	}
+	# Very low support (very_low - low): 0.3
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_low
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_low
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.3 }
+	}
+	# Below very_low threshold remains 0.4 (worst, default)
 }
 
 # Calculate war phase factor based on war duration and type
@@ -248,62 +275,73 @@ dr_calculate_peace_bonus = {
 			add_to_variable = { peace_rp_bonus = 0.01 }
 		}
 
-		# Ruling party contribution
+		# Ruling party contribution (using helper effect for consistency)
+		# Democratic government
 		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.7
+			limit = { has_government = democratic }
+			set_variable = { temp_government_popularity = democratic }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
 			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
 		}
+
+		# Fascist government
 		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.85
+			limit = { has_government = fascism }
+			set_variable = { temp_government_popularity = fascism }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
 			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
 		}
+
+		# Communist government
 		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.7
+			limit = { has_government = communism }
+			set_variable = { temp_government_popularity = communism }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
 			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
 		}
+
+		# Neutral or other government
 		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.85
+			limit = { has_government = neutrality }
+			set_variable = { temp_government_popularity = neutrality }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
 			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.7
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
 			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.7
-			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
 		}
 
 		# Cap at +5%

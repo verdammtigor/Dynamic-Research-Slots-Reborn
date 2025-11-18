@@ -80,6 +80,13 @@ dr_reset_research_config_defaults = {
 	set_variable = { experimental_facility_rp_reduction_heavy_water_reactor = 0.15 }
 	set_variable = { experimental_facility_rp_reduction_commercial_reactor = 0.15 }
 
+	# Government support thresholds for war/peace RP modifiers
+	set_variable = { government_support_threshold_very_low = 0.25 }
+	set_variable = { government_support_threshold_low = 0.4 }
+	set_variable = { government_support_threshold_medium = 0.55 }
+	set_variable = { government_support_threshold_high = 0.7 }
+	set_variable = { government_support_threshold_very_high = 0.85 }
+
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.
 	add_to_array = { base_research_for_slot = 0 }	# 0 (dummy)

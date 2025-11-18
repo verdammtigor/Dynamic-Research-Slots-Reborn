@@ -148,6 +148,9 @@ recalculate_dynamic_research_slots = {
 		set_variable = { naval_facility_count = 0 }
 		set_variable = { air_facility_count = 0 }
 		set_variable = { land_facility_count = 0 }
+		set_variable = { nuclear_reactor_count = 0 }
+		set_variable = { heavy_water_reactor_count = 0 }
+		set_variable = { commercial_reactor_count = 0 }
 
 		every_owned_state = {
 			if = {
@@ -165,6 +168,18 @@ recalculate_dynamic_research_slots = {
 			if = {
 				limit = { land_facility > 0 }
 				ROOT = { add_to_variable = { land_facility_count = 1 } }
+			}
+			if = {
+				limit = { nuclear_reactor > 0 }
+				ROOT = { add_to_variable = { nuclear_reactor_count = 1 } }
+			}
+			if = {
+				limit = { nuclear_reactor_heavy_water > 0 }
+				ROOT = { add_to_variable = { heavy_water_reactor_count = 1 } }
+			}
+			if = {
+				limit = { commercial_nuclear_reactor > 0 }
+				ROOT = { add_to_variable = { commercial_reactor_count = 1 } }
 			}
 		}
 
@@ -212,70 +227,83 @@ recalculate_dynamic_research_slots = {
 			}
 			set_variable = { land_facility_count = 0 }
 		}
+		# Validate nuclear reactor counts (defensive programming - prevent negative values)
+		if = {
+			limit = {
+				check_variable = {
+					var = nuclear_reactor_count
+					value = 0
+					compare = less_than
+				}
+			}
+			set_variable = { nuclear_reactor_count = 0 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = heavy_water_reactor_count
+					value = 0
+					compare = less_than
+				}
+			}
+			set_variable = { heavy_water_reactor_count = 0 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = commercial_reactor_count
+					value = 0
+					compare = less_than
+				}
+			}
+			set_variable = { commercial_reactor_count = 0 }
+		}
 
 		# Apply per-facility RP based on accumulated counts (can be disabled via flag).
 		if = {
 			limit = { NOT = { has_country_flag = dr_disable_facility_rp } }
 			
 			# Nuclear facilities
-			if = {
-				limit = {
-					check_variable = {
-						var = nuclear_facility_count
-						value = 0
-						compare = greater_than
-					}
-				}
-				set_variable = { facility_rp_count = nuclear_facility_count }
-				set_variable = { rp_per_facility_var = rp_per_nuclear_facility }
-				set_variable = { facility_rp_reduction_factor = experimental_facility_rp_reduction_nuclear }
-				dr_calculate_single_facility_rp = yes
-			}
+			set_variable = { facility_count_var = nuclear_facility_count }
+			set_variable = { rp_per_facility_value = rp_per_nuclear_facility }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_nuclear }
+			dr_apply_facility_rp_if_present = yes
 			
 			# Naval facilities
-			if = {
-				limit = {
-					check_variable = {
-						var = naval_facility_count
-						value = 0
-						compare = greater_than
-					}
-				}
-				set_variable = { facility_rp_count = naval_facility_count }
-				set_variable = { rp_per_facility_var = rp_per_naval_facility }
-				set_variable = { facility_rp_reduction_factor = experimental_facility_rp_reduction_naval }
-				dr_calculate_single_facility_rp = yes
-			}
+			set_variable = { facility_count_var = naval_facility_count }
+			set_variable = { rp_per_facility_value = rp_per_naval_facility }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_naval }
+			dr_apply_facility_rp_if_present = yes
 			
 			# Air facilities
-			if = {
-				limit = {
-					check_variable = {
-						var = air_facility_count
-						value = 0
-						compare = greater_than
-					}
-				}
-				set_variable = { facility_rp_count = air_facility_count }
-				set_variable = { rp_per_facility_var = rp_per_air_facility }
-				set_variable = { facility_rp_reduction_factor = experimental_facility_rp_reduction_air }
-				dr_calculate_single_facility_rp = yes
-			}
+			set_variable = { facility_count_var = air_facility_count }
+			set_variable = { rp_per_facility_value = rp_per_air_facility }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_air }
+			dr_apply_facility_rp_if_present = yes
 			
 			# Land facilities
-			if = {
-				limit = {
-					check_variable = {
-						var = land_facility_count
-						value = 0
-						compare = greater_than
-					}
-				}
-				set_variable = { facility_rp_count = land_facility_count }
-				set_variable = { rp_per_facility_var = rp_per_land_facility }
-				set_variable = { facility_rp_reduction_factor = experimental_facility_rp_reduction_land }
-				dr_calculate_single_facility_rp = yes
-			}
+			set_variable = { facility_count_var = land_facility_count }
+			set_variable = { rp_per_facility_value = rp_per_land_facility }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_land }
+			dr_apply_facility_rp_if_present = yes
+			
+			# Nuclear Reactor: 20 RP (mit reduzierender RP-Generierung)
+			set_variable = { facility_count_var = nuclear_reactor_count }
+			set_variable = { rp_per_facility_value = 20 }
+			set_variable = { reduction_factor_value = 0.15 }
+			dr_apply_facility_rp_if_present = yes
+			
+			# Heavy Water Reactor: 35 RP (mit reduzierender RP-Generierung)
+			set_variable = { facility_count_var = heavy_water_reactor_count }
+			set_variable = { rp_per_facility_value = 35 }
+			set_variable = { reduction_factor_value = 0.15 }
+			dr_apply_facility_rp_if_present = yes
+			
+			# Commercial Reactor: 12 RP (mit reduzierender RP-Generierung)
+			set_variable = { facility_count_var = commercial_reactor_count }
+			set_variable = { rp_per_facility_value = 12 }
+			set_variable = { reduction_factor_value = 0.15 }
+			dr_apply_facility_rp_if_present = yes
 		}
 
 		# Allow submods to convert facility counts (vanilla or custom) into RP (only if facility RP is enabled).
@@ -465,4 +493,24 @@ dr_calculate_single_facility_rp = {
 	dr_apply_experimental_facility_rp_scaling = yes
 	add_to_variable = { total_research_power = temp_facility_rp }
 	add_to_variable = { facility_research_power = temp_facility_rp }
+}
+
+# Helper effect: Apply RP for a facility type if count > 0
+# Expects: facility_count_var (variable containing the count)
+#          rp_per_facility_value (variable or literal value)
+#          reduction_factor_value (variable or literal value)
+dr_apply_facility_rp_if_present = {
+	if = {
+		limit = {
+			check_variable = {
+				var = facility_count_var
+				value = 0
+				compare = greater_than
+			}
+		}
+		set_variable = { facility_rp_count = facility_count_var }
+		set_variable = { rp_per_facility_var = rp_per_facility_value }
+		set_variable = { facility_rp_reduction_factor = reduction_factor_value }
+		dr_calculate_single_facility_rp = yes
+	}
 }

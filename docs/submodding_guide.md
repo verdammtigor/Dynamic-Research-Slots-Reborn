@@ -428,14 +428,18 @@ You can also define new game rule options (in your submod's `common/game_rules`)
 
 ### Goal
 
-You want for example:
+You want to change the default RP values for experimental facilities. The current defaults are:
+- nuclear facilities: +30 RP each
+- air/naval/land facilities: +15 RP each
+- All facilities have a 15% diminishing returns reduction applied
 
+For example, you might want:
 - nuclear facilities to grant only +20 RP each,
 - air/naval/land facilities to grant only +10 RP each.
 
 ### Steps
 
-In `dr_apply_research_config` the RP per facility variables are defined:
+In `dr_apply_research_config_submods` (or by overriding `dr_reset_research_config_defaults`), you can set the RP per facility variables:
 
 ```txt
   # RP per experimental facility (per building)
@@ -445,7 +449,17 @@ In `dr_apply_research_config` the RP per facility variables are defined:
   set_variable = { rp_per_land_facility = 10 }
 ```
 
-The core logic (`recalculate_dynamic_research_slots`) multiplies these values with the number of respective facilities. You don't need to change anything there.
+You can also adjust the diminishing returns reduction factors:
+
+```txt
+  # Reduction factor (0.0 = no reduction, 0.15 = 15% reduction per additional facility)
+  set_variable = { experimental_facility_rp_reduction_nuclear = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_naval = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_air = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_land = 0.1 }
+```
+
+**Note on Diminishing Returns:** The system applies a linear diminishing return formula: `total_rp = n * base_rp * (1 - reduction * (n - 1) / 2)`. With the default 15% reduction, the optimal number of facilities is around 7, after which total RP starts decreasing. Lower reduction values allow more facilities before hitting the efficiency cap, while higher values make stacking less effective.
 
 ---
 

@@ -194,7 +194,7 @@ Total RP:
 Facility counts:
 
 - `nuclear_facility_count`, `naval_facility_count`, `air_facility_count`, `land_facility_count` – number of each facility type (counted per state).
-- `rp_per_nuclear_facility`, `rp_per_naval_facility`, `rp_per_air_facility`, `rp_per_land_facility` – RP per facility type (default: 50, 35, 35, 35).
+- `rp_per_nuclear_facility`, `rp_per_naval_facility`, `rp_per_air_facility`, `rp_per_land_facility` – RP per facility type (default: 30, 15, 15, 15).
 
 Easy slots:
 
@@ -310,10 +310,10 @@ These can be overridden by the **Factory Weights** game rule:
 - Naval-focused: 2/2/4
 
 Default RP per facility:
-- `rp_per_nuclear_facility = 50`
-- `rp_per_naval_facility = 35`
-- `rp_per_air_facility = 35`
-- `rp_per_land_facility = 35`
+- `rp_per_nuclear_facility = 30`
+- `rp_per_naval_facility = 15`
+- `rp_per_air_facility = 15`
+- `rp_per_land_facility = 15`
 
 Baseline RP thresholds for each slot in `base_research_for_slot` and `research_for_slot`:
 
@@ -375,10 +375,10 @@ The hook `dr_apply_factory_modifiers_submods` is called **before** the factory R
 
 If the country has any **Experimental Facilities**, additional flat RP is added **per facility**:
 
-- Each nuclear facility: +50 RP (default).
-- Each naval facility: +35 RP (default).
-- Each air facility: +35 RP (default).
-- Each land facility: +35 RP (default).
+- Each nuclear facility: +30 RP (default).
+- Each naval facility: +15 RP (default).
+- Each air facility: +15 RP (default).
+- Each land facility: +15 RP (default).
 
 Because the building variables (`nuclear_facility`, `naval_facility`, `air_facility`, `land_facility`) only exist at **state** scope, the script does not read them directly on the country. Instead `recalculate_dynamic_research_slots` runs an `every_owned_state` loop to count how many owned states have each facility type and stores these counts in the internal variables `nuclear_facility_count`, `naval_facility_count`, `air_facility_count` and `land_facility_count`.
 
@@ -390,13 +390,62 @@ These counters are then multiplied by the configured `rp_per_*_facility` values 
 
 The hook `dr_apply_facility_rp_submods` is called after vanilla facility RP is added, allowing submods to convert custom facility counts into RP or add additional RP sources.
 
-New configuration values (`experimental_facility_rp_reduction_nuclear`, `experimental_facility_rp_reduction_naval`, `experimental_facility_rp_reduction_air`, `experimental_facility_rp_reduction_land`) apply a per-facility reduction to each type. These defaults are `0.0` (no reduction) and the core script applies a linear diminishing return directly: for `n` facilities the average RP per facility is scaled by `1 - reduction * (n - 1) / 2` (clamped at 0). After this calculation runs, the hook `dr_apply_experimental_facility_rp_scaling` is called so submods can further tweak `temp_facility_rp` without affecting saves.
+New configuration values (`experimental_facility_rp_reduction_nuclear`, `experimental_facility_rp_reduction_naval`, `experimental_facility_rp_reduction_air`, `experimental_facility_rp_reduction_land`) apply a per-facility reduction to each type. These defaults are `0.15` (15% reduction) and the core script applies a linear diminishing return directly: for `n` facilities the total RP is calculated as `n * base_rp * (1 - reduction * (n - 1) / 2)` (clamped at 0). This means:
+- The first facility provides full RP (base value)
+- Each additional facility reduces the multiplier, making later facilities less efficient
+- At 15 facilities, the multiplier reaches 0 and no RP is generated
+- The optimal number of facilities is typically around 7, where total RP peaks before diminishing returns make additional facilities counterproductive
+
+After this calculation runs, the hook `dr_apply_experimental_facility_rp_scaling` is called so submods can further tweak `temp_facility_rp` without affecting saves.
 
 This RP goes both into:
 - `total_research_power`
 - `facility_research_power` (for display/debug purposes).
 
 Facility RP can be disabled per-country via the `dr_disable_facility_rp` flag.
+
+#### 5.2.1 Diminishing Returns and Balance Analysis
+
+The diminishing returns system for experimental facilities is designed to prevent excessive stacking while maintaining their value for strategic research investment.
+
+**Mathematical Formula:**
+- Multiplier = `1 - reduction * (n - 1) / 2`
+- Total RP = `n * base_rp * multiplier`
+- When multiplier < 0, it is clamped to 0
+
+**With 15% reduction (0.15) and current base values:**
+
+**Naval/Air/Land Facilities (15 RP base):**
+- 1 facility: 15.0 RP (multiplier: 1.0)
+- 2 facilities: 27.75 RP (multiplier: 0.925)
+- 3 facilities: 38.25 RP (multiplier: 0.85)
+- 4 facilities: 46.5 RP (multiplier: 0.775)
+- 5 facilities: 52.5 RP (multiplier: 0.7)
+- 6 facilities: 56.25 RP (multiplier: 0.625)
+- 7 facilities: **57.75 RP** (multiplier: 0.55) - **Optimal point**
+- 8 facilities: 57.0 RP (multiplier: 0.475) - Total RP starts decreasing
+- 15 facilities: 0 RP (multiplier: 0.0) - No RP generated
+
+**Nuclear Facilities (30 RP base):**
+- 1 facility: 30.0 RP (multiplier: 1.0)
+- 2 facilities: 55.5 RP (multiplier: 0.925)
+- 3 facilities: 76.5 RP (multiplier: 0.85)
+- 4 facilities: 93.0 RP (multiplier: 0.775)
+- 5 facilities: 105.0 RP (multiplier: 0.7)
+- 6 facilities: 112.5 RP (multiplier: 0.625)
+- 7 facilities: **115.5 RP** (multiplier: 0.55) - **Optimal point**
+- 8 facilities: 114.0 RP (multiplier: 0.475) - Total RP starts decreasing
+- 15 facilities: 0 RP (multiplier: 0.0) - No RP generated
+
+**Efficiency Comparison:**
+- **Early facilities (1-3)**: Very efficient compared to factories. A single Naval/Air/Land facility provides 5x the RP of a civilian factory (15 vs 3 RP), and a Nuclear facility provides 10x (30 vs 3 RP).
+- **Mid-range (4-7)**: Still efficient, but diminishing returns are noticeable. At 7 facilities, Naval/Air/Land facilities provide ~8.25 RP each on average, still better than factories.
+- **Late facilities (8+)**: Less efficient than factories. Beyond 7-8 facilities, building additional civilian factories becomes more cost-effective for RP generation.
+
+**Strategic Implications:**
+- The optimal strategy is to build 6-7 facilities of each type for maximum RP efficiency.
+- Building more than 7 facilities of the same type becomes counterproductive as total RP decreases.
+- The system encourages diversification across facility types rather than stacking a single type.
 
 ### 5.3 War-time RP modifier
 

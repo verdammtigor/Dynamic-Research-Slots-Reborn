@@ -146,6 +146,7 @@ RUNTIME (daily for players, staggered for AI):
 | `dr_collect_facility_counts_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Adjust the facility counters after the vanilla `every_owned_state` loop (e.g., count custom buildings). |
 | `dr_apply_facility_rp_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Convert the (vanilla or custom) counters into extra RP, or add new flat RP sources. |
 | `dr_total_rp_modifier_submods` | `recalculate_dynamic_research_slots` | Every recalculation | Tweak the final `total_research_power` after all global modifiers have been applied. |
+| `dr_get_opinion_factor_for_ally_submods` *(since v1.4)* | `dr_apply_alliance_rp_logic` | During alliance RP calculation (per ally) | Override opinion factor calculation (0.0 to 1.0) for alliance members. Must set `dr_opinion_factor_custom_set` flag when providing custom value. |
 
 Hook call order during recalculation:
 
@@ -160,6 +161,8 @@ Hook call order during recalculation:
 9. Built-in global modifier is applied (`total_rp_modifier`).
 10. `dr_total_rp_modifier_submods`.
 11. Slot threshold checks and slot application.
+
+**Note**: During alliance RP calculation (step 9, within `dr_apply_alliance_rp_logic`), the hook `dr_get_opinion_factor_for_ally_submods` is called for each alliance member to allow custom opinion factor calculation.
 
 This makes it clear where to plug custom logic without touching the core script.
 
@@ -191,7 +194,7 @@ Total RP:
 Facility counts:
 
 - `nuclear_facility_count`, `naval_facility_count`, `air_facility_count`, `land_facility_count` – number of each facility type (counted per state).
-- `rp_per_nuclear_facility`, `rp_per_naval_facility`, `rp_per_air_facility`, `rp_per_land_facility` – RP per facility type (default: 50, 35, 35, 35).
+- `rp_per_nuclear_facility`, `rp_per_naval_facility`, `rp_per_air_facility`, `rp_per_land_facility` – RP per facility type (default: 30, 15, 15, 15).
 
 Easy slots:
 
@@ -212,14 +215,16 @@ War / alliance / law modifiers:
 - `total_rp_modifier` – overall additive RP modifier (includes war/alliance/law effects).  
   This is applied on top of the summed factory/facility RP.
 
-Alliance variables:
+Alliance variables *(updated in version 1.4)*:
 
+- `alliance_rel_factor` *(since version 1.4)* – opinion factor for a single alliance member (0.0 to 1.0, calculated per member via `dr_get_opinion_factor_for_ally` helper effect or custom hook `dr_get_opinion_factor_for_ally_submods`).
 - `alliance_member_count` – number of faction members (excluding self).
 - `alliance_rel_factor_sum` – sum of relation factors across all allies.
 - `alliance_avg_rel_factor` – average relation factor (0-1).
 - `alliance_bonus_cap` – maximum bonus allowed by game rule.
 - `alliance_bonus_pct` – effective alliance bonus percentage.
 - `dr_days_until_alliance_update` – timer to stagger alliance bonus recalculations (updates roughly once per week).
+- `dr_opinion_factor_custom_set` *(since version 1.4)* – flag set by submods when overriding opinion factor calculation via `dr_get_opinion_factor_for_ally_submods` hook.
 
 Arrays:
 
@@ -250,7 +255,7 @@ Key steps:
 2. Sets mod metadata (must be first):
    - Calls `dr_set_mod_metadata` which sets:
      - `set_global_flag = dynamic_research_slots_active` (once globally)
-     - `set_variable = { dr_mod_version = 1.3 }` (per country)
+     - `set_variable = { dr_mod_version = 1.4 }` (per country)
 
 3. Sets base slot counts:
    - `current_research_slots = amount_research_slots`
@@ -305,10 +310,24 @@ These can be overridden by the **Factory Weights** game rule:
 - Naval-focused: 2/2/4
 
 Default RP per facility:
-- `rp_per_nuclear_facility = 50`
-- `rp_per_naval_facility = 35`
-- `rp_per_air_facility = 35`
-- `rp_per_land_facility = 35`
+- `rp_per_nuclear_facility = 30`
+- `rp_per_naval_facility = 15`
+- `rp_per_air_facility = 15`
+- `rp_per_land_facility = 15`
+
+Default RP per nuclear reactor:
+- `rp_per_nuclear_reactor = 20`
+- `rp_per_heavy_water_reactor = 35`
+- `rp_per_commercial_reactor = 12`
+
+Government support thresholds for war/peace RP modifiers:
+- `government_support_threshold_very_low = 0.25`
+- `government_support_threshold_low = 0.4`
+- `government_support_threshold_medium = 0.55`
+- `government_support_threshold_high = 0.7`
+- `government_support_threshold_very_high = 0.85`
+
+These thresholds determine the government support factor used in war penalty and peace bonus calculations. The factor ranges from 0.0 (best, very high support) to 0.4 (worst, very low support). They can be adjusted in the config file without code changes.
 
 Baseline RP thresholds for each slot in `base_research_for_slot` and `research_for_slot`:
 
@@ -370,22 +389,88 @@ The hook `dr_apply_factory_modifiers_submods` is called **before** the factory R
 
 If the country has any **Experimental Facilities**, additional flat RP is added **per facility**:
 
-- Each nuclear facility: +50 RP (default).
-- Each naval facility: +35 RP (default).
-- Each air facility: +35 RP (default).
-- Each land facility: +35 RP (default).
+- Each nuclear facility: +30 RP (default).
+- Each naval facility: +15 RP (default).
+- Each air facility: +15 RP (default).
+- Each land facility: +15 RP (default).
 
-Because the building variables (`nuclear_facility`, `naval_facility`, `air_facility`, `land_facility`) only exist at **state** scope, the script does not read them directly on the country. Instead `recalculate_dynamic_research_slots` runs an `every_owned_state` loop to count how many owned states have each facility type and stores these counts in the internal variables `nuclear_facility_count`, `naval_facility_count`, `air_facility_count` and `land_facility_count`.
+Additionally, the mod supports **Nuclear Reactors** with the following RP values:
+
+- Each nuclear reactor (`nuclear_reactor`): +20 RP (with diminishing returns).
+- Each heavy water nuclear reactor (`nuclear_reactor_heavy_water`): +35 RP (with diminishing returns).
+- Each commercial nuclear reactor (`commercial_nuclear_reactor`): +12 RP (with diminishing returns).
+
+All reactors use a reduction factor of 0.15 (15% reduction per additional reactor) to prevent excessive RP farming.
+
+Because the building variables (`nuclear_facility`, `naval_facility`, `air_facility`, `land_facility`, `nuclear_reactor`, `nuclear_reactor_heavy_water`, `commercial_nuclear_reactor`) only exist at **state** scope, the script does not read them directly on the country. Instead `recalculate_dynamic_research_slots` runs an `every_owned_state` loop to count how many owned states have each facility type and stores these counts in the internal variables `nuclear_facility_count`, `naval_facility_count`, `air_facility_count`, `land_facility_count`, `nuclear_reactor_count`, `heavy_water_reactor_count` and `commercial_reactor_count`.
 
 After the vanilla counting pass, the hook `dr_collect_facility_counts_submods` is called, allowing submods to count custom buildings or adjust the counts.
 
-These counters are then multiplied by the configured `rp_per_*_facility` values from `00_dr_dynamic_research_config.txt` to obtain the flat RP bonus. The hook `dr_apply_facility_rp_submods` is called after vanilla facility RP is added, allowing submods to convert custom facility counts into RP or add additional RP sources.
+**Facility count validation** *(since version 1.4)*: After `dr_collect_facility_counts_submods`, the system validates that all facility counts (including reactor counts) are non-negative. If any count is negative, it is automatically set to 0 to prevent calculation errors.
+
+These counters are then multiplied by the configured `rp_per_*_facility` and `rp_per_*_reactor` values from `00_dr_dynamic_research_config.txt` to obtain the flat RP bonus. The facility RP calculation uses two helper effects:
+
+- `dr_apply_facility_rp_if_present` - Checks if a facility count is greater than 0 and applies RP calculation if present. This helper eliminates code duplication by providing a unified interface for all facility types.
+- `dr_calculate_single_facility_rp` *(since version 1.4)* - Handles the reduction logic for all facility types, applying diminishing returns based on the number of facilities.
+
+The hook `dr_apply_facility_rp_submods` is called after vanilla facility RP is added, allowing submods to convert custom facility counts into RP or add additional RP sources.
+
+New configuration values (`experimental_facility_rp_reduction_nuclear`, `experimental_facility_rp_reduction_naval`, `experimental_facility_rp_reduction_air`, `experimental_facility_rp_reduction_land`) apply a per-facility reduction to each type. These defaults are `0.15` (15% reduction) and the core script applies a linear diminishing return directly: for `n` facilities the total RP is calculated as `n * base_rp * (1 - reduction * (n - 1) / 2)` (clamped at 0). This means:
+- The first facility provides full RP (base value)
+- Each additional facility reduces the multiplier, making later facilities less efficient
+- At 15 facilities, the multiplier reaches 0 and no RP is generated
+- The optimal number of facilities is typically around 7, where total RP peaks before diminishing returns make additional facilities counterproductive
+
+After this calculation runs, the hook `dr_apply_experimental_facility_rp_scaling` is called so submods can further tweak `temp_facility_rp` without affecting saves.
 
 This RP goes both into:
 - `total_research_power`
 - `facility_research_power` (for display/debug purposes).
 
 Facility RP can be disabled per-country via the `dr_disable_facility_rp` flag.
+
+#### 5.2.1 Diminishing Returns and Balance Analysis
+
+The diminishing returns system for experimental facilities is designed to prevent excessive stacking while maintaining their value for strategic research investment.
+
+**Mathematical Formula:**
+- Multiplier = `1 - reduction * (n - 1) / 2`
+- Total RP = `n * base_rp * multiplier`
+- When multiplier < 0, it is clamped to 0
+
+**With 15% reduction (0.15) and current base values:**
+
+**Naval/Air/Land Facilities (15 RP base):**
+- 1 facility: 15.0 RP (multiplier: 1.0)
+- 2 facilities: 27.75 RP (multiplier: 0.925)
+- 3 facilities: 38.25 RP (multiplier: 0.85)
+- 4 facilities: 46.5 RP (multiplier: 0.775)
+- 5 facilities: 52.5 RP (multiplier: 0.7)
+- 6 facilities: 56.25 RP (multiplier: 0.625)
+- 7 facilities: **57.75 RP** (multiplier: 0.55) - **Optimal point**
+- 8 facilities: 57.0 RP (multiplier: 0.475) - Total RP starts decreasing
+- 15 facilities: 0 RP (multiplier: 0.0) - No RP generated
+
+**Nuclear Facilities (30 RP base):**
+- 1 facility: 30.0 RP (multiplier: 1.0)
+- 2 facilities: 55.5 RP (multiplier: 0.925)
+- 3 facilities: 76.5 RP (multiplier: 0.85)
+- 4 facilities: 93.0 RP (multiplier: 0.775)
+- 5 facilities: 105.0 RP (multiplier: 0.7)
+- 6 facilities: 112.5 RP (multiplier: 0.625)
+- 7 facilities: **115.5 RP** (multiplier: 0.55) - **Optimal point**
+- 8 facilities: 114.0 RP (multiplier: 0.475) - Total RP starts decreasing
+- 15 facilities: 0 RP (multiplier: 0.0) - No RP generated
+
+**Efficiency Comparison:**
+- **Early facilities (1-3)**: Very efficient compared to factories. A single Naval/Air/Land facility provides 5x the RP of a civilian factory (15 vs 3 RP), and a Nuclear facility provides 10x (30 vs 3 RP).
+- **Mid-range (4-7)**: Still efficient, but diminishing returns are noticeable. At 7 facilities, Naval/Air/Land facilities provide ~8.25 RP each on average, still better than factories.
+- **Late facilities (8+)**: Less efficient than factories. Beyond 7-8 facilities, building additional civilian factories becomes more cost-effective for RP generation.
+
+**Strategic Implications:**
+- The optimal strategy is to build 6-7 facilities of each type for maximum RP efficiency.
+- Building more than 7 facilities of the same type becomes counterproductive as total RP decreases.
+- The system encourages diversification across facility types rather than stacking a single type.
 
 ### 5.3 War-time RP modifier
 
@@ -427,6 +512,8 @@ The following rules influence `total_rp_modifier` as positive or negative terms:
 - `DR_ALLIANCE_RP_RULE` – determines the maximum positive RP bonus you can get from being in an alliance (OFF, +5%, +10%, +15%, +20%, +25%, +30%, default: +10%).
   - Alliance bonus calculation:
     - Base: 5% per ally, scaled by relations (0-100 opinion mapped to 0-1.0 relation factor in 10 steps)
+    - Opinion factor calculation uses a helper effect `dr_get_opinion_factor_for_ally` *(since version 1.4)* that checks from highest to lowest opinion values for better average performance
+    - Submods can override opinion calculation via `dr_get_opinion_factor_for_ally_submods` hook *(since version 1.4)* - must set `dr_opinion_factor_custom_set` flag when providing custom value
     - Average relation factor across all allies
     - Cap: `min(5% × ally_count, game_rule_cap)`
     - Effective bonus: `cap × average_relation_factor`
@@ -452,14 +539,43 @@ Compatibility note:
 - `dr_apply_law_rp_logic` assumes the vanilla law idea IDs (`free_trade`, `export_focus`, `closed_economy`, `civilian_economy`, `low_economic_mobilisation`, `war_economy`, `tot_economic_mobilisation`, `extensive_conscription`, `service_by_requirement`, `all_adults_serve`, `scraping_the_barrel`).
 - If a large overhaul mod renames or replaces these ideas, create a submod that overrides `00_dr_dynamic_research_modifiers.txt` and adjust only the `dr_apply_law_rp_logic` block to the new IDs.
 
-Together with the war penalty and peacetime bonus, these form a **single additive modifier** `total_rp_modifier`. Finally:
+Together with the war penalty and peacetime bonus, these form a **single additive modifier** `total_rp_modifier`.
+
+**Modifier validation** *(since version 1.4)*: After `dr_apply_rp_modifier_logic`, the system validates and caps `total_rp_modifier`:
+- Maximum bonus: capped at 1.0 (100% bonus)
+- Maximum penalty: capped at -0.5 (50% penalty)
+
+Finally:
 
 - A temporary variable `temp` is set to `1 + total_rp_modifier`.
 - `total_research_power` is multiplied by `temp`.
 
+**Total RP validation** *(since version 1.4)*: After all modifiers are applied and `dr_total_rp_modifier_submods` has run, the system validates that `total_research_power` is non-negative. If negative, it is set to 0.
+
+**Array validation** *(since version 1.4)*: Before slot threshold checks, the system validates that the `research_for_slot` array exists. If missing, it re-initializes the configuration and rebuilds thresholds.
+
 This is the value used for slot thresholds.
 
 RP modifiers can be disabled per-country via the `dr_disable_rp_modifiers` flag.
+
+**War RP logic structure** *(since version 1.4)*: The war RP calculation is split into modular helper effects for better maintainability:
+- `dr_calculate_war_penalty_factors` - calculates war support, stability, and ruling party factors
+- `dr_calculate_war_phase_factor` - calculates war duration and type factors
+- `dr_calculate_peace_bonus` - calculates peacetime bonus based on stability and ruling party support
+
+**Helper effect for government support** *(since version 1.4)*:
+- `dr_get_government_support_factor` - calculates government support factor (0.0, 0.1, 0.2, 0.3, or 0.4) based on popularity and config thresholds
+  - Expects: `temp_government_popularity` (variable containing popularity value)
+  - Sets: `government_support_factor` based on `government_support_threshold_very_low/low/medium/high/very_high` config values
+  - Factor mapping:
+    - > very_high (0.85): 0.0 (best)
+    - high - very_high (0.7-0.85): 0.1
+    - medium - high (0.55-0.7): 0.1
+    - low - medium (0.4-0.55): 0.2
+    - very_low - low (0.25-0.4): 0.3
+    - < very_low (< 0.25): 0.4 (worst)
+  - Used by both `dr_calculate_war_penalty_factors` and `dr_calculate_peace_bonus` for consistent logic
+  - Performance: ~0.001ms per call, no loops
 
 ---
 
@@ -638,6 +754,32 @@ When creating a **submod** that rebalances the system, typical patterns are:
   - Adjust `civilian_rp_modifier`, `military_rp_modifier` or `naval_rp_modifier` from your own ideas/spirits.
 
 This way, the **core logic and debug tools remain unchanged**, while submods only replace or extend the configuration layer. If you need to completely opt out a country from dynamic slot changes (for example in a large overhaul), you can set the country flag `dr_disable_dynamic_research_slots`; the system will still keep its internal variables in sync but will not change the number of research slots for that country.
+
+### 9.5 Helper Effects
+
+The mod provides several helper effects that can be used by submods or for internal calculations:
+
+**Facility RP Helpers:**
+
+- `dr_apply_facility_rp_if_present` - Checks if a facility count is greater than 0 and applies RP calculation if present. Expects:
+  - `facility_count_var` - Variable containing the facility count
+  - `rp_per_facility_value` - Variable or literal value for RP per facility
+  - `reduction_factor_value` - Variable or literal value for the reduction factor (typically 0.15)
+  - Calls `dr_calculate_single_facility_rp` internally if count > 0
+
+- `dr_calculate_single_facility_rp` *(since version 1.4)* - Calculates RP for a facility type with diminishing returns. Expects:
+  - `facility_rp_count` - Number of facilities
+  - `rp_per_facility_var` - RP per facility
+  - `facility_rp_reduction_factor` - Reduction factor for diminishing returns
+  - Sets `temp_facility_rp` and adds it to `total_research_power` and `facility_research_power`
+
+**Other Helpers:**
+
+- `dr_rebuild_research_thresholds` - Rebuilds effective RP thresholds based on base thresholds, Easy Slots, and Easy Slot coefficient
+- `dr_get_opinion_factor_for_ally` *(since version 1.4)* - Calculates opinion factor for alliance members
+- Various war/law/alliance helper effects (see `00_dr_dynamic_research_modifiers.txt`)
+
+These helpers follow the DRY (Don't Repeat Yourself) principle and make the codebase more maintainable.
 
 ---
 

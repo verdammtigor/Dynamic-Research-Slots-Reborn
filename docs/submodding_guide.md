@@ -51,7 +51,7 @@ As a submodder you usually only touch `00_dr_dynamic_research_config.txt` – an
 
 To avoid editing the core logic, the mod exposes empty scripted effects that you can override in your submod. All hooks are empty in the base mod, so overriding them in your submod is conflict-free.
 
-**Quick start**: For a quick-start template with all 8 hooks, see `submod_quick_start_template.md` (copy code blocks, uncomment, adjust). For complete, working example submods, see the `example_submods/` directory on GitHub (developer resources, not published on Steam Workshop).
+**Quick start**: For a quick-start template with all 9 hooks, see `submod_quick_start_template.md` (copy code blocks, uncomment, adjust). For complete, working example submods, see the `example_submods/` directory on GitHub (developer resources, not published on Steam Workshop).
 
 **Hook execution flow**:
 
@@ -115,6 +115,7 @@ To avoid editing the core logic, the mod exposes empty scripted effects that you
 | `dr_collect_facility_counts_submods` | `recalculate_dynamic_research_slots` | Every recalculation tick (daily for players, staggered for AI) | Count custom buildings, scripted states or other sources that should translate into facility-style RP. |
 | `dr_apply_facility_rp_submods` | `recalculate_dynamic_research_slots` | Immediately after vanilla facilities converted to RP | Turn your custom counters into flat RP, or add extra RP buckets. |
 | `dr_total_rp_modifier_submods` | `recalculate_dynamic_research_slots` | After the vanilla `total_rp_modifier` multiplier is applied | Final tweaks to `total_research_power`, e.g., faction-wide buffs, ideology bonuses, or penalties. |
+| `dr_get_opinion_factor_for_ally_submods` *(since v1.4)* | `dr_apply_alliance_rp_logic` | During alliance RP calculation (per alliance member) | Override opinion factor calculation (0.0 to 1.0) for alliance members. Must set `dr_opinion_factor_custom_set` flag when providing custom value. |
 
 **Detailed hook descriptions**:
 
@@ -141,6 +142,21 @@ To avoid editing the core logic, the mod exposes empty scripted effects that you
 
 - **`dr_total_rp_modifier_submods`**  
   Fires after `total_rp_modifier` was applied globally. Use it for extra multiplicative/flat tweaks (e.g., ideology-based bonuses) without touching `dr_apply_rp_modifier_logic`.
+
+- **`dr_get_opinion_factor_for_ally_submods`** *(since version 1.4)*  
+  Executes during alliance RP calculation for each alliance member. Allows you to override the opinion factor calculation (0.0 to 1.0) used for alliance bonuses. When providing a custom value, you must set the `dr_opinion_factor_custom_set` flag to signal that the default calculation should be skipped. This allows you to explicitly set 0.0 if needed, or implement custom opinion scaling logic. Example:
+  ```txt
+  dr_get_opinion_factor_for_ally_submods = {
+      # Custom opinion calculation
+      if = { limit = { has_opinion = { target = ROOT value > 50 } }
+          set_variable = { alliance_rel_factor = 1.0 }
+      }
+      else = {
+          set_variable = { alliance_rel_factor = 0.5 }
+      }
+      set_country_flag = dr_opinion_factor_custom_set  # IMPORTANT: Signal custom value
+  }
+  ```
 
 **Multiple submods**: If multiple submods override the same hook, standard HOI4 load-order rules apply—the later one wins. Coordinate via dependencies when distributing public submods, or design your hooks to be additive rather than overwriting.
 
@@ -412,14 +428,20 @@ You can also define new game rule options (in your submod's `common/game_rules`)
 
 ### Goal
 
-You want for example:
+You want to change the default RP values for experimental facilities. The current defaults are:
+- nuclear facilities: +30 RP each
+- air/naval/land facilities: +15 RP each
+- All facilities have a 15% diminishing returns reduction applied
 
+**Note**: The mod also supports nuclear reactors (nuclear_reactor, nuclear_reactor_heavy_water, commercial_nuclear_reactor) which are automatically counted and included in RP calculations. These reactors use configurable RP values in `00_dr_dynamic_research_config.txt` (default: 20, 35, and 12 RP respectively), just like experimental facilities.
+
+For example, you might want:
 - nuclear facilities to grant only +20 RP each,
 - air/naval/land facilities to grant only +10 RP each.
 
 ### Steps
 
-In `dr_apply_research_config` the RP per facility variables are defined:
+In `dr_apply_research_config_submods` (or by overriding `dr_reset_research_config_defaults`), you can set the RP per facility variables:
 
 ```txt
   # RP per experimental facility (per building)
@@ -427,9 +449,29 @@ In `dr_apply_research_config` the RP per facility variables are defined:
   set_variable = { rp_per_naval_facility = 10 }
   set_variable = { rp_per_air_facility = 10 }
   set_variable = { rp_per_land_facility = 10 }
+  
+  # RP per nuclear reactor (per building)
+  set_variable = { rp_per_nuclear_reactor = 15 }
+  set_variable = { rp_per_heavy_water_reactor = 30 }
+  set_variable = { rp_per_commercial_reactor = 10 }
 ```
 
-The core logic (`recalculate_dynamic_research_slots`) multiplies these values with the number of respective facilities. You don't need to change anything there.
+You can also adjust the diminishing returns reduction factors:
+
+```txt
+  # Reduction factor (0.0 = no reduction, 0.15 = 15% reduction per additional facility)
+  set_variable = { experimental_facility_rp_reduction_nuclear = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_naval = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_air = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_land = 0.1 }
+  
+  # Reduction factor for reactors
+  set_variable = { experimental_facility_rp_reduction_nuclear_reactor = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_heavy_water_reactor = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_commercial_reactor = 0.1 }
+```
+
+**Note on Diminishing Returns:** The system applies a linear diminishing return formula: `total_rp = n * base_rp * (1 - reduction * (n - 1) / 2)`. With the default 15% reduction, the optimal number of facilities is around 7, after which total RP starts decreasing. Lower reduction values allow more facilities before hitting the efficiency cap, while higher values make stacking less effective.
 
 ---
 

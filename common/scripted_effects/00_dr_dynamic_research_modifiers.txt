@@ -21,14 +21,348 @@ dr_apply_rp_modifier_logic = {
 	dr_apply_alliance_rp_logic = yes
 }
 
-dr_apply_war_rp_logic = {
-	# War-time RP modifier (global, applied to total RP)
-	set_variable = { war_rp_base_penalty = 0 }
+# Calculate war penalty factors (war support, stability, ruling party)
+# Sets: war_penalty_factor_ws, war_penalty_factor_stab, war_penalty_factor_party
+dr_calculate_war_penalty_factors = {
 	set_variable = { war_penalty_factor_ws = 0 }
 	set_variable = { war_penalty_factor_stab = 0 }
 	set_variable = { war_penalty_factor_party = 0 }
-	set_variable = { war_phase_factor = 0 }
+
+	# War support factor (0.0-0.4), 5 grobe Stufen statt 1%-Schritte
+	set_variable = { war_penalty_factor_ws = 0.40 }
+	if = { limit = { has_war_support > 0.20 } set_variable = { war_penalty_factor_ws = 0.30 } }
+	if = { limit = { has_war_support > 0.40 } set_variable = { war_penalty_factor_ws = 0.20 } }
+	if = { limit = { has_war_support > 0.60 } set_variable = { war_penalty_factor_ws = 0.10 } }
+	if = { limit = { has_war_support > 0.80 } set_variable = { war_penalty_factor_ws = 0.00 } }
+
+	# Stability factor (0.0-0.3), 5 grobe Stufen statt 1%-Schritte
+	set_variable = { war_penalty_factor_stab = 0.30 }
+	if = { limit = { has_stability > 0.20 } set_variable = { war_penalty_factor_stab = 0.24 } }
+	if = { limit = { has_stability > 0.40 } set_variable = { war_penalty_factor_stab = 0.18 } }
+	if = { limit = { has_stability > 0.60 } set_variable = { war_penalty_factor_stab = 0.12 } }
+	if = { limit = { has_stability > 0.80 } set_variable = { war_penalty_factor_stab = 0.00 } }
+
+	# Ruling party factor (0.0-0.4), based on ruling ideology popularity.
+	set_variable = { war_penalty_factor_party = 0.4 }
+
+	# Calculate government support factor using helper effect
+	# Democratic government
+	if = {
+		limit = { has_government = democratic }
+		set_variable = { temp_government_popularity = democratic }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
+	}
+
+	# Fascist government
+	if = {
+		limit = { has_government = fascism }
+		set_variable = { temp_government_popularity = fascism }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
+	}
+
+	# Communist government
+	if = {
+		limit = { has_government = communism }
+		set_variable = { temp_government_popularity = communism }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
+	}
+
+	# Neutral or other government
+	if = {
+		limit = { has_government = neutrality }
+		set_variable = { temp_government_popularity = neutrality }
+		dr_get_government_support_factor = yes
+		set_variable = { war_penalty_factor_party = government_support_factor }
+	}
+}
+
+# Helper effect: Calculate government support factor based on popularity
+# Expects: temp_government_popularity (variable containing popularity value, e.g., democratic, fascism, communism, neutrality)
+# Sets: government_support_factor (0.0, 0.1, 0.2, 0.3, or 0.4) based on config thresholds
+# Uses config variables: government_support_threshold_very_low, government_support_threshold_low, government_support_threshold_medium, government_support_threshold_high, government_support_threshold_very_high
+dr_get_government_support_factor = {
+	set_variable = { government_support_factor = 0.4 }
+	
+	# Check against thresholds (from highest to lowest for better performance)
+	# Very high support (> very_high): 0.0 (best)
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_high
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.0 }
+	}
+	# High support (high - very_high): 0.1
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_high
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_high
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.1 }
+	}
+	# Medium support (medium - high): 0.1 (unchanged for compatibility)
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_high
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_medium
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.1 }
+	}
+	# Low support (low - medium): 0.2
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_medium
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_low
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.2 }
+	}
+	# Very low support (very_low - low): 0.3
+	if = {
+		limit = {
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_low
+				compare = less_than_or_equals
+			}
+			check_variable = {
+				var = temp_government_popularity
+				value = government_support_threshold_very_low
+				compare = greater_than
+			}
+		}
+		set_variable = { government_support_factor = 0.3 }
+	}
+	# Below very_low threshold remains 0.4 (worst, default)
+}
+
+# Calculate war phase factor based on war duration and type
+# Sets: war_phase_factor, war_defense_factor
+dr_calculate_war_phase_factor = {
+	set_variable = { war_phase_factor = 0.0 }
 	set_variable = { war_defense_factor = 1.0 }
+
+	# Defensive vs. offensive war
+	if = {
+		limit = {
+			has_defensive_war = yes
+			has_offensive_war = no
+		}
+		set_variable = { war_defense_factor = 0.5 }
+	}
+
+	# Transition phase: offensive war ~3 months, defensive war ~6 months
+
+	# Offensive war (at least one offensive war)
+	if = {
+		limit = { has_offensive_war = yes }
+
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 30
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 0.33 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 60
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 0.66 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 90
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 1.0 }
+		}
+	}
+
+	# Pure defensive war
+	if = {
+		limit = {
+			has_defensive_war = yes
+			has_offensive_war = no
+		}
+
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 60
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 0.33 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 120
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 0.66 }
+		}
+		if = {
+			limit = {
+				check_variable = {
+					var = dr_days_in_war
+					value = 180
+					compare = greater_than_or_equals
+				}
+			}
+			set_variable = { war_phase_factor = 1.0 }
+		}
+	}
+}
+
+# Calculate peacetime bonus based on stability and ruling party support
+# Sets: peace_rp_bonus
+dr_calculate_peace_bonus = {
+	set_variable = { peace_rp_bonus = 0 }
+	if = {
+		limit = { has_war = no }
+
+		# Stability contribution
+		if = {
+			limit = { has_stability > 0.7 }
+			add_to_variable = { peace_rp_bonus = 0.02 }
+		}
+		if = {
+			limit = { has_stability > 0.85 }
+			add_to_variable = { peace_rp_bonus = 0.01 }
+		}
+
+		# Ruling party contribution (using helper effect for consistency)
+		# Democratic government
+		if = {
+			limit = { has_government = democratic }
+			set_variable = { temp_government_popularity = democratic }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
+			}
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
+		}
+
+		# Fascist government
+		if = {
+			limit = { has_government = fascism }
+			set_variable = { temp_government_popularity = fascism }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
+			}
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
+		}
+
+		# Communist government
+		if = {
+			limit = { has_government = communism }
+			set_variable = { temp_government_popularity = communism }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
+			}
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
+		}
+
+		# Neutral or other government
+		if = {
+			limit = { has_government = neutrality }
+			set_variable = { temp_government_popularity = neutrality }
+			if = {
+				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
+				add_to_variable = { peace_rp_bonus = 0.03 }
+			}
+			if = {
+				limit = {
+					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
+					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
+				}
+				add_to_variable = { peace_rp_bonus = 0.02 }
+			}
+		}
+
+		# Cap at +5%
+		if = {
+			limit = {
+				check_variable = {
+					var = peace_rp_bonus
+					value = 0.05
+					compare = greater_than
+				}
+			}
+			set_variable = { peace_rp_bonus = 0.05 }
+		}
+
+		add_to_variable = { total_rp_modifier = peace_rp_bonus }
+	}
+}
+
+dr_apply_war_rp_logic = {
+	# War-time RP modifier (global, applied to total RP)
+	set_variable = { war_rp_base_penalty = 0 }
 	set_variable = { war_penalty_factor_total = 0 }
 	set_variable = { war_rp_penalty_effective = 0 }
 
@@ -61,202 +395,11 @@ dr_apply_war_rp_logic = {
 			set_variable = { war_rp_base_penalty = 0.30 }
 		}
 
-		# War support factor (0.0-0.4), 5 grobe Stufen statt 1%-Schritte
-		set_variable = { war_penalty_factor_ws = 0.40 }
-		if = { limit = { has_war_support > 0.20 } set_variable = { war_penalty_factor_ws = 0.30 } }
-		if = { limit = { has_war_support > 0.40 } set_variable = { war_penalty_factor_ws = 0.20 } }
-		if = { limit = { has_war_support > 0.60 } set_variable = { war_penalty_factor_ws = 0.10 } }
-		if = { limit = { has_war_support > 0.80 } set_variable = { war_penalty_factor_ws = 0.00 } }
+		# Calculate penalty factors (war support, stability, ruling party)
+		dr_calculate_war_penalty_factors = yes
 
-		# Stability factor (0.0-0.3), 5 grobe Stufen statt 1%-Schritte
-		set_variable = { war_penalty_factor_stab = 0.30 }
-		if = { limit = { has_stability > 0.20 } set_variable = { war_penalty_factor_stab = 0.24 } }
-		if = { limit = { has_stability > 0.40 } set_variable = { war_penalty_factor_stab = 0.18 } }
-		if = { limit = { has_stability > 0.60 } set_variable = { war_penalty_factor_stab = 0.12 } }
-		if = { limit = { has_stability > 0.80 } set_variable = { war_penalty_factor_stab = 0.00 } }
-
-		# Ruling party factor (0.0-0.3), based on ruling ideology popularity.
-		set_variable = { war_penalty_factor_party = 0.3 }
-
-		# Demokratische Regierung
-		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.4
-			}
-			set_variable = { war_penalty_factor_party = 0.2 }
-		}
-		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.55
-			}
-			set_variable = { war_penalty_factor_party = 0.1 }
-		}
-		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.7
-			}
-			set_variable = { war_penalty_factor_party = 0.0 }
-		}
-
-		# Fascist government
-		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.4
-			}
-			set_variable = { war_penalty_factor_party = 0.2 }
-		}
-		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.55
-			}
-			set_variable = { war_penalty_factor_party = 0.1 }
-		}
-		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.7
-			}
-			set_variable = { war_penalty_factor_party = 0.0 }
-		}
-
-		# Communist government
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.4
-			}
-			set_variable = { war_penalty_factor_party = 0.2 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.55
-			}
-			set_variable = { war_penalty_factor_party = 0.1 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.7
-			}
-			set_variable = { war_penalty_factor_party = 0.0 }
-		}
-
-		# Neutral or other government
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.4
-			}
-			set_variable = { war_penalty_factor_party = 0.2 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.55
-			}
-			set_variable = { war_penalty_factor_party = 0.1 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.7
-			}
-			set_variable = { war_penalty_factor_party = 0.0 }
-		}
-
-		# Defensive vs. offensive war
-		set_variable = { war_defense_factor = 1.0 }
-		if = {
-			limit = {
-				has_defensive_war = yes
-				has_offensive_war = no
-			}
-			set_variable = { war_defense_factor = 0.5 }
-		}
-
-		# Transition phase: offensive war ~3 months, defensive war ~6 months
-		set_variable = { war_phase_factor = 0.0 }
-
-		# Offensive war (at least one offensive war)
-		if = {
-			limit = { has_offensive_war = yes }
-
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 30
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 0.33 }
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 60
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 0.66 }
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 90
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 1.0 }
-			}
-		}
-
-		# Pure defensive war
-		if = {
-			limit = {
-				has_defensive_war = yes
-				has_offensive_war = no
-			}
-
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 60
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 0.33 }
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 120
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 0.66 }
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = dr_days_in_war
-						value = 180
-						compare = greater_than_or_equals
-					}
-				}
-				set_variable = { war_phase_factor = 1.0 }
-			}
-		}
+		# Calculate phase factor (war duration and type)
+		dr_calculate_war_phase_factor = yes
 
 		# Combined war penalty factor
 		set_variable = { war_penalty_factor_total = 0 }
@@ -273,93 +416,8 @@ dr_apply_war_rp_logic = {
 		add_to_variable = { total_rp_modifier = war_rp_penalty_effective }
 	}
 
-	# Peacetime bonus with high stability and strong ruling party support
-	set_variable = { peace_rp_bonus = 0 }
-	if = {
-		limit = { has_war = no }
-
-		# Stability contribution
-		if = {
-			limit = { has_stability > 0.7 }
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = { has_stability > 0.85 }
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-
-		# Ruling party contribution
-		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.7
-			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = democratic
-				democratic > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.7
-			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = fascism
-				fascism > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.7
-			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = communism
-				communism > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.7
-			}
-			add_to_variable = { peace_rp_bonus = 0.02 }
-		}
-		if = {
-			limit = {
-				has_government = neutrality
-				neutrality > 0.85
-			}
-			add_to_variable = { peace_rp_bonus = 0.01 }
-		}
-
-		# Cap at +5%
-		if = {
-			limit = {
-				check_variable = {
-					var = peace_rp_bonus
-					value = 0.05
-					compare = greater_than
-				}
-			}
-			set_variable = { peace_rp_bonus = 0.05 }
-		}
-
-		add_to_variable = { total_rp_modifier = peace_rp_bonus }
-	}
+	# Calculate peacetime bonus
+	dr_calculate_peace_bonus = yes
 }
 
 dr_apply_law_rp_logic = {
@@ -420,6 +478,91 @@ dr_apply_law_rp_logic = {
 	}
 }
 
+# Helper effect: Calculate opinion factor for an ally (0.0 to 1.0 in 0.1 steps)
+# Uses reverse checking (from highest to lowest) for better average performance
+# Sets: alliance_rel_factor
+dr_get_opinion_factor_for_ally = {
+	set_variable = { alliance_rel_factor = 0.0 }
+	
+	# Check from highest to lowest (reverse order for better average performance)
+	if = {
+		limit = { has_opinion = { target = ROOT value > 79 } } # 80+
+		set_variable = { alliance_rel_factor = 1.0 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 71 } # 72-79
+			NOT = { has_opinion = { target = ROOT value > 79 } }
+		}
+		set_variable = { alliance_rel_factor = 0.9 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 63 } # 64-71
+			NOT = { has_opinion = { target = ROOT value > 71 } }
+		}
+		set_variable = { alliance_rel_factor = 0.8 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 55 } # 56-63
+			NOT = { has_opinion = { target = ROOT value > 63 } }
+		}
+		set_variable = { alliance_rel_factor = 0.7 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 47 } # 48-55
+			NOT = { has_opinion = { target = ROOT value > 55 } }
+		}
+		set_variable = { alliance_rel_factor = 0.6 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 39 } # 40-47
+			NOT = { has_opinion = { target = ROOT value > 47 } }
+		}
+		set_variable = { alliance_rel_factor = 0.5 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 31 } # 32-39
+			NOT = { has_opinion = { target = ROOT value > 39 } }
+		}
+		set_variable = { alliance_rel_factor = 0.4 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 23 } # 24-31
+			NOT = { has_opinion = { target = ROOT value > 31 } }
+		}
+		set_variable = { alliance_rel_factor = 0.3 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 15 } # 16-23
+			NOT = { has_opinion = { target = ROOT value > 23 } }
+		}
+		set_variable = { alliance_rel_factor = 0.2 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = ROOT value > 7 } # 8-15
+			NOT = { has_opinion = { target = ROOT value > 15 } }
+		}
+		set_variable = { alliance_rel_factor = 0.1 }
+	}
+	# 0-7 remains 0.0 (default)
+}
+
+# Submod hook: override opinion factor calculation for alliance members
+# If this hook sets alliance_rel_factor and sets the dr_opinion_factor_custom_set flag,
+# the default calculation is skipped. This allows submods to explicitly set 0.0 if needed.
+# Example:
+#   set_variable = { alliance_rel_factor = 0.5 }
+#   set_country_flag = dr_opinion_factor_custom_set
+dr_get_opinion_factor_for_ally_submods = { }
+
 dr_apply_alliance_rp_logic = {
 	# Alliance / faction RP modifier
 	# 5% per ally, scaled by relations and capped by game rule.
@@ -477,6 +620,7 @@ dr_apply_alliance_rp_logic = {
 
 				ROOT = { add_to_variable = { alliance_member_count = 1 } }
 
+				# Calculate opinion factor (0.0 to 1.0 in 0.1 steps)
 				# Relation factor g_rel in 10 steps between 0 and 80 opinion:
 				# 0-7  -> 0.0
 				# 8-15 -> 0.1
@@ -490,73 +634,26 @@ dr_apply_alliance_rp_logic = {
 				# 72-79 -> 0.9
 				# 80+   -> 1.0
 
-				if = {
-					limit = { has_opinion = { target = ROOT value > 79 } } # 80+
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 1.0 } }
+				# Reset factor and flag before calculation
+				ROOT = { 
+					set_variable = { alliance_rel_factor = 0.0 }
+					clr_country_flag = dr_opinion_factor_custom_set
 				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 71 } # 72-79
-						NOT = { has_opinion = { target = ROOT value > 79 } }
+				
+				# Allow submods to override opinion calculation
+				# Submods should set dr_opinion_factor_custom_set flag if they set a custom value
+				ROOT = { dr_get_opinion_factor_for_ally_submods = yes }
+				
+				# Default calculation (only if submod didn't set it)
+				ROOT = {
+					if = {
+						limit = { NOT = { has_country_flag = dr_opinion_factor_custom_set } }
+						dr_get_opinion_factor_for_ally = yes
 					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.9 } }
 				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 63 } # 64-71
-						NOT = { has_opinion = { target = ROOT value > 71 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.8 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 55 } # 56-63
-						NOT = { has_opinion = { target = ROOT value > 63 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.7 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 47 } # 48-55
-						NOT = { has_opinion = { target = ROOT value > 55 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.6 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 39 } # 40-47
-						NOT = { has_opinion = { target = ROOT value > 47 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.5 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 31 } # 32-39
-						NOT = { has_opinion = { target = ROOT value > 39 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.4 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 23 } # 24-31
-						NOT = { has_opinion = { target = ROOT value > 31 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.3 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 15 } # 16-23
-						NOT = { has_opinion = { target = ROOT value > 23 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.2 } }
-				}
-				if = {
-					limit = {
-						has_opinion = { target = ROOT value > 7 } # 8-15
-						NOT = { has_opinion = { target = ROOT value > 15 } }
-					}
-					ROOT = { add_to_variable = { alliance_rel_factor_sum = 0.1 } }
-				}
+				
+				# Add to sum
+				ROOT = { add_to_variable = { alliance_rel_factor_sum = alliance_rel_factor } }
 			}
 
 			# 5% base bonus per ally, capped by game rule and scaled with average relation.

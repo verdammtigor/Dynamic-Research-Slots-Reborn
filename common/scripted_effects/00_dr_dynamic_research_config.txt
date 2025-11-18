@@ -61,10 +61,31 @@ dr_reset_research_config_defaults = {
 	set_variable = { research_power_per_nav = 2 }
 
 	# RP per experimental facility (per building)
-	set_variable = { rp_per_nuclear_facility = 50 }
-	set_variable = { rp_per_naval_facility = 35 }
-	set_variable = { rp_per_air_facility = 35 }
-	set_variable = { rp_per_land_facility = 35 }
+	set_variable = { rp_per_nuclear_facility = 30 }
+	set_variable = { rp_per_naval_facility = 15 }
+	set_variable = { rp_per_air_facility = 15 }
+	set_variable = { rp_per_land_facility = 15 }
+	# Reduction factor applied per additional facility of each type (0 = flat bonus)
+	set_variable = { experimental_facility_rp_reduction_nuclear = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_naval = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_air = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_land = 0.15 }
+	
+	# RP per nuclear reactor (per building)
+	set_variable = { rp_per_nuclear_reactor = 20 }
+	set_variable = { rp_per_heavy_water_reactor = 35 }
+	set_variable = { rp_per_commercial_reactor = 12 }
+	# Reduction factor applied per additional reactor of each type (0 = flat bonus)
+	set_variable = { experimental_facility_rp_reduction_nuclear_reactor = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_heavy_water_reactor = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_commercial_reactor = 0.15 }
+
+	# Government support thresholds for war/peace RP modifiers
+	set_variable = { government_support_threshold_very_low = 0.25 }
+	set_variable = { government_support_threshold_low = 0.4 }
+	set_variable = { government_support_threshold_medium = 0.55 }
+	set_variable = { government_support_threshold_high = 0.7 }
+	set_variable = { government_support_threshold_very_high = 0.85 }
 
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.

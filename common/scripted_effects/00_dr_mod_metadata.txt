@@ -10,7 +10,7 @@
 dr_set_mod_metadata = {
 	# Set mod version for compatibility checks by other mods
 	# Update this value when releasing a new version to match descriptor.mod
-	set_variable = { dr_mod_version = 1.3 }
+	set_variable = { dr_mod_version = 1.4 }
 	
 	# Signal that Dynamic Research Slots is active
 	set_global_flag = dynamic_research_slots_active

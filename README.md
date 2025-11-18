@@ -5,7 +5,7 @@ This repository contains the updated and extended version of the mod **“Dynami
 ## What the mod does (for players)
 
 - The number of your research slots is no longer static but depends on your **industry**.
-- Civilian factories, military factories, dockyards and **experimental facilities** generate **Research Power (RP)**.
+- Civilian factories, military factories, dockyards, **experimental facilities** and **nuclear reactors** generate **Research Power (RP)**.
 - When your RP crosses certain thresholds, you gain additional research slots.
 - Some of the slots are **Easy Research Slots**: they are easier to maintain (require less RP).
 

@@ -287,22 +287,22 @@ recalculate_dynamic_research_slots = {
 			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_land }
 			dr_apply_facility_rp_if_present = yes
 			
-			# Nuclear Reactor: 20 RP (mit reduzierender RP-Generierung)
+			# Nuclear Reactor
 			set_variable = { facility_count_var = nuclear_reactor_count }
-			set_variable = { rp_per_facility_value = 20 }
-			set_variable = { reduction_factor_value = 0.15 }
+			set_variable = { rp_per_facility_value = rp_per_nuclear_reactor }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_nuclear_reactor }
 			dr_apply_facility_rp_if_present = yes
 			
-			# Heavy Water Reactor: 35 RP (mit reduzierender RP-Generierung)
+			# Heavy Water Reactor
 			set_variable = { facility_count_var = heavy_water_reactor_count }
-			set_variable = { rp_per_facility_value = 35 }
-			set_variable = { reduction_factor_value = 0.15 }
+			set_variable = { rp_per_facility_value = rp_per_heavy_water_reactor }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_heavy_water_reactor }
 			dr_apply_facility_rp_if_present = yes
 			
-			# Commercial Reactor: 12 RP (mit reduzierender RP-Generierung)
+			# Commercial Reactor
 			set_variable = { facility_count_var = commercial_reactor_count }
-			set_variable = { rp_per_facility_value = 12 }
-			set_variable = { reduction_factor_value = 0.15 }
+			set_variable = { rp_per_facility_value = rp_per_commercial_reactor }
+			set_variable = { reduction_factor_value = experimental_facility_rp_reduction_commercial_reactor }
 			dr_apply_facility_rp_if_present = yes
 		}
 

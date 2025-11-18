@@ -70,6 +70,15 @@ dr_reset_research_config_defaults = {
 	set_variable = { experimental_facility_rp_reduction_naval = 0.15 }
 	set_variable = { experimental_facility_rp_reduction_air = 0.15 }
 	set_variable = { experimental_facility_rp_reduction_land = 0.15 }
+	
+	# RP per nuclear reactor (per building)
+	set_variable = { rp_per_nuclear_reactor = 20 }
+	set_variable = { rp_per_heavy_water_reactor = 35 }
+	set_variable = { rp_per_commercial_reactor = 12 }
+	# Reduction factor applied per additional reactor of each type (0 = flat bonus)
+	set_variable = { experimental_facility_rp_reduction_nuclear_reactor = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_heavy_water_reactor = 0.15 }
+	set_variable = { experimental_facility_rp_reduction_commercial_reactor = 0.15 }
 
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.

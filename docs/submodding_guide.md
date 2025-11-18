@@ -433,6 +433,8 @@ You want to change the default RP values for experimental facilities. The curren
 - air/naval/land facilities: +15 RP each
 - All facilities have a 15% diminishing returns reduction applied
 
+**Note**: The mod also supports nuclear reactors (nuclear_reactor, nuclear_reactor_heavy_water, commercial_nuclear_reactor) which are automatically counted and included in RP calculations. These reactors use configurable RP values in `00_dr_dynamic_research_config.txt` (default: 20, 35, and 12 RP respectively), just like experimental facilities.
+
 For example, you might want:
 - nuclear facilities to grant only +20 RP each,
 - air/naval/land facilities to grant only +10 RP each.
@@ -447,6 +449,11 @@ In `dr_apply_research_config_submods` (or by overriding `dr_reset_research_confi
   set_variable = { rp_per_naval_facility = 10 }
   set_variable = { rp_per_air_facility = 10 }
   set_variable = { rp_per_land_facility = 10 }
+  
+  # RP per nuclear reactor (per building)
+  set_variable = { rp_per_nuclear_reactor = 15 }
+  set_variable = { rp_per_heavy_water_reactor = 30 }
+  set_variable = { rp_per_commercial_reactor = 10 }
 ```
 
 You can also adjust the diminishing returns reduction factors:
@@ -457,6 +464,11 @@ You can also adjust the diminishing returns reduction factors:
   set_variable = { experimental_facility_rp_reduction_naval = 0.1 }
   set_variable = { experimental_facility_rp_reduction_air = 0.1 }
   set_variable = { experimental_facility_rp_reduction_land = 0.1 }
+  
+  # Reduction factor for reactors
+  set_variable = { experimental_facility_rp_reduction_nuclear_reactor = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_heavy_water_reactor = 0.1 }
+  set_variable = { experimental_facility_rp_reduction_commercial_reactor = 0.1 }
 ```
 
 **Note on Diminishing Returns:** The system applies a linear diminishing return formula: `total_rp = n * base_rp * (1 - reduction * (n - 1) / 2)`. With the default 15% reduction, the optimal number of facilities is around 7, after which total RP starts decreasing. Lower reduction values allow more facilities before hitting the efficiency cap, while higher values make stacking less effective.

@@ -63,8 +63,8 @@ Player countries recalculate **every day** for responsive gameplay:
   - For 10 states: ~0.1ms
   - For 50 states: ~0.5ms
   - For 100+ states: ~1ms+
-- Facility count validation *(since version 1.4)*: ~0.0004ms (4 checks)
-- Facility RP application: ~0.01ms (uses helper effect `dr_calculate_single_facility_rp` since version 1.4)
+- Facility count validation *(since version 1.4)*: ~0.0007ms (7 checks: 4 facilities + 3 reactors)
+- Facility RP application: ~0.01ms (uses helper effects `dr_apply_facility_rp_if_present` and `dr_calculate_single_facility_rp` since version 1.4)
 - Global modifier application: ~0.001ms
 - Modifier validation and capping *(since version 1.4)*: ~0.0001ms
 - Total RP validation *(since version 1.4)*: ~0.0001ms
@@ -144,8 +144,9 @@ The main performance bottlenecks in the base mod are:
 - 100 states: ~1ms
 
 **Performance improvements** *(since version 1.4)*:
-- Helper effect `dr_calculate_single_facility_rp` reduces code duplication without performance impact
-- Facility RP calculation is now more maintainable with same performance characteristics
+- Helper effects `dr_apply_facility_rp_if_present` and `dr_calculate_single_facility_rp` reduce code duplication without performance impact
+- Facility RP calculation refactored following DRY principle: reduced from ~100 lines to ~40 lines while maintaining same performance characteristics
+- All facility types (4 experimental facilities + 3 nuclear reactors) now use unified helper interface
 
 ⚠️ **Main bottleneck** - Scales with state count. Can be disabled via `dr_disable_facility_rp` flag.
 

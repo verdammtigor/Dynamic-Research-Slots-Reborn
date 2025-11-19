@@ -9,7 +9,7 @@ Dynamic Research Slots Reborn is designed with performance in mind. The base mod
 **Key Performance Characteristics:**
 - **Startup**: ~20-30ms total overhead (includes one-time initial calculation for all AI countries to ensure accuracy from day 1)
 - **Daily (Player)**: ~0.5-2ms per recalculation (depending on state count and configuration)
-- **Daily (AI)**: Staggered updates (~1/30th of AI countries per day) reduce impact to ~1-1.5ms per day (full calculation cost; compatibility hooks overhead is only ~0.1ms/day)
+- **Daily (AI)**: Staggered updates (~1/14th of AI countries per day by default) reduce impact to ~2-3ms per day (full calculation cost; compatibility hooks overhead is only ~0.1ms/day)
 - **Compatibility Features**: Zero overhead when unused (empty hooks, fast flag checks)
 
 The performance impact depends primarily on:
@@ -91,10 +91,11 @@ Player countries recalculate **every day** for responsive gameplay:
 AI countries use **staggered updates** to reduce overhead:
 
 - **Startup**: All AI countries get an initial calculation at game start to ensure correct research slots from day 1 (see startup performance above)
-- **Runtime**: Only ~1/30th of AI countries recalculate per day (random offset, 30-day cycle, timer initialized at startup)
+- **Runtime**: Only ~1/14th of AI countries recalculate per day by default (random offset, 14-day cycle by default, configurable via `dr_ai_update_frequency`, timer initialized at startup)
 - Same calculation cost as player when triggered (~0.2-1.5ms per calculation, typically ~0.5ms)
-- **Per day impact**: ~(AI_countries / 30) × 0.5ms ≈ **~1-1.5ms per day** for 70 AI countries
-- **Annual impact**: ~1-1.5ms per day × 365 days ≈ **~0.4-0.5 seconds per year**
+- **Per day impact**: ~(AI_countries / 14) × 0.5ms ≈ **~2-3ms per day** for 70 AI countries (with default 14-day frequency)
+- **Annual impact**: ~2-3ms per day × 365 days ≈ **~0.7-1.1 seconds per year** (with default 14-day frequency)
+- **Note**: The update frequency is configurable via `dr_ai_update_frequency` (default: 14 days). Submods can override this value to adjust the balance between performance and responsiveness.
 
 ✅ **Verdict**: Excellent performance. The initial startup calculation ensures accuracy from day 1, while staggered runtime updates keep daily overhead minimal while maintaining game balance.
 
@@ -314,11 +315,11 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 
 **AI countries**:
 - **Note**: AI countries get an initial calculation at startup (see section 1.1 above) to ensure correct research slots from day 1.
-- `recalculate_dynamic_research_slots` runs **every ~30 days** (staggered, timer initialized at startup)
+- `recalculate_dynamic_research_slots` runs **every ~14 days by default** (staggered, timer initialized at startup, configurable via `dr_ai_update_frequency`)
 - Same hooks and checks as player
 - Edge-case validations *(since version 1.4)* - same overhead as player
 
-**Per day**: ~1 player + ~(number_of_AI_countries / 30) recalculations
+**Per day**: ~1 player + ~(number_of_AI_countries / 14) recalculations (with default 14-day frequency)
 
 **Note**: Alliance opinion hook `dr_get_opinion_factor_for_ally_submods` runs during alliance bonus calculation (every 7 days), not during daily recalculation. Performance impact is included in alliance bonus calculation estimates.
 
@@ -586,7 +587,7 @@ Different game rule configurations have minimal performance impact:
 ✅ **Already optimized**:
 - Empty hooks have zero overhead
 - Flag checks are fast and skip expensive operations
-- AI uses staggered updates (only ~1/30th of AI countries update per day)
+- AI uses staggered updates (only ~1/14th of AI countries update per day by default, configurable via `dr_ai_update_frequency`)
 - Player updates are necessary for responsive gameplay
 - Alliance bonus uses 7-day timer to avoid daily overhead
 - Conditional execution skips expensive calculations when disabled

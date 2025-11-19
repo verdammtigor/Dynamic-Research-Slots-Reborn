@@ -59,7 +59,7 @@ At game start, every country runs:
 This sets up all internal variables and the RP thresholds.
 
 **AI countries** additionally:
-- Initialize the staggered update timer (`dr_days_until_update`) with a random offset (1–30 days)
+- Initialize the staggered update timer (`dr_days_until_update`) with a random offset (1–14 days by default, configurable via `dr_ai_update_frequency`)
 - Run `recalculate_dynamic_research_slots = yes` to set correct research slots from day 1
 
 This ensures AI countries have accurate research slots immediately at game start, before their first staggered update cycle begins.
@@ -82,11 +82,12 @@ Player country:
 
 AI countries:
 - **Note**: AI countries get an initial calculation at startup (see `on_startup` above) to ensure correct research slots from day 1.
-- Use a staggered update for subsequent calculations: `dr_days_until_update` counts down from a random offset (1–30 days, initialized at startup), then triggers:
+- Use a staggered update for subsequent calculations: `dr_days_until_update` counts down from a random offset (1–14 days by default, configurable via `dr_ai_update_frequency`, initialized at startup), then triggers:
   - `calculate_modifiers_to_rp`
   - `recalculate_dynamic_research_slots`
-- The timer resets to 30 days after each update cycle.
+- The timer resets to `dr_ai_update_frequency` (14 days by default) after each update cycle.
 - This staggered approach reduces performance overhead while maintaining accurate research slots.
+- The update frequency can be customized via the `dr_ai_update_frequency` config variable (set in `dr_reset_research_config_defaults`, overrideable via `dr_apply_research_config_submods`).
 
 ---
 
@@ -244,7 +245,8 @@ Arrays:
 Timers and cooldowns:
 
 - `dr_player_event_cooldown` – cooldown timer for player notification events (14 days).
-- `dr_days_until_update` – AI update timer (1-30 days, staggered).
+- `dr_days_until_update` – AI update timer (1-14 days by default, staggered, configurable via `dr_ai_update_frequency`).
+- `dr_ai_update_frequency` – Configuration variable for AI update frequency (default: 14 days, set in `dr_reset_research_config_defaults`).
 - `dr_days_until_alliance_update` – alliance bonus update timer (7 days).
 
 ---
@@ -681,6 +683,7 @@ This effect is called from `initialize_dynamic_research_slots` and is responsibl
 - Setting base RP weights (`research_power_per_civ`, `research_power_per_mil`, `research_power_per_nav`).
 - Filling the arrays `base_research_for_slot` and `research_for_slot` with the default thresholds.
 - Setting and adjusting `easy_research_slots` and `easy_research_slot_coefficient` (including game-rule overrides).
+- Setting AI update frequency (`dr_ai_update_frequency`, default: 14 days).
 
 Internally the effect is split into smaller helpers:
 - `dr_reset_research_config_defaults` – sets all base values

@@ -183,6 +183,9 @@ dr_initialize_submods = {
 # Adjust configuration values
 dr_apply_research_config_submods = {
   add_to_variable = { rp_per_nuclear_facility = 10 }
+  # Example: Change AI update frequency (default: 14 days)
+  # set_variable = { dr_ai_update_frequency = 7 }  # More responsive (7 days)
+  # set_variable = { dr_ai_update_frequency = 21 } # Better performance (21 days)
 }
 ```
 

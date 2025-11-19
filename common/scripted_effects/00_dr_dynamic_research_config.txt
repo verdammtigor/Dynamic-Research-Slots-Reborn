@@ -116,6 +116,9 @@ dr_reset_research_config_defaults = {
 	# Default Easy Slot setup
 	set_variable = { easy_research_slots = 2 }
 	set_variable = { easy_research_slot_coefficient = 0.6 }
+
+	# AI update frequency (days between staggered updates for AI countries)
+	set_variable = { dr_ai_update_frequency = 14 }
 }
 
 dr_apply_research_factory_weight_rules = {

@@ -552,7 +552,11 @@ The following rules influence `total_rp_modifier` as positive or negative terms:
 - `DR_ALLIANCE_RP_RULE` – determines the maximum positive RP bonus you can get from being in an alliance (OFF, +5%, +10%, +15%, +20%, +25%, +30%, default: +10%).
   - Alliance bonus calculation:
     - Base: 5% per ally, scaled by relations (0-100 opinion mapped to 0-1.0 relation factor in 10 steps)
-    - Opinion factor calculation uses a helper effect `dr_get_opinion_factor_for_ally` *(since version 1.4)* that checks from highest to lowest opinion values for better average performance
+    - Opinion factor calculation is **bidirectional** *(since version 1.5)*:
+      - Calculates "They like Us" (Ally's opinion of You)
+      - Calculates "We like Them" (Your opinion of Ally)
+      - Uses the **average** of these two factors
+    - Uses helper effects `dr_get_opinion_factor_for_ally` and `dr_get_opinion_factor_from_root` to check opinions
     - Submods can override opinion calculation via `dr_get_opinion_factor_for_ally_submods` hook *(since version 1.4)* - must set `dr_opinion_factor_custom_set` flag when providing custom value
     - Average relation factor across all allies
     - Cap: `min(5% × ally_count, game_rule_cap)`

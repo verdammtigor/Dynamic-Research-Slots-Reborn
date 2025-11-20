@@ -500,6 +500,82 @@ dr_get_opinion_factor_for_ally = {
 	# 0-7 remains 0.0 (default)
 }
 
+# Helper effect: Calculate opinion factor FROM ROOT to PREV (Ally)
+# Checks ROOT's opinion of the Ally (PREV).
+# Sets: alliance_rel_factor
+dr_get_opinion_factor_from_root = {
+	set_variable = { alliance_rel_factor = 0.0 }
+	
+	# Check from highest to lowest
+	if = {
+		limit = { has_opinion = { target = PREV value > 79 } }
+		set_variable = { alliance_rel_factor = 1.0 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 71 }
+			NOT = { has_opinion = { target = PREV value > 79 } }
+		}
+		set_variable = { alliance_rel_factor = 0.9 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 63 }
+			NOT = { has_opinion = { target = PREV value > 71 } }
+		}
+		set_variable = { alliance_rel_factor = 0.8 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 55 }
+			NOT = { has_opinion = { target = PREV value > 63 } }
+		}
+		set_variable = { alliance_rel_factor = 0.7 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 47 }
+			NOT = { has_opinion = { target = PREV value > 55 } }
+		}
+		set_variable = { alliance_rel_factor = 0.6 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 39 }
+			NOT = { has_opinion = { target = PREV value > 47 } }
+		}
+		set_variable = { alliance_rel_factor = 0.5 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 31 }
+			NOT = { has_opinion = { target = PREV value > 39 } }
+		}
+		set_variable = { alliance_rel_factor = 0.4 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 23 }
+			NOT = { has_opinion = { target = PREV value > 31 } }
+		}
+		set_variable = { alliance_rel_factor = 0.3 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 15 }
+			NOT = { has_opinion = { target = PREV value > 23 } }
+		}
+		set_variable = { alliance_rel_factor = 0.2 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 7 }
+			NOT = { has_opinion = { target = PREV value > 15 } }
+		}
+		set_variable = { alliance_rel_factor = 0.1 }
+	}
+}
+
 # Submod hook: override opinion factor calculation for alliance members
 # If this hook sets alliance_rel_factor and sets the dr_opinion_factor_custom_set flag,
 # the default calculation is skipped. This allows submods to explicitly set 0.0 if needed.
@@ -568,37 +644,40 @@ dr_apply_alliance_rp_logic = {
 				# Calculate opinion factor (0.0 to 1.0 in 0.1 steps)
 				# Relation factor g_rel in 10 steps between 0 and 80 opinion:
 				# 0-7  -> 0.0
-				# 8-15 -> 0.1
-				# 16-23 -> 0.2
-				# 24-31 -> 0.3
-				# 32-39 -> 0.4
-				# 40-47 -> 0.5
-				# 48-55 -> 0.6
-				# 56-63 -> 0.7
-				# 64-71 -> 0.8
-				# 72-79 -> 0.9
+				# ...
 				# 80+   -> 1.0
 
-				# Reset factor and flag before calculation
-				ROOT = { 
-					set_variable = { alliance_rel_factor = 0.0 }
-					clr_country_flag = dr_opinion_factor_custom_set
+				# 1. Calculate Ally's opinion of US (They like Us)
+				# Run in ALLY scope
+				set_variable = { alliance_rel_factor = 0.0 }
+				clr_country_flag = dr_opinion_factor_custom_set
+				
+				# Allow submods to override opinion calculation (in Ally scope)
+				dr_get_opinion_factor_for_ally_submods = yes
+				
+				# Default calculation
+				if = {
+					limit = { NOT = { has_country_flag = dr_opinion_factor_custom_set } }
+					dr_get_opinion_factor_for_ally = yes
 				}
-				
-				# Allow submods to override opinion calculation
-				# Submods should set dr_opinion_factor_custom_set flag if they set a custom value
-				ROOT = { dr_get_opinion_factor_for_ally_submods = yes }
-				
-				# Default calculation (only if submod didn't set it)
+				set_variable = { factor_they_like_us = alliance_rel_factor }
+
+				# 2. Calculate OUR opinion of THEM (We like Them)
+				# Run in ROOT scope
 				ROOT = {
-					if = {
-						limit = { NOT = { has_country_flag = dr_opinion_factor_custom_set } }
-						dr_get_opinion_factor_for_ally = yes
-					}
+					set_variable = { alliance_rel_factor = 0.0 }
+					
+					# Use the new helper to check opinion of PREV (Ally)
+					dr_get_opinion_factor_from_root = yes
+					set_variable = { factor_we_like_them = alliance_rel_factor }
+					
+					# 3. Average the two factors
+					add_to_variable = { factor_we_like_them = PREV:factor_they_like_us }
+					divide_variable = { factor_we_like_them = 2 }
+					
+					# Add to sum
+					add_to_variable = { alliance_rel_factor_sum = factor_we_like_them }
 				}
-				
-				# Add to sum
-				ROOT = { add_to_variable = { alliance_rel_factor_sum = alliance_rel_factor } }
 			}
 
 			# 5% base bonus per ally, capped by game rule and scaled with average relation.

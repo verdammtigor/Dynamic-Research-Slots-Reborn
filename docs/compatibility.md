@@ -85,7 +85,7 @@ The mod sets standard flags and variables that other mods can use for detection 
 
 - **`dynamic_research_slots_active`** (Global Flag) - Set at startup to indicate the system is active.
 
-- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.4), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
+- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.5), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
 
 **Usage in other mods**:
 
@@ -169,7 +169,7 @@ The mod is fully backward compatible:
 ### 4.3. Compatibility Signals
 
 - 1 Global Flag (`dynamic_research_slots_active`)
-- 1 Variable (`dr_mod_version = 1.4`)
+- 1 Variable (`dr_mod_version = 1.5`)
 
 ---
 

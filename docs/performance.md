@@ -323,7 +323,7 @@ The compatibility improvements add minimal overhead to the base mod. All new hoo
 #### 3.1.3. Compatibility Signals
 
 - `set_global_flag = dynamic_research_slots_active` - Once at startup
-- `set_variable = { dr_mod_version = 1.4 }` - Once per country at init
+- `set_variable = { dr_mod_version = 1.5 }` - Once per country at init
 
 ### 3.2. Execution Frequency
 
@@ -458,7 +458,7 @@ dr_collect_facility_counts_submods = {
 | Signal | Frequency | Cost | Notes |
 |--------|-----------|------|-------|
 | `set_global_flag = dynamic_research_slots_active` | Once at startup | ~0.01ms | Cached by engine, no repeated lookups |
-| `set_variable = { dr_mod_version = 1.4 }` | Once per country at init | ~0.0001ms | Minimal memory allocation |
+| `set_variable = { dr_mod_version = 1.5 }` | Once per country at init | ~0.0001ms | Minimal memory allocation |
 
 ---
 

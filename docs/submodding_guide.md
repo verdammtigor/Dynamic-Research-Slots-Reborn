@@ -649,6 +649,13 @@ dr_map_government_support_to_peace_bonus = yes
 # Now peace_rp_bonus has been updated
 ```
 
+**Opinion Checks:**
+```txt
+# Check opinion of PREV scope (e.g. inside every_other_country loop)
+dr_get_opinion_factor_from_root = yes
+# Now alliance_rel_factor contains 0.0-1.0 based on ROOT's opinion of PREV
+```
+
 These helpers can be used in custom modifier logic or for testing purposes. For a complete list of all helper effects, see `technical_reference.md` section 9.5.
 
 ## 10. Debugging and testing submods

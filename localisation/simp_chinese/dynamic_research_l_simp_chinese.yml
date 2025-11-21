@@ -1,150 +1,150 @@
 ﻿l_simp_chinese:
   # Startup notification localisation
-  dynamic_research_startup_title:0 "Dynamic Research Slots Initialized"
-  dynamic_research_startup_desc:0 "Dynamic Research Power is now active. Your factories will generate Research Power (RP) each day. When RP reaches certain thresholds, additional research slots will unlock automatically; if your RP falls below a threshold, slots may be lost. Keep growing your industrial capacity to maintain or increase your research efficiency. Existing research slots above 2 are treated as Easy Research Slots with reduced RP thresholds instead of being permanently lost."
-  dynamic_research_startup_option:0 "Understood"
+  dynamic_research_startup_title:0 "动态研究槽位已初始化"
+  dynamic_research_startup_desc:0 "动态研究能力现已激活。您的工厂每天将产生研究能力（RP）。当RP达到特定阈值时，将自动解锁额外的研究槽位；如果您的RP低于阈值，则可能会失去槽位。不断发展您的工业能力，以维持或提高您的研究效率。高于2的现有研究槽位被视为简易研究槽位，具有降低的RP阈值，而不是永久丢失。"
+  dynamic_research_startup_option:0 "好的"
 
   # Custom game rules
-  RULE_GROUP_DYNAMIC_RESEARCH:0 "Dynamic Research"
+  RULE_GROUP_DYNAMIC_RESEARCH:0 "动态研究"
 
   # Easy Research Slots (Base)
-  RULE_DR_EASY_SLOTS:0 "Easy Research Slots (Base)"
-  RULE_DR_EASY_SLOTS_DESC:0 "Controls how many additional Easy Research Slots each country starts with on top of the default behaviour. Easy slots are cheaper to maintain and require less Research Power to unlock."
+  RULE_DR_EASY_SLOTS:0 "简易研究槽位（基础）"
+  RULE_DR_EASY_SLOTS_DESC:0 "控制每个国家在默认行为之上拥有的额外简易研究槽位的数量。简易槽位的维护成本更低，解锁所需的研发能力也更少。"
   
-  RULE_DR_EASY_SLOTS_DEFAULT:0 "Default"
-  RULE_DR_EASY_SLOTS_DEFAULT_DESC:0 "Use the original Dynamic Research Slots logic. Only research slots granted at game start or via focuses count as Easy Slots."
+  RULE_DR_EASY_SLOTS_DEFAULT:0 "默认"
+  RULE_DR_EASY_SLOTS_DEFAULT_DESC:0 "使用原始的动态研究槽位逻辑。只有在游戏开始时或通过国策授予的研究槽位才算作简易槽位。"
   
-  RULE_DR_EASY_SLOTS_PLUS_1:0 "+1 Easy Slot"
-  RULE_DR_EASY_SLOTS_PLUS_1_DESC:0 "Each country starts with one extra Easy Research Slot."
+  RULE_DR_EASY_SLOTS_PLUS_1:0 "+1 简易槽位"
+  RULE_DR_EASY_SLOTS_PLUS_1_DESC:0 "每个国家在游戏开始时拥有一个额外的简易研究槽位。"
   
-  RULE_DR_EASY_SLOTS_PLUS_2:0 "+2 Easy Slots"
-  RULE_DR_EASY_SLOTS_PLUS_2_DESC:0 "Each country starts with two extra Easy Research Slots."
+  RULE_DR_EASY_SLOTS_PLUS_2:0 "+2 简易槽位"
+  RULE_DR_EASY_SLOTS_PLUS_2_DESC:0 "每个国家在游戏开始时拥有两个额外的简易研究槽位。"
   
-  RULE_DR_EASY_SLOTS_PLUS_3:0 "+3 Easy Slots"
-  RULE_DR_EASY_SLOTS_PLUS_3_DESC:0 "Each country starts with three extra Easy Slots."
+  RULE_DR_EASY_SLOTS_PLUS_3:0 "+3 简易槽位"
+  RULE_DR_EASY_SLOTS_PLUS_3_DESC:0 "每个国家在游戏开始时拥有三个额外的简易研究槽位。"
   
-  RULE_DR_EASY_SLOTS_PLUS_4:0 "+4 Easy Slots"
-  RULE_DR_EASY_SLOTS_PLUS_4_DESC:0 "Each country starts with four extra Easy Slots."
+  RULE_DR_EASY_SLOTS_PLUS_4:0 "+4 简易槽位"
+  RULE_DR_EASY_SLOTS_PLUS_4_DESC:0 "每个国家在游戏开始时拥有四个额外的简易研究槽位。"
   
-  RULE_DR_EASY_SLOTS_PLUS_5:0 "+5 Easy Slots"
-  RULE_DR_EASY_SLOTS_PLUS_5_DESC:0 "Each country starts with five extra Easy Slots."
+  RULE_DR_EASY_SLOTS_PLUS_5:0 "+5 简易槽位"
+  RULE_DR_EASY_SLOTS_PLUS_5_DESC:0 "每个国家在游戏开始时拥有五个额外的简易研究槽位。"
 
   # Easy Slot RP Cost Factor
-  RULE_DR_EASY_COST:0 "Easy Slot RP Cost Factor"
-  RULE_DR_EASY_COST_DESC:0 "Controls how much Research Power Easy Slots require compared to normal slots. Lower values mean easier (cheaper) slots."
+  RULE_DR_EASY_COST:0 "简易槽位 RP 成本系数"
+  RULE_DR_EASY_COST_DESC:0 "控制简易槽位与普通槽位相比所需的研发能力。数值越低意味着槽位越容易（便宜）。"
   
-  RULE_DR_EASY_COST_10:0 "10% of normal cost"
-  RULE_DR_EASY_COST_10_DESC:0 "Easy Research Slots require only 10% of the normal Research Power."
+  RULE_DR_EASY_COST_10:0 "正常成本的 10%"
+  RULE_DR_EASY_COST_10_DESC:0 "简易研究槽位仅需要正常研发能力的 10%。"
   
-  RULE_DR_EASY_COST_20:0 "20% of normal cost"
-  RULE_DR_EASY_COST_20_DESC:0 "Easy Research Slots require 20% of the normal Research Power."
+  RULE_DR_EASY_COST_20:0 "正常成本的 20%"
+  RULE_DR_EASY_COST_20_DESC:0 "简易研究槽位需要正常研发能力的 20%。"
   
-  RULE_DR_EASY_COST_30:0 "30% of normal cost"
-  RULE_DR_EASY_COST_30_DESC:0 "Easy Research Slots require 30% of the normal Research Power."
+  RULE_DR_EASY_COST_30:0 "正常成本的 30%"
+  RULE_DR_EASY_COST_30_DESC:0 "简易研究槽位需要正常研发能力的 30%。"
   
-  RULE_DR_EASY_COST_40:0 "40% of normal cost"
-  RULE_DR_EASY_COST_40_DESC:0 "Easy Research Slots require 40% of the normal Research Power."
+  RULE_DR_EASY_COST_40:0 "正常成本的 40%"
+  RULE_DR_EASY_COST_40_DESC:0 "简易研究槽位需要正常研发能力的 40%。"
   
-  RULE_DR_EASY_COST_50:0 "50% of normal cost"
-  RULE_DR_EASY_COST_50_DESC:0 "Easy Research Slots require 50% of the normal Research Power."
+  RULE_DR_EASY_COST_50:0 "正常成本的 50%"
+  RULE_DR_EASY_COST_50_DESC:0 "简易研究槽位需要正常研发能力的 50%。"
   
-  RULE_DR_EASY_COST_60:0 "60% of normal cost (default)"
-  RULE_DR_EASY_COST_60_DESC:0 "Easy Research Slots require 60% of the normal Research Power. This matches the original mod behaviour."
+  RULE_DR_EASY_COST_60:0 "正常成本的 60%（默认）"
+  RULE_DR_EASY_COST_60_DESC:0 "简易研究槽位需要正常研发能力的 60%。这与原始模组的行为相匹配。"
   
-  RULE_DR_EASY_COST_70:0 "70% of normal cost"
-  RULE_DR_EASY_COST_70_DESC:0 "Easy Research Slots require 70% of the normal Research Power."
+  RULE_DR_EASY_COST_70:0 "正常成本的 70%"
+  RULE_DR_EASY_COST_70_DESC:0 "简易研究槽位需要正常研发能力的 70%。"
   
-  RULE_DR_EASY_COST_80:0 "80% of normal cost"
-  RULE_DR_EASY_COST_80_DESC:0 "Easy Research Slots require 80% of the normal Research Power."
+  RULE_DR_EASY_COST_80:0 "正常成本的 80%"
+  RULE_DR_EASY_COST_80_DESC:0 "简易研究槽位需要正常研发能力的 80%。"
   
-  RULE_DR_EASY_COST_90:0 "90% of normal cost"
-  RULE_DR_EASY_COST_90_DESC:0 "Easy Research Slots require 90% of the normal Research Power."
+  RULE_DR_EASY_COST_90:0 "正常成本的 90%"
+  RULE_DR_EASY_COST_90_DESC:0 "简易研究槽位需要正常研发能力的 90%。"
   
-  RULE_DR_EASY_COST_100:0 "100% of normal cost"
-  RULE_DR_EASY_COST_100_DESC:0 "Easy Research Slots require the full Research Power cost of a normal slot (no discount)."
+  RULE_DR_EASY_COST_100:0 "正常成本的 100%"
+  RULE_DR_EASY_COST_100_DESC:0 "简易研究槽位需要与普通槽位相同的研发能力成本（无折扣）。"
 
   # Minor Nation Easy Slots
-  RULE_DR_MINOR_EASY_SLOTS:0 "Minor Nation Easy Slots"
-  RULE_DR_MINOR_EASY_SLOTS_DESC:0 "Controls whether non-major countries receive an additional Easy Research Slot to help them keep up technologically."
+  RULE_DR_MINOR_EASY_SLOTS:0 "小国简易槽位"
+  RULE_DR_MINOR_EASY_SLOTS_DESC:0 "控制非主要国家是否获得额外的简易研究槽位，以帮助它们在技术上保持同步。"
   
-  RULE_DR_MINOR_EASY_SLOTS_OFF:0 "Disabled"
-  RULE_DR_MINOR_EASY_SLOTS_OFF_DESC:0 "Minor nations use the same Easy Slot baseline as major nations."
+  RULE_DR_MINOR_EASY_SLOTS_OFF:0 "已禁用"
+  RULE_DR_MINOR_EASY_SLOTS_OFF_DESC:0 "小国使用与主要国家相同的简易槽位基线。"
   
-  RULE_DR_MINOR_EASY_SLOTS_ON:0 "Enabled (no achievements)"
-  RULE_DR_MINOR_EASY_SLOTS_ON_DESC:0 "Non-major countries receive one additional Easy Research Slot. This makes the game slightly easier for minors and disables achievements."
+  RULE_DR_MINOR_EASY_SLOTS_ON:0 "已启用（无成就）"
+  RULE_DR_MINOR_EASY_SLOTS_ON_DESC:0 "非主要国家获得一个额外的简易研究槽位。这使得小国的游戏稍微容易一些，并禁用成就。"
 
   # Factory RP Weights
-  RULE_DR_FACTORY_WEIGHTS:0 "Factory RP Weights"
-  RULE_DR_FACTORY_WEIGHTS_DESC:0 "Controls how much Research Power civilian, military and naval factories generate."
+  RULE_DR_FACTORY_WEIGHTS:0 "工厂 RP 权重"
+  RULE_DR_FACTORY_WEIGHTS_DESC:0 "控制民用工厂、军用工厂和海军工厂产生多少研发能力。"
   
-  RULE_DR_FACTORY_WEIGHTS_BALANCED:0 "Balanced (3 / 2 / 2)"
-  RULE_DR_FACTORY_WEIGHTS_BALANCED_DESC:0 "Civilian factories generate 3 RP each, military and naval factories 2 RP each."
+  RULE_DR_FACTORY_WEIGHTS_BALANCED:0 "平衡（3 / 2 / 2）"
+  RULE_DR_FACTORY_WEIGHTS_BALANCED_DESC:0 "民用工厂每个产生 3 RP，军用工厂和海军工厂每个产生 2 RP。"
   
-  RULE_DR_FACTORY_WEIGHTS_INDUSTRY:0 "Industry-focused (4 / 2 / 1)"
-  RULE_DR_FACTORY_WEIGHTS_INDUSTRY_DESC:0 "Civilian factories generate 4 RP each, military factories 2 RP and naval dockyards 1 RP."
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY:0 "以工业为重点（4 / 2 / 1）"
+  RULE_DR_FACTORY_WEIGHTS_INDUSTRY_DESC:0 "民用工厂每个产生 4 RP，军用工厂产生 2 RP，海军船坞产生 1 RP。"
   
-  RULE_DR_FACTORY_WEIGHTS_MILITARY:0 "Military-focused (2 / 4 / 2)"
-  RULE_DR_FACTORY_WEIGHTS_MILITARY_DESC:0 "Military factories generate 4 RP each, civilian and naval factories 2 RP each."
+  RULE_DR_FACTORY_WEIGHTS_MILITARY:0 "以军事为重点（2 / 4 / 2）"
+  RULE_DR_FACTORY_WEIGHTS_MILITARY_DESC:0 "军用工厂每个产生 4 RP，民用工厂和海军工厂每个产生 2 RP。"
   
-  RULE_DR_FACTORY_WEIGHTS_NAVAL:0 "Naval-focused (2 / 2 / 4)"
-  RULE_DR_FACTORY_WEIGHTS_NAVAL_DESC:0 "Naval dockyards generate 4 RP each, civilian and military factories 2 RP each."
+  RULE_DR_FACTORY_WEIGHTS_NAVAL:0 "以海军为重点（2 / 2 / 4）"
+  RULE_DR_FACTORY_WEIGHTS_NAVAL_DESC:0 "海军船坞每个产生 4 RP，民用工厂和军用工厂每个产生 2 RP。"
 
   # War-time Research Power
-  RULE_DR_WAR_RP:0 "War-time Research Power"
-  RULE_DR_WAR_RP_DESC:0 "Sets the maximum Research Power penalty while at war. The effective penalty scales with War Support, Stability, ruling party popularity, war duration and whether wars are offensive or defensive."
+  RULE_DR_WAR_RP:0 "战时研发能力"
+  RULE_DR_WAR_RP_DESC:0 "设置战时研发能力的最大惩罚。实际惩罚随战争支持度、稳定度、执政党支持率、战争持续时间以及战争是侵略性还是防御性而变化。"
   
-  RULE_DR_WAR_RP_OFF:0 "No change"
-  RULE_DR_WAR_RP_OFF_DESC:0 "War does not affect Research Power."
+  RULE_DR_WAR_RP_OFF:0 "无变化"
+  RULE_DR_WAR_RP_OFF_DESC:0 "战争不影响研发能力。"
   
-  RULE_DR_WAR_RP_MINUS_5:0 "Max -5% RP in war"
-  RULE_DR_WAR_RP_MINUS_5_DESC:0 "Sets the maximum wartime penalty to -5% Research Power. The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_5:0 "战争中最大 -5% RP"
+  RULE_DR_WAR_RP_MINUS_5_DESC:0 "将最大战时惩罚设置为 -5% 研发能力。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
   
-  RULE_DR_WAR_RP_MINUS_10:0 "Max -10% RP in war (default)"
-  RULE_DR_WAR_RP_MINUS_10_DESC:0 "Sets the maximum wartime penalty to -10% Research Power (default). The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_10:0 "战争中最大 -10% RP（默认）"
+  RULE_DR_WAR_RP_MINUS_10_DESC:0 "将最大战时惩罚设置为 -10% 研发能力（默认）。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
   
-  RULE_DR_WAR_RP_MINUS_15:0 "Max -15% RP in war"
-  RULE_DR_WAR_RP_MINUS_15_DESC:0 "Sets the maximum wartime penalty to -15% Research Power. The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_15:0 "战争中最大 -15% RP"
+  RULE_DR_WAR_RP_MINUS_15_DESC:0 "将最大战时惩罚设置为 -15% 研发能力。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
   
-  RULE_DR_WAR_RP_MINUS_20:0 "Max -20% RP in war"
-  RULE_DR_WAR_RP_MINUS_20_DESC:0 "Sets the maximum wartime penalty to -20% Research Power. The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_20:0 "战争中最大 -20% RP"
+  RULE_DR_WAR_RP_MINUS_20_DESC:0 "将最大战时惩罚设置为 -20% 研发能力。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
   
-  RULE_DR_WAR_RP_MINUS_25:0 "Max -25% RP in war"
-  RULE_DR_WAR_RP_MINUS_25_DESC:0 "Sets the maximum wartime penalty to -25% Research Power. The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_25:0 "战争中最大 -25% RP"
+  RULE_DR_WAR_RP_MINUS_25_DESC:0 "将最大战时惩罚设置为 -25% 研发能力。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
   
-  RULE_DR_WAR_RP_MINUS_30:0 "Max -30% RP in war"
-  RULE_DR_WAR_RP_MINUS_30_DESC:0 "Sets the maximum wartime penalty to -30% Research Power. The effective penalty is usually smaller and scales with internal conditions (War Support, Stability, ruling party, war duration, offensive/defensive wars)."
+  RULE_DR_WAR_RP_MINUS_30:0 "战争中最大 -30% RP"
+  RULE_DR_WAR_RP_MINUS_30_DESC:0 "将最大战时惩罚设置为 -30% 研发能力。实际惩罚通常较小，并随内部条件（战争支持度、稳定度、执政党、战争持续时间、侵略/防御战争）而变化。"
 
   # Alliance Research Power
-  RULE_DR_ALLIANCE_RP:0 "Alliance Research Power"
-  RULE_DR_ALLIANCE_RP_DESC:0 "Sets the maximum Research Power bonus from faction members. Each ally can contribute up to 5% of its RP, scaled by relations, but the total alliance bonus is capped by this rule."
+  RULE_DR_ALLIANCE_RP:0 "联盟研发能力"
+  RULE_DR_ALLIANCE_RP_DESC:0 "设置来自派系成员的最大研发能力加成。每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，但总联盟加成受此规则限制。"
   
-  RULE_DR_ALLIANCE_RP_OFF:0 "No bonus"
-  RULE_DR_ALLIANCE_RP_OFF_DESC:0 "Being in a faction does not grant any alliance Research Power bonus."
+  RULE_DR_ALLIANCE_RP_OFF:0 "无加成"
+  RULE_DR_ALLIANCE_RP_OFF_DESC:0 "加入派系不会授予任何联盟研发能力加成。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_5:0 "Max +5% RP from allies"
-  RULE_DR_ALLIANCE_RP_PLUS_5_DESC:0 "Alliance bonuses can provide up to +5% Research Power from faction members (each ally up to 5% of its RP, scaled by relations, capped at +5% total)."
+  RULE_DR_ALLIANCE_RP_PLUS_5:0 "来自盟友的最大 +5% RP"
+  RULE_DR_ALLIANCE_RP_PLUS_5_DESC:0 "联盟加成可以提供来自派系成员的最高 +5% 研发能力（每个盟友最高贡献其 RP 的 5%，并根据关系进行缩放，总计上限为 +5%）。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_10:0 "Max +10% RP from allies (default)"
-  RULE_DR_ALLIANCE_RP_PLUS_10_DESC:0 "Alliance bonuses can provide up to +10% Research Power from faction members (default). Each ally can contribute up to 5% of its RP, scaled by relations, capped at +10% total."
+  RULE_DR_ALLIANCE_RP_PLUS_10:0 "来自盟友的最大 +10% RP（默认）"
+  RULE_DR_ALLIANCE_RP_PLUS_10_DESC:0 "联盟加成可以提供来自派系成员的最高 +10% 研发能力（默认）。每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，总计上限为 +10%）。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_15:0 "Max +15% RP from allies"
-  RULE_DR_ALLIANCE_RP_PLUS_15_DESC:0 "Alliance bonuses can provide up to +15% Research Power from faction members (each ally up to 5% of its RP, scaled by relations, capped at +15% total)."
+  RULE_DR_ALLIANCE_RP_PLUS_15:0 "来自盟友的最大 +15% RP"
+  RULE_DR_ALLIANCE_RP_PLUS_15_DESC:0 "联盟加成可以提供来自派系成员的最高 +15% 研发能力（每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，总计上限为 +15%）。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_20:0 "Max +20% RP from allies"
-  RULE_DR_ALLIANCE_RP_PLUS_20_DESC:0 "Alliance bonuses can provide up to +20% Research Power from faction members (each ally up to 5% of its RP, scaled by relations, capped at +20% total)."
+  RULE_DR_ALLIANCE_RP_PLUS_20:0 "来自盟友的最大 +20% RP"
+  RULE_DR_ALLIANCE_RP_PLUS_20_DESC:0 "联盟加成可以提供来自派系成员的最高 +20% 研发能力（每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，总计上限为 +20%）。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_25:0 "Max +25% RP from allies"
-  RULE_DR_ALLIANCE_RP_PLUS_25_DESC:0 "Alliance bonuses can provide up to +25% Research Power from faction members (each ally up to 5% of its RP, scaled by relations, capped at +25% total)."
+  RULE_DR_ALLIANCE_RP_PLUS_25:0 "来自盟友的最大 +25% RP"
+  RULE_DR_ALLIANCE_RP_PLUS_25_DESC:0 "联盟加成可以提供来自派系成员的最高 +25% 研发能力（每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，总计上限为 +25%）。"
   
-  RULE_DR_ALLIANCE_RP_PLUS_30:0 "Max +30% RP from allies"
-  RULE_DR_ALLIANCE_RP_PLUS_30_DESC:0 "Alliance bonuses can provide up to +30% Research Power from faction members (each ally up to 5% of its RP, scaled by relations, capped at +30% total)."
+  RULE_DR_ALLIANCE_RP_PLUS_30:0 "来自盟友的最大 +30% RP"
+  RULE_DR_ALLIANCE_RP_PLUS_30_DESC:0 "联盟加成可以提供来自派系成员的最高 +30% 研发能力（每个盟友可以贡献高达其 RP 的 5%，并根据关系进行缩放，总计上限为 +30%）。"
 
   # Law-based Research Power Modifiers
-  RULE_DR_LAW_RP:0 "Law-based Research Power Modifiers"
-  RULE_DR_LAW_RP_DESC:0 "Controls whether trade, economy and conscription laws modify Research Power (RP). When disabled, law changes no longer affect RP - only factories, facilities, war-time and alliance rules apply."
+  RULE_DR_LAW_RP:0 "基于法律的研发能力修正"
+  RULE_DR_LAW_RP_DESC:0 "控制贸易、经济和征兵法律是否修改研发能力 (RP)。禁用后，法律变更不再影响 RP - 仅工厂、设施、战时和联盟规则适用。"
   
-  RULE_DR_LAW_RP_ON:0 "Enabled (default)"
-  RULE_DR_LAW_RP_ON_DESC:0 "Keep all existing Research Power modifiers from trade laws (e.g. Free Trade), economy laws (e.g. Civilian Economy, War Economy) and conscription laws (e.g. Extensive Conscription)."
+  RULE_DR_LAW_RP_ON:0 "已启用（默认）"
+  RULE_DR_LAW_RP_ON_DESC:0 "保留所有现有的来自贸易法（例如自由贸易）、经济法（例如民用经济、战时经济）和征兵法（例如广泛征兵）的研发能力修正。"
   
-  RULE_DR_LAW_RP_OFF:0 "Disabled"
-  RULE_DR_LAW_RP_OFF_DESC:0 "Ignore all Research Power modifiers from trade, economy and conscription laws. This makes RP depend only on factories, facilities and other Dynamic Research rules."
+  RULE_DR_LAW_RP_OFF:0 "已禁用"
+  RULE_DR_LAW_RP_OFF_DESC:0 "忽略所有来自贸易、经济和征兵法律的研发能力修正。这使得 RP 仅取决于工厂、设施和其他动态研究规则。"

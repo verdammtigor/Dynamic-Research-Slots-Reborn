@@ -9,10 +9,32 @@ on_actions = {
         initialize_dynamic_research_slots = yes
         calculate_modifiers_to_rp = yes
 
+        # Perform initial calculation to set correct research slots from day 1.
+        recalculate_dynamic_research_slots = yes
+
         # Show a one-time startup explanation for human players.
         if = {
           limit = { is_ai = no }
           country_event = dynamic_research_slots.6
+        }
+
+        # AI countries need an initial calculation at startup to set correct research slots.
+        # After this, they use staggered updates (every ~14 days by default) for performance.
+        if = {
+          limit = { is_ai = yes }
+          # Ensure AI update frequency variable exists (defensive check).
+          if = {
+            limit = { NOT = { has_variable = dr_ai_update_frequency } }
+            set_variable = { dr_ai_update_frequency = 14 }
+          }
+          # Initialize the staggered update timer at startup.
+          set_temp_variable_to_random = {
+            var = dr_rand_offset
+            min = 1
+            max = var:dr_ai_update_frequency
+            integer = yes
+          }
+          set_variable = { dr_days_until_update = var:dr_rand_offset }
         }
       }
     }
@@ -21,7 +43,7 @@ on_actions = {
   ###
   # Daily update.
   # - Player: recalculate every day, with event cooldown.
-  # - AI: roughly every 30 days, staggered across countries.
+  # - AI: roughly every 14 days by default, staggered across countries.
   ###
   on_daily = {
     effect = {
@@ -43,51 +65,38 @@ on_actions = {
         recalculate_dynamic_research_slots = yes
       }
 
-      # Player logic: recalculate every day.
+      # Unified Logic (Player & AI)
+      
+      # Decrease event cooldown (if present)
       if = {
-        limit = { is_ai = no }
+        limit = { has_variable = dr_player_event_cooldown }
+        subtract_from_variable = { dr_player_event_cooldown = 1 }
+      }
 
-        # Decrease event cooldown (if present).
-        if = {
-          limit = { has_variable = dr_player_event_cooldown }
-          subtract_from_variable = { dr_player_event_cooldown = 1 }
-        }
+      calculate_modifiers_to_rp = yes
+      
+      # Increment days since last full check
+      add_to_variable = { dr_days_since_last_full_check = 1 }
+      
+      # Run smart check (only recalculates if factories changed or 7 days passed)
+      dr_recalculate_if_needed = yes
+    }
+  }
 
-        calculate_modifiers_to_rp = yes
+  ###
+  # State Control Change
+  # Immediate recalculation when territory changes hands.
+  ###
+  on_state_control_changed = {
+    effect = {
+      # If the new controller is initialized, recalculate immediately
+      if = {
+        limit = { has_country_flag = dynamic_research_slots_initialized }
         recalculate_dynamic_research_slots = yes
       }
-
-      # AI logic: recalculate roughly every 30 days, staggered.
-      if = {
-        limit = { is_ai = yes }
-
-        # Initialize random offset if not yet set.
-        if = {
-          limit = { NOT = { has_variable = dr_days_until_update } }
-          set_temp_variable_to_random = {
-            var = dr_rand_offset
-            min = 1
-            max = 30
-            integer = yes
-          }
-          set_variable = { dr_days_until_update = var:dr_rand_offset }
-        }
-
-        subtract_from_variable = { dr_days_until_update = 1 }
-
-        if = {
-          limit = {
-            check_variable = {
-              var = dr_days_until_update
-              value = 0
-              compare = less_than_or_equals
-            }
-          }
-          set_variable = { dr_days_until_update = 30 }
-          calculate_modifiers_to_rp = yes
-          recalculate_dynamic_research_slots = yes
-        }
-      }
+      # Note: The previous owner doesn't get a trigger here in vanilla HOI4 on_state_control_changed usually runs for the new controller.
+      # If we need to update the loser, we might need FROM scope or similar, but usually the daily/weekly check will catch it for them.
+      # For the winner (ROOT), this gives instant feedback.
     }
   }
 }

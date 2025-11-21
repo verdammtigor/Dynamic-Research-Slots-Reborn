@@ -87,6 +87,14 @@ dr_reset_research_config_defaults = {
 	set_variable = { government_support_threshold_high = 0.7 }
 	set_variable = { government_support_threshold_very_high = 0.85 }
 
+	# War phase thresholds (days)
+	set_variable = { war_phase_offensive_threshold_1 = 30 }
+	set_variable = { war_phase_offensive_threshold_2 = 60 }
+	set_variable = { war_phase_offensive_threshold_3 = 90 }
+	set_variable = { war_phase_defensive_threshold_1 = 60 }
+	set_variable = { war_phase_defensive_threshold_2 = 120 }
+	set_variable = { war_phase_defensive_threshold_3 = 180 }
+
 	# Base thresholds for research slots
 	# Index 0 is a dummy entry for easier indexing.
 	add_to_array = { base_research_for_slot = 0 }	# 0 (dummy)
@@ -116,6 +124,9 @@ dr_reset_research_config_defaults = {
 	# Default Easy Slot setup
 	set_variable = { easy_research_slots = 2 }
 	set_variable = { easy_research_slot_coefficient = 0.6 }
+
+	# AI update frequency (days between staggered updates for AI countries)
+	set_variable = { dr_ai_update_frequency = 14 }
 }
 
 dr_apply_research_factory_weight_rules = {

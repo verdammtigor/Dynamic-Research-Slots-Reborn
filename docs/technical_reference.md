@@ -56,7 +56,13 @@ At game start, every country runs:
 - `initialize_dynamic_research_slots = yes`
 - `calculate_modifiers_to_rp = yes`
 
-This sets up all internal variables and the RP thresholds, but does **not** immediately change the number of vanilla research slots beyond the initial configuration.
+This sets up all internal variables and the RP thresholds.
+
+**AI countries** additionally:
+- Initialize the staggered update timer (`dr_days_until_update`) with a random offset (1–14 days by default, configurable via `dr_ai_update_frequency`)
+- Run `recalculate_dynamic_research_slots = yes` to set correct research slots from day 1
+
+This ensures AI countries have accurate research slots immediately at game start, before their first staggered update cycle begins.
 
 A one-time startup explanation event (`dynamic_research_slots.6`) is shown to human players.
 
@@ -66,19 +72,52 @@ Every in-game day:
 
 - `dr_days_in_war` is updated (counts how long the country has been at war). Resets to 0 when at peace.
 - New countries that appear later in the game get initialized once via `initialize_dynamic_research_slots`.
-- The system branches between **player** and **AI**:
+- Decrease event cooldown (`dr_player_event_cooldown`) if present.
+- Calculate modifiers (`calculate_modifiers_to_rp`).
+- Increment `dr_days_since_last_full_check`.
+- **Smart check:** `dr_recalculate_if_needed` (only recalculates if factories changed or 7 days passed).
 
-Player country:
-- Recalculates modifiers every day: `calculate_modifiers_to_rp`.
-- Recalculates target slots every day: `recalculate_dynamic_research_slots`.
-- Decrements event cooldown `dr_player_event_cooldown` by 1 each day.
-- Uses a cooldown variable `dr_player_event_cooldown` to avoid spamming the player with events (14-day cooldown after each slot change event).
+**Note:** The Smart Detection System *(since version 1.5)* replaces the previous daily recalculation for both players and AI, significantly reducing performance overhead while maintaining responsiveness.
 
 AI countries:
-- Use a staggered update: `dr_days_until_update` counts down from a random offset (1–30 days), then triggers:
+- **Note**: AI countries get an initial calculation at startup (see `on_startup` above) to ensure correct research slots from day 1.
+- Use a staggered update for subsequent calculations: `dr_days_until_update` counts down from a random offset (1–14 days by default, configurable via `dr_ai_update_frequency`, initialized at startup), then triggers:
   - `calculate_modifiers_to_rp`
   - `recalculate_dynamic_research_slots`
-- The timer resets to 30 days after each update cycle.
+- The timer resets to `dr_ai_update_frequency` (14 days by default) after each update cycle.
+- This staggered approach reduces performance overhead while maintaining accurate research slots.
+- The update frequency can be customized via the `dr_ai_update_frequency` config variable (set in `dr_reset_research_config_defaults`, overrideable via `dr_apply_research_config_submods`).
+
+### 2.2. Smart Detection System *(since version 1.5)*
+
+The mod uses an intelligent detection system that only triggers recalculation when necessary:
+
+**`dr_check_for_factory_changes`** - Checks if factory counts (Civ/Mil/Nav) have changed since last check:
+- Compares `dr_last_civ_count`, `dr_last_mil_count`, `dr_last_nav_count` with current factory counts
+- Uses early exit strategy (stops checking once a change is found)
+- Sets `dr_factories_changed` flag if any factory type changed
+
+**`dr_recalculate_if_needed`** - Conditional recalculation wrapper:
+- Runs `dr_check_for_factory_changes` first
+- Checks if 7 days have passed since last full check (`dr_days_since_last_full_check >= 7`)
+- Only calls `recalculate_dynamic_research_slots` if:
+  - Factories changed OR
+  - 7 days have passed (weekly fallback for custom buildings)
+- Resets `dr_days_since_last_full_check` after recalculation
+
+**Benefits:**
+- Reduces unnecessary recalculations by ~75-85% in typical gameplay
+- Maintains responsiveness (immediate update when factories change)
+- Weekly fallback ensures custom buildings from submods are still detected
+- Works seamlessly for both players and AI
+
+**Variables:**
+- `dr_last_civ_count` - Last known civilian factory count
+- `dr_last_mil_count` - Last known military factory count
+- `dr_last_nav_count` - Last known naval factory count
+- `dr_days_since_last_full_check` - Days since last full recalculation
+- `dr_factories_changed` - Flag set when factory counts change
+- `dr_force_weekly_update` - Flag set when 7-day fallback triggers
 
 ---
 
@@ -236,7 +275,8 @@ Arrays:
 Timers and cooldowns:
 
 - `dr_player_event_cooldown` – cooldown timer for player notification events (14 days).
-- `dr_days_until_update` – AI update timer (1-30 days, staggered).
+- `dr_days_until_update` – AI update timer (1-14 days by default, staggered, configurable via `dr_ai_update_frequency`).
+- `dr_ai_update_frequency` – Configuration variable for AI update frequency (default: 14 days, set in `dr_reset_research_config_defaults`).
 - `dr_days_until_alliance_update` – alliance bonus update timer (7 days).
 
 ---
@@ -512,7 +552,11 @@ The following rules influence `total_rp_modifier` as positive or negative terms:
 - `DR_ALLIANCE_RP_RULE` – determines the maximum positive RP bonus you can get from being in an alliance (OFF, +5%, +10%, +15%, +20%, +25%, +30%, default: +10%).
   - Alliance bonus calculation:
     - Base: 5% per ally, scaled by relations (0-100 opinion mapped to 0-1.0 relation factor in 10 steps)
-    - Opinion factor calculation uses a helper effect `dr_get_opinion_factor_for_ally` *(since version 1.4)* that checks from highest to lowest opinion values for better average performance
+    - Opinion factor calculation is **bidirectional** *(since version 1.5)*:
+      - Calculates "They like Us" (Ally's opinion of You)
+      - Calculates "We like Them" (Your opinion of Ally)
+      - Uses the **average** of these two factors
+    - Uses helper effects `dr_get_opinion_factor_for_ally` and `dr_get_opinion_factor_from_root` to check opinions
     - Submods can override opinion calculation via `dr_get_opinion_factor_for_ally_submods` hook *(since version 1.4)* - must set `dr_opinion_factor_custom_set` flag when providing custom value
     - Average relation factor across all allies
     - Cap: `min(5% × ally_count, game_rule_cap)`
@@ -673,6 +717,7 @@ This effect is called from `initialize_dynamic_research_slots` and is responsibl
 - Setting base RP weights (`research_power_per_civ`, `research_power_per_mil`, `research_power_per_nav`).
 - Filling the arrays `base_research_for_slot` and `research_for_slot` with the default thresholds.
 - Setting and adjusting `easy_research_slots` and `easy_research_slot_coefficient` (including game-rule overrides).
+- Setting AI update frequency (`dr_ai_update_frequency`, default: 14 days).
 
 Internally the effect is split into smaller helpers:
 - `dr_reset_research_config_defaults` – sets all base values
@@ -773,13 +818,38 @@ The mod provides several helper effects that can be used by submods or for inter
   - `facility_rp_reduction_factor` - Reduction factor for diminishing returns
   - Sets `temp_facility_rp` and adds it to `total_research_power` and `facility_research_power`
 
+**Government Support Helpers:**
+
+- `dr_set_government_popularity` *(since version 1.5)* - Sets `temp_government_popularity` based on current government type (democratic, fascism, communism, neutrality). Used internally by war penalty and peace bonus calculations.
+
+- `dr_get_government_support_factor` *(since version 1.5)* - Calculates government support factor (0.0, 0.1, 0.2, 0.3, or 0.4) based on popularity thresholds. Expects:
+  - `temp_government_popularity` - Variable containing popularity value
+  - Uses config variables: `government_support_threshold_very_low`, `government_support_threshold_low`, `government_support_threshold_medium`, `government_support_threshold_high`, `government_support_threshold_very_high`
+  - Sets `government_support_factor`
+
+- `dr_map_government_support_to_peace_bonus` *(since version 1.5)* - Maps government support factor to peace bonus. Expects:
+  - `government_support_factor` (0.0, 0.1, 0.2, 0.3, or 0.4)
+  - Modifies `peace_rp_bonus` (adds 0.03 for 0.0, 0.02 for 0.1, 0.0 for 0.2+)
+
 **Other Helpers:**
 
 - `dr_rebuild_research_thresholds` - Rebuilds effective RP thresholds based on base thresholds, Easy Slots, and Easy Slot coefficient
 - `dr_get_opinion_factor_for_ally` *(since version 1.4)* - Calculates opinion factor for alliance members
+- `dr_check_for_factory_changes` *(since version 1.5)* - Checks if factory counts (Civ/Mil/Nav) have changed since last check
+- `dr_recalculate_if_needed` *(since version 1.5)* - Conditional recalculation wrapper that only triggers when factories changed or 7 days passed
 - Various war/law/alliance helper effects (see `00_dr_dynamic_research_modifiers.txt`)
 
 These helpers follow the DRY (Don't Repeat Yourself) principle and make the codebase more maintainable.
+
+### 9.6 Code Quality Improvements *(since version 1.5)*
+
+The mod has been refactored to reduce code redundancy:
+
+- **Government Type Detection:** Consolidated into `dr_set_government_popularity` helper effect
+- **Peace Bonus Mapping:** Consolidated into `dr_map_government_support_to_peace_bonus` helper effect
+- **Smart Detection System:** Factory change detection reduces unnecessary calculations
+
+These improvements maintain backward compatibility while improving maintainability and performance.
 
 ---
 

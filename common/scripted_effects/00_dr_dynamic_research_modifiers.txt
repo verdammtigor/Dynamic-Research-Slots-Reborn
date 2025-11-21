@@ -45,37 +45,30 @@ dr_calculate_war_penalty_factors = {
 	# Ruling party factor (0.0-0.4), based on ruling ideology popularity.
 	set_variable = { war_penalty_factor_party = 0.4 }
 
-	# Calculate government support factor using helper effect
-	# Democratic government
+	# Calculate government support factor using helper effects
+	dr_set_government_popularity = yes
+	dr_get_government_support_factor = yes
+	set_variable = { war_penalty_factor_party = government_support_factor }
+}
+
+# Helper effect: Set temp_government_popularity based on current government type
+# Sets: temp_government_popularity (democratic, fascism, communism, or neutrality)
+dr_set_government_popularity = {
 	if = {
 		limit = { has_government = democratic }
 		set_variable = { temp_government_popularity = democratic }
-		dr_get_government_support_factor = yes
-		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
-
-	# Fascist government
 	if = {
 		limit = { has_government = fascism }
 		set_variable = { temp_government_popularity = fascism }
-		dr_get_government_support_factor = yes
-		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
-
-	# Communist government
 	if = {
 		limit = { has_government = communism }
 		set_variable = { temp_government_popularity = communism }
-		dr_get_government_support_factor = yes
-		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
-
-	# Neutral or other government
 	if = {
 		limit = { has_government = neutrality }
 		set_variable = { temp_government_popularity = neutrality }
-		dr_get_government_support_factor = yes
-		set_variable = { war_penalty_factor_party = government_support_factor }
 	}
 }
 
@@ -165,6 +158,20 @@ dr_get_government_support_factor = {
 	# Below very_low threshold remains 0.4 (worst, default)
 }
 
+# Helper effect: Map government_support_factor to peace bonus
+# Expects: government_support_factor (0.0, 0.1, 0.2, 0.3, or 0.4)
+# Modifies: peace_rp_bonus (adds 0.03 for 0.0, 0.02 for 0.1, 0.0 for 0.2+)
+dr_map_government_support_to_peace_bonus = {
+	if = {
+		limit = { check_variable = { var = government_support_factor value = 0.0 compare = equals } }
+		add_to_variable = { peace_rp_bonus = 0.03 }
+	}
+	if = {
+		limit = { check_variable = { var = government_support_factor value = 0.1 compare = equals } }
+		add_to_variable = { peace_rp_bonus = 0.02 }
+	}
+}
+
 # Calculate war phase factor based on war duration and type
 # Sets: war_phase_factor, war_defense_factor
 dr_calculate_war_phase_factor = {
@@ -190,7 +197,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 30
+					value = war_phase_offensive_threshold_1
 					compare = greater_than_or_equals
 				}
 			}
@@ -200,7 +207,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 60
+					value = war_phase_offensive_threshold_2
 					compare = greater_than_or_equals
 				}
 			}
@@ -210,7 +217,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 90
+					value = war_phase_offensive_threshold_3
 					compare = greater_than_or_equals
 				}
 			}
@@ -229,7 +236,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 60
+					value = war_phase_defensive_threshold_1
 					compare = greater_than_or_equals
 				}
 			}
@@ -239,7 +246,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 120
+					value = war_phase_defensive_threshold_2
 					compare = greater_than_or_equals
 				}
 			}
@@ -249,7 +256,7 @@ dr_calculate_war_phase_factor = {
 			limit = {
 				check_variable = {
 					var = dr_days_in_war
-					value = 180
+					value = war_phase_defensive_threshold_3
 					compare = greater_than_or_equals
 				}
 			}
@@ -275,74 +282,12 @@ dr_calculate_peace_bonus = {
 			add_to_variable = { peace_rp_bonus = 0.01 }
 		}
 
-		# Ruling party contribution (using helper effect for consistency)
-		# Democratic government
-		if = {
-			limit = { has_government = democratic }
-			set_variable = { temp_government_popularity = democratic }
-			if = {
-				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
-				add_to_variable = { peace_rp_bonus = 0.03 }
-			}
-			if = {
-				limit = {
-					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
-					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
-				}
-				add_to_variable = { peace_rp_bonus = 0.02 }
-			}
-		}
-
-		# Fascist government
-		if = {
-			limit = { has_government = fascism }
-			set_variable = { temp_government_popularity = fascism }
-			if = {
-				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
-				add_to_variable = { peace_rp_bonus = 0.03 }
-			}
-			if = {
-				limit = {
-					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
-					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
-				}
-				add_to_variable = { peace_rp_bonus = 0.02 }
-			}
-		}
-
-		# Communist government
-		if = {
-			limit = { has_government = communism }
-			set_variable = { temp_government_popularity = communism }
-			if = {
-				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
-				add_to_variable = { peace_rp_bonus = 0.03 }
-			}
-			if = {
-				limit = {
-					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
-					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
-				}
-				add_to_variable = { peace_rp_bonus = 0.02 }
-			}
-		}
-
-		# Neutral or other government
-		if = {
-			limit = { has_government = neutrality }
-			set_variable = { temp_government_popularity = neutrality }
-			if = {
-				limit = { check_variable = { var = temp_government_popularity value = 0.85 compare = greater_than } }
-				add_to_variable = { peace_rp_bonus = 0.03 }
-			}
-			if = {
-				limit = {
-					check_variable = { var = temp_government_popularity value = 0.7 compare = greater_than }
-					check_variable = { var = temp_government_popularity value = 0.85 compare = less_than_or_equals }
-				}
-				add_to_variable = { peace_rp_bonus = 0.02 }
-			}
-		}
+		# Ruling party contribution (using helper effects for consistency)
+		# Calculate government support factor and map to peace bonus
+		dr_set_government_popularity = yes
+		dr_get_government_support_factor = yes
+		# Map government_support_factor to peace bonus: 0.0 -> 0.03, 0.1 -> 0.02, 0.2+ -> 0.0
+		dr_map_government_support_to_peace_bonus = yes
 
 		# Cap at +5%
 		if = {
@@ -555,6 +500,82 @@ dr_get_opinion_factor_for_ally = {
 	# 0-7 remains 0.0 (default)
 }
 
+# Helper effect: Calculate opinion factor FROM ROOT to PREV (Ally)
+# Checks ROOT's opinion of the Ally (PREV).
+# Sets: alliance_rel_factor
+dr_get_opinion_factor_from_root = {
+	set_variable = { alliance_rel_factor = 0.0 }
+	
+	# Check from highest to lowest
+	if = {
+		limit = { has_opinion = { target = PREV value > 79 } }
+		set_variable = { alliance_rel_factor = 1.0 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 71 }
+			NOT = { has_opinion = { target = PREV value > 79 } }
+		}
+		set_variable = { alliance_rel_factor = 0.9 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 63 }
+			NOT = { has_opinion = { target = PREV value > 71 } }
+		}
+		set_variable = { alliance_rel_factor = 0.8 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 55 }
+			NOT = { has_opinion = { target = PREV value > 63 } }
+		}
+		set_variable = { alliance_rel_factor = 0.7 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 47 }
+			NOT = { has_opinion = { target = PREV value > 55 } }
+		}
+		set_variable = { alliance_rel_factor = 0.6 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 39 }
+			NOT = { has_opinion = { target = PREV value > 47 } }
+		}
+		set_variable = { alliance_rel_factor = 0.5 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 31 }
+			NOT = { has_opinion = { target = PREV value > 39 } }
+		}
+		set_variable = { alliance_rel_factor = 0.4 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 23 }
+			NOT = { has_opinion = { target = PREV value > 31 } }
+		}
+		set_variable = { alliance_rel_factor = 0.3 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 15 }
+			NOT = { has_opinion = { target = PREV value > 23 } }
+		}
+		set_variable = { alliance_rel_factor = 0.2 }
+	}
+	if = {
+		limit = {
+			has_opinion = { target = PREV value > 7 }
+			NOT = { has_opinion = { target = PREV value > 15 } }
+		}
+		set_variable = { alliance_rel_factor = 0.1 }
+	}
+}
+
 # Submod hook: override opinion factor calculation for alliance members
 # If this hook sets alliance_rel_factor and sets the dr_opinion_factor_custom_set flag,
 # the default calculation is skipped. This allows submods to explicitly set 0.0 if needed.
@@ -623,37 +644,40 @@ dr_apply_alliance_rp_logic = {
 				# Calculate opinion factor (0.0 to 1.0 in 0.1 steps)
 				# Relation factor g_rel in 10 steps between 0 and 80 opinion:
 				# 0-7  -> 0.0
-				# 8-15 -> 0.1
-				# 16-23 -> 0.2
-				# 24-31 -> 0.3
-				# 32-39 -> 0.4
-				# 40-47 -> 0.5
-				# 48-55 -> 0.6
-				# 56-63 -> 0.7
-				# 64-71 -> 0.8
-				# 72-79 -> 0.9
+				# ...
 				# 80+   -> 1.0
 
-				# Reset factor and flag before calculation
-				ROOT = { 
-					set_variable = { alliance_rel_factor = 0.0 }
-					clr_country_flag = dr_opinion_factor_custom_set
+				# 1. Calculate Ally's opinion of US (They like Us)
+				# Run in ALLY scope
+				set_variable = { alliance_rel_factor = 0.0 }
+				clr_country_flag = dr_opinion_factor_custom_set
+				
+				# Allow submods to override opinion calculation (in Ally scope)
+				dr_get_opinion_factor_for_ally_submods = yes
+				
+				# Default calculation
+				if = {
+					limit = { NOT = { has_country_flag = dr_opinion_factor_custom_set } }
+					dr_get_opinion_factor_for_ally = yes
 				}
-				
-				# Allow submods to override opinion calculation
-				# Submods should set dr_opinion_factor_custom_set flag if they set a custom value
-				ROOT = { dr_get_opinion_factor_for_ally_submods = yes }
-				
-				# Default calculation (only if submod didn't set it)
+				set_variable = { factor_they_like_us = alliance_rel_factor }
+
+				# 2. Calculate OUR opinion of THEM (We like Them)
+				# Run in ROOT scope
 				ROOT = {
-					if = {
-						limit = { NOT = { has_country_flag = dr_opinion_factor_custom_set } }
-						dr_get_opinion_factor_for_ally = yes
-					}
+					set_variable = { alliance_rel_factor = 0.0 }
+					
+					# Use the new helper to check opinion of PREV (Ally)
+					dr_get_opinion_factor_from_root = yes
+					set_variable = { factor_we_like_them = alliance_rel_factor }
+					
+					# 3. Average the two factors
+					add_to_variable = { factor_we_like_them = PREV:factor_they_like_us }
+					divide_variable = { factor_we_like_them = 2 }
+					
+					# Add to sum
+					add_to_variable = { alliance_rel_factor_sum = factor_we_like_them }
 				}
-				
-				# Add to sum
-				ROOT = { add_to_variable = { alliance_rel_factor_sum = alliance_rel_factor } }
 			}
 
 			# 5% base bonus per ally, capped by game rule and scaled with average relation.

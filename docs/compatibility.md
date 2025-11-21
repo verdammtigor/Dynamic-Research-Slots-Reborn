@@ -52,6 +52,24 @@ The mod provides **4 Country Flags** for granular control:
 
 **Usage**: Set these flags in your submod via `dr_check_compatibility_submods` or `dr_initialize_submods`:
 
+### 1.3. Smart Detection System *(since version 1.5)*
+
+The mod uses intelligent detection that only triggers recalculation when necessary:
+
+- **Factory Change Detection**: Automatically detects changes to Civ/Mil/Nav factories
+- **Weekly Fallback**: Ensures custom buildings from submods are detected (7-day interval)
+- **Compatibility**: Works seamlessly with all submods
+  - Custom buildings are caught by weekly fallback
+  - No special configuration needed
+  - Maintains full responsiveness for factory changes
+
+**For Submods:**
+- Custom buildings that don't affect factory counts will be detected within 7 days
+- If immediate detection is needed, submods can manually trigger `recalculate_dynamic_research_slots`
+- The system is fully backward compatible
+
+**Usage**: Set these flags in your submod via `dr_check_compatibility_submods` or `dr_initialize_submods`:
+
 ```txt
 dr_check_compatibility_submods = {
   # Disable system for specific countries
@@ -67,7 +85,7 @@ The mod sets standard flags and variables that other mods can use for detection 
 
 - **`dynamic_research_slots_active`** (Global Flag) - Set at startup to indicate the system is active.
 
-- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.4), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
+- **`dr_mod_version`** (Variable) - Contains the mod version (currently 1.5), enables version checks. The version is defined in `common/scripted_effects/00_dr_mod_metadata.txt` and should match the version in `descriptor.mod`.
 
 **Usage in other mods**:
 
@@ -151,7 +169,7 @@ The mod is fully backward compatible:
 ### 4.3. Compatibility Signals
 
 - 1 Global Flag (`dynamic_research_slots_active`)
-- 1 Variable (`dr_mod_version = 1.4`)
+- 1 Variable (`dr_mod_version = 1.5`)
 
 ---
 

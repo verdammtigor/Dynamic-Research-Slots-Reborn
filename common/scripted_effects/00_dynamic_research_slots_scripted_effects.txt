@@ -187,6 +187,8 @@ recalculate_dynamic_research_slots = {
 		dr_collect_facility_counts_submods = yes
 
 		# Validate facility counts (defensive programming - prevent negative values)
+		# Note: Due to HOI4 scripting limitations (no variable references), each facility type
+		# must be validated individually. This redundancy is necessary.
 		if = {
 			limit = {
 				check_variable = {
@@ -420,6 +422,88 @@ recalculate_dynamic_research_slots = {
 			set_research_slots = var:target_research_slots
 		}
 		set_variable = { current_research_slots = amount_research_slots }
+	}
+
+	# Update tracking variables after a recalculation so we don't trigger again immediately
+	set_variable = { dr_last_civ_count = num_of_civilian_factories }
+	set_variable = { dr_last_mil_count = num_of_military_factories }
+	set_variable = { dr_last_nav_count = num_of_naval_factories }
+	set_variable = { dr_days_since_last_full_check = 0 }
+}
+
+# Smart check: Only returns true (sets flag) if factory counts have changed
+dr_check_for_factory_changes = {
+	clr_country_flag = dr_factories_changed
+	
+	# Check Civs
+	if = {
+		limit = {
+			check_variable = {
+				var = dr_last_civ_count
+				value = num_of_civilian_factories
+				compare = not_equals
+			}
+		}
+		set_country_flag = dr_factories_changed
+	}
+
+	# Check Mils (only if not already found change)
+	if = {
+		limit = {
+			NOT = { has_country_flag = dr_factories_changed }
+			check_variable = {
+				var = dr_last_mil_count
+				value = num_of_military_factories
+				compare = not_equals
+			}
+		}
+		set_country_flag = dr_factories_changed
+	}
+
+	# Check Docks (only if not already found change)
+	if = {
+		limit = {
+			NOT = { has_country_flag = dr_factories_changed }
+			check_variable = {
+				var = dr_last_nav_count
+				value = num_of_naval_factories
+				compare = not_equals
+			}
+		}
+		set_country_flag = dr_factories_changed
+	}
+}
+
+# Wrapper: Runs recalculation ONLY if factories changed OR it's been 7 days
+dr_recalculate_if_needed = {
+	# 1. Check if factories changed
+	dr_check_for_factory_changes = yes
+
+	# 2. Check if it's been 7 days (weekly fallback for custom buildings)
+	if = {
+		limit = {
+			check_variable = {
+				var = dr_days_since_last_full_check
+				value = 7
+				compare = greater_than_or_equals
+			}
+		}
+		set_country_flag = dr_force_weekly_update
+	}
+
+	# 3. Execute if either condition is met
+	if = {
+		limit = {
+			OR = {
+				has_country_flag = dr_factories_changed
+				has_country_flag = dr_force_weekly_update
+			}
+		}
+		recalculate_dynamic_research_slots = yes
+		
+		# Cleanup flags
+		clr_country_flag = dr_factories_changed
+		clr_country_flag = dr_force_weekly_update
 	}
 }
 

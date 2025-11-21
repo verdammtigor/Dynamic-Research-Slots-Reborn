@@ -47,7 +47,25 @@ As a submodder you usually only touch `00_dr_dynamic_research_config.txt` – an
 
 ---
 
-### 2.1. Extension hooks
+### 2.1. Smart Detection System *(since version 1.5)*
+
+The mod uses intelligent detection that only triggers recalculation when necessary:
+
+- **Automatic**: Factory changes (Civ/Mil/Nav) trigger immediate recalculation
+- **Weekly Fallback**: Custom buildings are detected within 7 days
+- **For Submods**: If you add custom buildings that affect RP, they will be detected automatically within 7 days, or you can manually trigger recalculation if immediate update is needed
+
+**Manual Recalculation:**
+If your submod needs immediate recalculation (e.g., after a focus tree completion), you can call:
+```txt
+recalculate_dynamic_research_slots = yes
+```
+
+This is safe to call at any time and will update research slots immediately.
+
+---
+
+### 2.2. Extension hooks
 
 To avoid editing the core logic, the mod exposes empty scripted effects that you can override in your submod. All hooks are empty in the base mod, so overriding them in your submod is conflict-free.
 
@@ -183,6 +201,9 @@ dr_initialize_submods = {
 # Adjust configuration values
 dr_apply_research_config_submods = {
   add_to_variable = { rp_per_nuclear_facility = 10 }
+  # Example: Change AI update frequency (default: 14 days)
+  # set_variable = { dr_ai_update_frequency = 7 }  # More responsive (7 days)
+  # set_variable = { dr_ai_update_frequency = 21 } # Better performance (21 days)
 }
 ```
 
@@ -607,7 +628,37 @@ You can, for example, change only the caps by modifying the `alliance_bonus_cap`
 
 ---
 
-## 9. Debugging and testing submods
+## 9. Using Helper Effects *(since version 1.5)*
+
+The mod provides several helper effects that submods can use:
+
+**Government Support:**
+```txt
+# Get government support factor for current government
+dr_set_government_popularity = yes
+dr_get_government_support_factor = yes
+# Now government_support_factor contains 0.0-0.4 based on popularity
+```
+
+**Peace Bonus Mapping:**
+```txt
+# Map government support to peace bonus
+dr_set_government_popularity = yes
+dr_get_government_support_factor = yes
+dr_map_government_support_to_peace_bonus = yes
+# Now peace_rp_bonus has been updated
+```
+
+**Opinion Checks:**
+```txt
+# Check opinion of PREV scope (e.g. inside every_other_country loop)
+dr_get_opinion_factor_from_root = yes
+# Now alliance_rel_factor contains 0.0-1.0 based on ROOT's opinion of PREV
+```
+
+These helpers can be used in custom modifier logic or for testing purposes. For a complete list of all helper effects, see `technical_reference.md` section 9.5.
+
+## 10. Debugging and testing submods
 
 For balance submods it's important to see what happens internally. The mod ships with its own debug tools:
 
@@ -630,7 +681,7 @@ Typical test flow for a submod:
 
 ---
 
-## 10. Best practices and common pitfalls
+## 11. Best practices and common pitfalls
 
 - **Override as few files as possible.**  
   In most cases `00_dr_dynamic_research_config.txt` is enough. Only touch `00_dr_dynamic_research_modifiers.txt` if you really need different war/alliance logic.

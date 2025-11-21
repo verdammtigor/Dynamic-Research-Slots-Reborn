@@ -2,15 +2,9 @@
   dynamic_research_slots_decisions:0 "动态科研槽位"
   dynamic_research_slots_decisions_desc:0 "§P我们的工厂会生成科研点数（RP）。§! 当 RP 达到特定阈值时，我们会解锁更多科研槽位 - 但如果我们的 RP 降得太低，也可能会失去槽位。\n\n§Y总 RP: [?total_research_power]§!\n§Y下一槽位所需: [?next_research_slot_at]§!\n\n§G民用工厂提供的 RP:§! [?civilian_research_power]\n§R军用工厂提供的 RP:§! [?military_research_power]\n§C海军船坞提供的 RP:§! [?naval_research_power]\n§O实验设施提供的 RP:§! [?facility_research_power]\n\n§YRP 修正: [?total_rp_modifier|%+]§!\n§Y战争/和平影响: [?war_rp_penalty_effective|%+]§!\n§Y联盟加成: [?alliance_bonus_pct|%+]§!\n\n使用“帮助”决议获取更详细信息。"
   
-<<<<<<< HEAD
   dynamic_research_slots_help:0 "帮助"
-  dynamic_research_slots.help.title:0 "动态科研槽位帮助"
-  dynamic_research_slots.help.desc:0 "§G每座民用工厂提供的 RP:§! [?research_power_per_civ]\n§R每座军用工厂提供的 RP:§! [?research_power_per_mil]\n§C每个海军船坞提供的 RP:§! [?research_power_per_nav]\n§O实验设施提供的 RP:§! [?facility_research_power] (物理: +50 RP, 海军/空军/陆军: 各 +35 RP)\n\n§P简易科研槽位:§! [?easy_research_slots]\n§W简易科研槽位是我们初始拥有（或通过国策等获得）的槽位，其 RP 需求降低至 [?easy_research_slot_coefficient|%.0]。§!\n\n§P科研槽位的 RP 阈值:§!\n§W1: [?research_for_slot^1] RP\n2: [?research_for_slot^2] RP\n3: [?research_for_slot^3] RP\n4: [?research_for_slot^4] RP\n5: [?research_for_slot^5] RP\n6: [?research_for_slot^6] RP\n7: [?research_for_slot^7] RP\n8: [?research_for_slot^8] RP\n9: [?research_for_slot^9] RP\n10: [?research_for_slot^10] RP§!\n\n§P更多信息:§!\n§W点击下方的“更多详情”以了解战争、法律和联盟如何修正您的科研点数。§!"
-=======
-  dynamic_research_slots_help:0 "HELP"
-  dynamic_research_slots.help.title:0 "Dynamic Research Slots Help"
-  dynamic_research_slots.help.desc:0 "§GRP per civilian factory:§! [?research_power_per_civ]\n§RRP per military factory:§! [?research_power_per_mil]\n§CRP per naval dockyard:§! [?research_power_per_nav]\n§ORP from experimental facilities:§! [?facility_research_power] (Physics: +30 RP, Naval/Air/Land: +15 RP each, with diminishing returns)\n\n§PEasy Research Slots:§! [?easy_research_slots]\n§WEasy research slots are slots we start with (or gain via focuses etc.) whose RP requirement is reduced to [?easy_research_slot_coefficient|%.0].§!\n\n§PRP thresholds for research slots:§!\n§W1: [?research_for_slot^1] RP\n2: [?research_for_slot^2] RP\n3: [?research_for_slot^3] RP\n4: [?research_for_slot^4] RP\n5: [?research_for_slot^5] RP\n6: [?research_for_slot^6] RP\n7: [?research_for_slot^7] RP\n8: [?research_for_slot^8] RP\n9: [?research_for_slot^9] RP\n10: [?research_for_slot^10] RP§!\n\n§PMore information:§!\n§WClick \"More details\" below to see how war, laws and alliances modify your Research Power.§!"
->>>>>>> fdc76599d4d0e6c8613c9ec49fc767b182c2195f
+  dynamic_research_slots.help.title:0 "动态科研槽位模组的帮助"
+  dynamic_research_slots.help.desc:0 "§G每座民用工厂提供的 RP:§! [?research_power_per_civ]\n§R每座军用工厂提供的 RP:§! [?research_power_per_mil]\n§C每个海军船坞提供的 RP:§! [?research_power_per_nav]\n§O实验设施提供的 RP:§! [?facility_research_power] (物理: +30 RP, 海军/空军/陆军: 各 +15 RP，存在收益递减)\n\n§P简易科研槽位:§! [?easy_research_slots]\n§W简易科研槽位是我们初始拥有（或通过国策等获得）的槽位，其 RP 需求降低至 [?easy_research_slot_coefficient|%.0]。§!\n\n§P科研槽位的 RP 阈值:§!\n§W1: [?research_for_slot^1] RP\n2: [?research_for_slot^2] RP\n3: [?research_for_slot^3] RP\n4: [?research_for_slot^4] RP\n5: [?research_for_slot^5] RP\n6: [?research_for_slot^6] RP\n7: [?research_for_slot^7] RP\n8: [?research_for_slot^8] RP\n9: [?research_for_slot^9] RP\n10: [?research_for_slot^10] RP§!\n\n§P更多信息:§!\n§W点击下方的“更多详情”以了解战争、法律和联盟如何修正您的科研点数。§!"
   
   dynamic_research_slots.help.a:0 "确认"
   dynamic_research_slots.help.b:0 "更多详情"
